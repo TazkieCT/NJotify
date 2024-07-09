@@ -3,7 +3,7 @@ import SignFooter from '../components/SignFooter'
 import styles from '../styles/SignPage/Sign.module.css'
 import google from '../assets/icons8-google.svg'
 
-const LoginForm = () => {
+const RegisForm = () => {
   return (
     <>
       <SignNav />
@@ -22,11 +22,20 @@ const LoginForm = () => {
             <label className={styles["label-form"]} htmlFor="password">Password</label>
             <input className={styles["input-text"]} type="password" placeholder='Password'/>
           </div>
+          <div className={styles["group-form"]}>
+            <label className={styles["label-form"]} htmlFor="password">Confirm Password</label>
+            <input className={styles["input-text"]} type="password" placeholder='Password'/>
+          </div>
+          <div className={styles["group-form"]}>
+            <label className={styles["label-form"]} >Your password must contain at least:</label>
+            <label className={styles["label-require"]} >1 letter</label>
+            <label className={styles["label-require"]} >1 number or special character (example: # ? ! &)</label>
+            <label className={styles["label-require"]} >10 characters</label>
+          </div>
         </div>
-        <button className={styles["button-1"]}>Log In</button>
-        <a href="" className={styles.link2}>Forgot your password?</a>
+        <button className={styles["button-1"]}>Sign Up</button>
         <hr className={styles["hr-full"]}/>
-        <span className={`${styles['link2']} .fontSp-regular`}>Don't have an account? <a href="" className={styles.link2}>Sign up for NJotify</a></span>
+        <span className={`${styles['link2']} .fontSp-regular`}>Already have an account? <a href="" className={styles.link2}>Log in to NJotify</a></span>
       </div>
 
       <SignFooter />
@@ -34,4 +43,4 @@ const LoginForm = () => {
   )
 }
 
-export default LoginForm
+export default RegisForm

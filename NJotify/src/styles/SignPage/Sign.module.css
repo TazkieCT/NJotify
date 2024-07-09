@@ -18,7 +18,7 @@
     width: 80%;
     border: none;
     border-top: 1px solid #454545;
-    margin: 20px 0;
+    margin-top: 20px;
 }
 
 .footer{
@@ -49,6 +49,7 @@
 .link2{
     color: rgb(184, 184, 184);
     font-size: 10px;
+    margin-top: 20px;
 }
 
 .input-text{
@@ -66,9 +67,9 @@
     align-items: center;
     flex-direction: column;
     background-color: rgb(13, 13, 13);
-    width: 70vh;
-    height: 70vh;
+    width: 500px;
     border-radius: 1%;
+    padding: 5vh 0;
 }
 
 .button-1{
@@ -76,10 +77,9 @@
     cursor: pointer;
     font-weight: 900;
     border: none;
-    margin: 20px 0;
+    margin: auto 0;
     border-radius: 15px;
     padding: 5px 10px;
-    width: 20vh;
 }
 
 .title{
@@ -91,13 +91,27 @@
     align-items: center;
     justify-content: center;
     background-color: transparent;
-    margin: 20px 0;
     cursor: pointer;
     color: white;
     border: 1px solid gray;
     border-radius: 15px;
     height: 30px;
     padding: 0 20px;
+    margin-top: 20px;
+}
+
+.form{
+    min-height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.reset{
+    min-height: 240px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 
 .button-2 img {
@@ -106,8 +120,13 @@
 
 .label-form{
     display: block;
-    font-size: 0.8rem;
-    margin: 3px;
+    font-size: 0.7rem;
+}
+
+.label-require{
+    display: block;
+    color: rgb(184, 184, 184);
+    font-size: 10px;
 }
 
 .group-form{

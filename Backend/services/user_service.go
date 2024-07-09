@@ -7,5 +7,5 @@ import (
 
 type UserService interface {
 	Create(user request.CreateUserRequest)
-	FindUser() response.UserResponse
+	FindUser(id string) response.UserResponse
 }
