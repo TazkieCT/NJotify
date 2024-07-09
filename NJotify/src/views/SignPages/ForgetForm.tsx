@@ -5,20 +5,21 @@ import styles from '../../styles/SignPage/Sign.module.css'
 const ForgetForm = () => {
   return (
     <>
-      <SignNav />
-      <div className={styles.card}>
-        <h1 className={styles['title']}>Find Your Account</h1>
-        <div className={styles["form"]}>
-          <div className={styles["group-form"]}>
-            <label className={styles["label-form"]} htmlFor="email">Email</label>
-            <input className={styles["input-text"]} type="text" placeholder='Email'/>
+      <div className={styles.container}>
+        <SignNav />
+        <div className={styles.card}>
+          <h1 className={styles['title']}>Find Your Account</h1>
+          <div className={styles["form"]}>
+            <div className={styles["group-form"]}>
+              <label className={styles["label-form"]} htmlFor="email">Email</label>
+              <input className={styles["input-text"]} type="text" placeholder='Email'/>
+            </div>
           </div>
+          <button className={styles["button-1"]}>Search</button>
+          <a href="" className={styles.link2}>Cancel</a>
         </div>
-        <button className={styles["button-1"]}>Search</button>
-        <a href="" className={styles.link2}>Cancel</a>
+        <SignFooter />
       </div>
-
-      <SignFooter />
     </>
   )
 }

@@ -5,6 +5,7 @@ import styles from '../../styles/SignPage/Sign.module.css'
 const ResetPasswordForm = () => {
   return (
     <>
+     <div className={styles.container}>
       <SignNav />
       <div className={styles.card}>
         <h1 className={styles['title']}>Reset Password</h1>
@@ -26,8 +27,8 @@ const ResetPasswordForm = () => {
         </div>
         <button className={styles["button-1"]}>Reset Password</button>
       </div>
-
       <SignFooter />
+</div>
     </>
   )
 }

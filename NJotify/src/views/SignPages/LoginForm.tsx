@@ -6,6 +6,7 @@ import google from '../../assets/icons8-google.svg'
 const LoginForm = () => {
   return (
     <>
+     <div className={styles.container}>
       <SignNav />
       <div className={styles.card}>
         <h1 className={styles['title']}>Login to Spotify</h1>
@@ -26,10 +27,11 @@ const LoginForm = () => {
         <button className={styles["button-1"]}>Log In</button>
         <a href="" className={styles.link2}>Forgot your password?</a>
         <hr className={styles["hr-full"]}/>
-        <span className={`${styles['link2']} .fontSp-regular`}>Don't have an account? <a href="" className={styles.link2}>Sign up for NJotify</a></span>
+        <span className={`${styles['link2']}`}>Don't have an account? <a href="" className={styles.link2}>Sign up for NJotify</a></span>
       </div>
-
       <SignFooter />
+
+</div>
     </>
   )
 }

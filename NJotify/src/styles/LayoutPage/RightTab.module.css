@@ -1,0 +1,12 @@
+.container{
+    width: 300px;
+    background-color: #000;
+    color: #fff;
+    overflow-y: auto;
+}
+
+@media (max-width: 768px) {
+    .container {
+        display: none;
+    }
+}

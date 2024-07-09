@@ -22,7 +22,6 @@ module.exports = {
     'import',
     'react-refresh',
     'simple-import-sort',
-    'tailwindcss',
     'unused-imports',
     'react',
     'security',

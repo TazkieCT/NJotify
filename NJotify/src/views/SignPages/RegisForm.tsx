@@ -6,6 +6,7 @@ import google from '../../assets/icons8-google.svg'
 const RegisForm = () => {
   return (
     <>
+     <div className={styles.container}>
       <SignNav />
       <div className={styles.card}>
         <h1 className={styles['title']}>Login to Spotify</h1>
@@ -37,8 +38,8 @@ const RegisForm = () => {
         <hr className={styles["hr-full"]}/>
         <span className={`${styles['link2']} .fontSp-regular`}>Already have an account? <a href="" className={styles.link2}>Log in to NJotify</a></span>
       </div>
-
       <SignFooter />
+</div>
     </>
   )
 }

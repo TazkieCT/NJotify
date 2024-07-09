@@ -1,0 +1,45 @@
+.container{
+    width: 300px;
+    background-color: #000;
+    color: #cecece;
+    overflow-y: auto;
+    padding: 10px 6px;
+}
+
+.links:hover{
+    color: white;
+}
+
+.big{
+    font-size: 30px;
+}
+
+.links{
+    padding: 5px;
+    display: flex;
+    align-self: center;
+    align-items: center;
+    gap: 14px;
+    cursor: pointer;
+    font-weight: 600;
+}
+    
+.navigation, .library{
+    background-color: #181818;
+    padding: 5px 10px;
+    border-radius: 2%;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+}
+
+@media (max-width: 768px) {
+    .container {
+        width: 150px;
+    }
+}
+
+@media (max-width: 500px) {
+    .container {
+        display: none;
+    }
+}
