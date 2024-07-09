@@ -1,6 +1,6 @@
-import SignNav from '../components/SignNav'
-import SignFooter from '../components/SignFooter'
-import styles from '../styles/SignPage/Sign.module.css'
+import SignNav from '../../components/SignNav'
+import SignFooter from '../../components/SignFooter'
+import styles from '../../styles/SignPage/Sign.module.css'
 
 const ResetPasswordForm = () => {
   return (

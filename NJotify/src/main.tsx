@@ -1,11 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import LoginForm from './views/LoginForm'
+import LoginForm from './views/SignPages/LoginForm'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import RegisForm from './views/RegisForm';
-import ForgetForm from './views/ForgetForm';
-import ResetPasswordForm from './views/ResetForm';
+import RegisForm from './views/SignPages/RegisForm';
+import ForgetForm from './views/SignPages/ForgetForm';
+import ResetPasswordForm from './views/SignPages/ResetForm';
+import HomeLayout from './views/HomeLayout';
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
   {
     path: "/reset",
     element: <ResetPasswordForm />,
+  },
+  {
+    path: "/home",
+    element: <HomeLayout />,
   },
 ]);
 

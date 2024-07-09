@@ -1,7 +1,6 @@
-import SignNav from '../components/SignNav'
-import SignFooter from '../components/SignFooter'
-import styles from '../styles/SignPage/Sign.module.css'
-import google from '../assets/icons8-google.svg'
+import SignNav from '../../components/SignNav'
+import SignFooter from '../../components/SignFooter'
+import styles from '../../styles/SignPage/Sign.module.css'
 
 const ForgetForm = () => {
   return (
