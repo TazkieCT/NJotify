@@ -1,5 +1,5 @@
 .container{
-    width: 100%;
+    flex-grow: 1;
     background-color: #333;
     color: #fff;
     overflow-y: auto;
