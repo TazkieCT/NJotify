@@ -1,8 +1,157 @@
-.container{
+.container {
+    display: flex;
+    flex-direction: column;
     width: 300px;
     background-color: #000;
-    color: #fff;
+    color: #a6a6a6;
     overflow-y: auto;
+    padding: 6px 6px 0px;
+    gap: 7px;
+    overflow: hidden;
+}
+
+.header-content {
+    background-color: #181818;
+    padding: 0x 0px 5px;
+    border-radius: 2%;
+    box-sizing: border-box;
+    position: fixed;
+    flex-grow: 1;
+    position: relative;
+    overflow-y: auto;
+}
+
+.header-text {
+    color: white;
+    font-weight: 600;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header-button {
+    display: flex;
+    transition: color 0.2s ease-in-out;
+    gap: 6px;
+}
+
+.medium {
+    font-size: 1.2rem;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    display: flex;
+}
+
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 20px 5px;
+}
+
+.medium:hover {
+    color: white;
+}
+
+.medium:hover {
+    background-color: #1c1c1c;
+    border-radius: 100%;
+}
+
+.album{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+}
+
+.album-cover {
+    border-radius: 0.5rem;
+    padding: 0.5rem 0px 1rem;
+}
+
+.title{
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.sticky{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #181818;
+}
+
+.artist{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+    position: relative;
+    background-color: rgb(36, 36, 36);
+    border-radius: 0.5rem;
+}
+
+.about-artist {
+    position: absolute;
+    padding: 1rem;
+    color: white;
+    z-index: 20;
+}
+
+.artist-image {
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.artist::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(0deg, rgba(255,255,255,0) 68%, rgba(31, 31, 31, 0.689) 100%);
+    border-radius: 0.5rem;
+    z-index: 15;
+}
+
+.follow-btn{
+    border: 2px solid #a6a6a6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-small{
+    font-size: 0.9rem;
+}
+
+.white{
+    color: white;
+}
+
+.between{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.p-20{
+    padding: 1rem;
 }
 
 @media (max-width: 768px) {
