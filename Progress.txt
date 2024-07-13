@@ -1,0 +1,6 @@
+Yang sudah:
+- Halaman Login
+- Halaman Register
+- Halaman Forget Password
+- Halaman Reset Password
+- Halaman Home (Baru side bar (kanan kiri), player bar yang bawah, header bar buat halaman utama)
