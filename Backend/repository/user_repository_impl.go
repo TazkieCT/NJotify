@@ -19,8 +19,7 @@ func (c *UserRepositoryImpl) Save(user model.User) {
 	helper.CheckPanic(result.Error)
 }
 
-func (r *UserRepositoryImpl) FindUser(id string) model.User {
-	var user model.User
+func (r *UserRepositoryImpl) FindUser(user model.User, id string) model.User {
 	result := r.Db.Find(&user)
 	helper.CheckPanic(result.Error)
 	return user

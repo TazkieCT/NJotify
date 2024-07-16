@@ -1,113 +1,117 @@
-.nav{
-    position: absolute;
-    top: 0;
-    display: flex;
-    width: 100%;
-    background-color: black;
-    box-sizing: border-box;
-    padding: 10px 30px;
+.nav {
+  position: absolute;
+  top: 0;
+  display: flex;
+  width: 100%;
+  background-color: black;
+  box-sizing: border-box;
+  padding: 10px 30px;
 }
 
-.w-full{
-    display: block;
-    width: 100%;
+.w-full {
+  display: block;
+  width: 100%;
 }
 
-.hr-full{
-    display: block;
-    width: 80%;
-    border: none;
-    border-top: 1px solid #454545;
-    margin-top: 20px;
+.hr-full {
+  display: block;
+  width: 80%;
+  border: none;
+  border-top: 1px solid #454545;
+  margin-top: 20px;
 }
 
-.footer{
-    box-sizing: border-box;
-    padding: 3vh 20vh;
-    display: flex;
-    width: 100%;
-    background-color: black;
-    justify-content: space-between;
-    align-items: center;
-    position: fixed;
-    bottom: 0;
+.footer {
+  box-sizing: border-box;
+  padding: 3vh 20vh;
+  display: flex;
+  width: 100%;
+  background-color: black;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  bottom: 0;
 }
 
-.link-foot{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 10px;
+.link-foot {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
 }
 
-.link{
-    color: gray;
-    text-decoration: none;
-    font-size: 10px;
+.link {
+  color: gray;
+  text-decoration: none;
+  font-size: 10px;
 }
 
-.link2{
-    color: rgb(184, 184, 184);
-    font-size: 10px;
-    margin-top: 20px;
+.link2 {
+  color: rgb(184, 184, 184);
+  font-size: 10px;
+  margin-top: 20px;
 }
 
-.input-text{
-    background-color: black;
-    border: 1px solid white;
-    border-radius: 2px;
-    padding: 5px 10px;
-    width: 30ch;
-    color: white;
+.pointer {
+  cursor: pointer;
 }
 
-.card{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    background-color: rgb(13, 13, 13);
-    width: 500px;
-    border-radius: 1%;
-    padding: 5vh 0;
+.input-text {
+  background-color: black;
+  border: 1px solid white;
+  border-radius: 2px;
+  padding: 5px 10px;
+  width: 30ch;
+  color: white;
 }
 
-.button-1{
-    background-color: rgb(29, 185, 84);
-    cursor: pointer;
-    font-weight: 900;
-    border: none;
-    margin: auto 0;
-    border-radius: 15px;
-    padding: 5px 10px;
+.card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: rgb(13, 13, 13);
+  width: 500px;
+  border-radius: 1%;
+  padding: 5vh 0;
 }
 
-.title{
-    margin: 0;
+.button-1 {
+  background-color: rgb(29, 185, 84);
+  cursor: pointer;
+  font-weight: 900;
+  border: none;
+  margin: auto 0;
+  border-radius: 15px;
+  padding: 5px 10px;
+}
+
+.title {
+  margin: 0;
 }
 
 .button-2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: transparent;
-    cursor: pointer;
-    color: white;
-    border: 1px solid gray;
-    border-radius: 15px;
-    height: 30px;
-    padding: 0 20px;
-    margin-top: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  cursor: pointer;
+  color: white;
+  border: 1px solid gray;
+  border-radius: 15px;
+  height: 30px;
+  padding: 0 20px;
+  margin-top: 20px;
 }
 
-.form{
-    min-height: 120px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.form {
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.container{
+.container {
   height: 100vh;
   flex-direction: column;
   display: flex;
@@ -115,32 +119,48 @@
   align-items: center;
 }
 
-.reset{
-    min-height: 240px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+.reset {
+  min-height: 240px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .button-2 img {
-    margin-right: 8px;
+  margin-right: 8px;
 }
 
-.label-form{
-    display: block;
-    font-size: 0.7rem;
+.label-form {
+  display: block;
+  font-size: 0.7rem;
 }
 
-.label-require{
-    display: block;
-    color: rgb(184, 184, 184);
-    font-size: 10px;
+.label-require {
+  display: flex;
+  align-items: center;
+  color: rgb(184, 184, 184);
+  font-size: 10px;
 }
 
-.group-form{
-    margin: 7px 0;
+.group-form {
+  margin: 7px 0;
 }
 
-.logo-footer{
-    margin-right: 30px;
+.logo-footer {
+  margin-right: 30px;
+}
+
+.radio {
+  appearance: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 1px solid #ccc;
+  border-radius: 50%;
+  outline: none;
+  background-color: black;
+  margin: 2px;
+}
+
+.radio:checked {
+  background-color: green;
 }

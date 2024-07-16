@@ -34,19 +34,24 @@ func (controller *UserController) Create(ctx *gin.Context) {
 		Status: "Ok",
 		Data:   nil,
 	}
-
+	ctx.Header("Access-Control-Allow-Origin", "*")
+	ctx.Header("Access-Control-Max-Age", "86400")
+	ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
+	ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max")
+	ctx.Header("Access-Control-Allow-Credentials", "true")
 	ctx.Header("Content-type", "application/json")
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
 func (controller *UserController) FindUser(ctx *gin.Context, id string) {
 	fmt.Println("Find user...")
-	userResponse := controller.userService.FindUser(id)
+	// userResponse := controller.userService.FindUser(id)
 
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
-		Data:   userResponse,
+		// Data:   userResponse,
+		Data:   nil,
 	}
 
 	ctx.Header("Content-type", "application/json")
