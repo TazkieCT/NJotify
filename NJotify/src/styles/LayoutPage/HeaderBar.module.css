@@ -1,0 +1,30 @@
+.header{
+    border-radius: 2%;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
+}
+
+.flex-between {
+    justify-content: space-between;
+    padding: 10px 20px 5px;
+    box-sizing: border-box;
+}
+
+.flex{
+    display: flex;
+    gap: 0.5rem;
+}
+
+.profile-icon{
+    width: 2rem;
+    height: 2rem;
+    border-radius: 100%;
+}
+
+.page-button{
+    padding: 5px;
+    background-color: #1c1c1c;
+    border-radius: 100%;
+    display: flex;
+}

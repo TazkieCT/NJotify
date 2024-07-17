@@ -1,4 +1,4 @@
-import style from "../styles/LayoutPage/RightTab.module.css"
+import style from "../../styles/LayoutPage/RightTab.module.css"
 import { IoCloseOutline } from "react-icons/io5";
 // import { HiOutlineDotsHorizontal } from "react-icons/hi";
 import { RxDotsHorizontal } from "react-icons/rx";

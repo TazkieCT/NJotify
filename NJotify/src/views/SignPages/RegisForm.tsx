@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import SignNav from "../../components/SignNav";
-import SignFooter from "../../components/SignFooter";
+import SignNav from "../../components/layout/SignNav";
+import SignFooter from "../../components/layout/SignFooter";
 import styles from "../../styles/SignPage/Sign.module.css";
 import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
@@ -27,10 +27,10 @@ const RegisForm = () => {
       password: password,
     };
     axios
-      .post("http://localhost:8888/log", data, { withCredentials: true })
+      .post("http://localhost:8888/signup", data)
       .then((response) => {
         console.log(response.data);
-        navigate("/home");
+        navigate("/");
       })
       .catch((error) => {
         console.error("There was an error registering!", error);

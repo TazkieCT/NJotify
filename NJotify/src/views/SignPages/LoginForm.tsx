@@ -1,5 +1,5 @@
-import SignNav from "../../components/SignNav";
-import SignFooter from "../../components/SignFooter";
+import SignNav from "../../components/layout/SignNav";
+import SignFooter from "../../components/layout/SignFooter";
 import styles from "../../styles/SignPage/Sign.module.css";
 import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";

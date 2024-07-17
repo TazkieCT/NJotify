@@ -1,6 +1,6 @@
 import { IoSearch } from "react-icons/io5";
 import { GoHome } from "react-icons/go";
-import style from "../styles/LayoutPage/LeftTab.module.css"
+import style from "../../styles/LayoutPage/LeftTab.module.css"
 import { VscLibrary } from "react-icons/vsc";
 import { FiPlus } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";

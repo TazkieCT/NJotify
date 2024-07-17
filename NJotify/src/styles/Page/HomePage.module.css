@@ -6,22 +6,13 @@
     padding: 6px 3px 0px;
 }
 
-.header{
-    background-color: #181818;
-    border-radius: 2%;
-    position: fixed;
-    flex-grow: 1;
-    position: relative;
-    overflow-y: auto;
-    display: flex;
-    align-items: center;
-}
-
 .content{
     background-color: #181818;
     border-radius: 1%;
     height: 100%;
+    padding: 60px 20px 5px;
     overflow-y: auto;
+    box-sizing: border-box;
 }
 
 .page-button{

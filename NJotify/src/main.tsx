@@ -7,6 +7,7 @@ import RegisForm from './views/SignPages/RegisForm';
 import ForgetForm from './views/SignPages/ForgetForm';
 import ResetPasswordForm from './views/SignPages/ResetForm';
 import HomeLayout from './views/HomeLayout';
+import TrackPage from './components/page/TrackPage';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomeLayout />,
+  },
+  {
+    path: "/track",
+    element: <TrackPage />,
   },
 ]);
 

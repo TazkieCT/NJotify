@@ -14,13 +14,20 @@ func NewUserRepositoryImpl(db *gorm.DB) UserRepository {
 	return &UserRepositoryImpl{Db: db}
 }
 
-func (c *UserRepositoryImpl) Save(user model.User) {
+func (c *UserRepositoryImpl) SignIn(user model.User) {
 	result := c.Db.Create(&user)
 	helper.CheckPanic(result.Error)
 }
 
-func (r *UserRepositoryImpl) FindUser(user model.User, id string) model.User {
-	result := r.Db.Find(&user)
+func (u *UserRepositoryImpl) Activate(user model.User) {
+	user.Roles = "listener"
+	result := u.Db.Save(&user)
+	helper.CheckPanic(result.Error)
+}
+
+func (r *UserRepositoryImpl) GetUser(email string) model.User {
+	var user model.User
+	result := r.Db.First(&user, "email = ?", email)
 	helper.CheckPanic(result.Error)
 	return user
 }

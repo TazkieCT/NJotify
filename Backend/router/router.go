@@ -13,16 +13,18 @@ func NewRouter(userController *controller.UserController) *gin.Engine {
 
 	corsMiddleware := cors.New(cors.Config{
 		AllowOrigins:     []string{"http://localhost:5173"},
-		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-		AllowHeaders:     []string{"Origin", "Content-Type", "Authorization"},
-		ExposeHeaders:    []string{"Content-Length"},
+		AllowMethods:     []string{"GET", "POST", "PUT", "PATCH", "DELETE"},
+		AllowHeaders:     []string{"Origin", "Content-Length", "Content-Type", "Authorization"},
 		AllowCredentials: true,
+		ExposeHeaders:    []string{"Content-Length"},
 		MaxAge:           12 * time.Hour,
 	})
 
 	router.Use(corsMiddleware)
 
-	router.POST("/log", userController.Create)
+	router.POST("/signup", userController.CreateUser)
+	router.POST("/activate", userController.ActivateUser)
+	router.GET("/login/:email", userController.GetUser)
 
 	return router
 }

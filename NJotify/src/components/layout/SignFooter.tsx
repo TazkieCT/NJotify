@@ -1,5 +1,5 @@
-import styles from '../styles/SignPage/Sign.module.css'
-import logo from '../assets/NJOTIFY.png'
+import styles from '../../styles/SignPage/Sign.module.css'
+import logo from '../../assets/NJOTIFY.png'
 const SignFooter = () => {
   return (
     <div className={styles['w-full']}>
