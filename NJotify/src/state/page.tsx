@@ -9,7 +9,7 @@ type Action = {
 }
 
 const usePageStore = create<State & Action>((set) => ({
-  page: 'maintab',
+  page: 'home',
   changePage: (page) => set(() => ({ page: page })),
 }))
 

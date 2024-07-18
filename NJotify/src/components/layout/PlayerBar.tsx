@@ -1,25 +1,28 @@
-import style from '../../styles/LayoutPage/PlayerBar.module.css'
+import style from '../../styles/layoutPage/PlayerBar.module.css'
 import { TbArrowsDiagonal } from "react-icons/tb";
 import { HiOutlineQueueList } from "react-icons/hi2";
 import { BsFilePlay } from "react-icons/bs";
 import { FiVolume2 } from "react-icons/fi";
 import { FaBackwardStep } from "react-icons/fa6";
 import { FaForwardStep } from "react-icons/fa6";
-import { IoIosPause } from "react-icons/io";
+// import { IoIosPause } from "react-icons/io";
 import { FaPlay } from "react-icons/fa6";
+import usePageStore from '../../state/page';
 
 // import { PiAirplay } from "react-icons/pi"; //Alternatif BsFilePlay
 // import { PiAirplayFill } from "react-icons/pi";
 // import { PiArrowsOutSimpleBold } from "react-icons/pi"; //Ketebalan
 
 const PlayerBar = () => {
+  const changePage = usePageStore((state) => state.changePage)
+
   return (
     <div className={`${style['container']} ${style['flex']}`}>
       <div className={style['player-info']}>
           <img className={style['album-cover']} width={60} src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c2/Radwimps_Your_Name_Album_Cover.jpg/220px-Radwimps_Your_Name_Album_Cover.jpg" alt="" />
           <div className={style.col}>
             <span className={style['album-title']}>Sparkle - movie ver.</span>
-            <span className={style['album-subtitle']}>RADWIMPS</span>
+            <span className={style['album-subtitle']} onClick={() => {changePage("profile")}}>RADWIMPS</span>
           </div>
       </div>
       <div className={style['music-control']}>

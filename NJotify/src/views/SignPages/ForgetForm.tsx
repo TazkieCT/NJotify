@@ -1,6 +1,6 @@
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
-import styles from "../../styles/SignPage/Sign.module.css";
+import styles from "../../styles/signPage/Sign.module.css";
 import { useNavigate } from "react-router-dom";
 
 const ForgetForm = () => {

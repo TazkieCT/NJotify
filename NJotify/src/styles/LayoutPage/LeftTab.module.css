@@ -10,6 +10,10 @@
     overflow: hidden;
 }
 
+.active{
+    color: white;
+}
+
 .navigation,
 .library {
     background-color: #181818;

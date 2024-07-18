@@ -1,11 +1,13 @@
 import HeaderBar from "../components/layout/HeaderBar";
 import LeftTab from "../components/layout/LeftTab"
-import MainTab from "../components/page/HomePage";
+import HomePage from "./page/HomePage";
 import PlayerBar from "../components/layout/PlayerBar"
 import RightTab from "../components/layout/RightTab"
-import TrackPage from "../components/page/TrackPage";
+import TrackPage from "./page/TrackPage";
 import usePageStore from "../state/page";
-import style from "../styles/LayoutPage/Layout.module.css";
+import style from "../styles/layoutPage/Layout.module.css";
+import ShowMorePage from "./page/ShowMorePage";
+import ProfilePage from "./page/ProfilePage";
 
 const HomeLayout = () => {
   const page = usePageStore((state) => state.page)
@@ -16,11 +18,11 @@ const HomeLayout = () => {
       <div className={style.container}>
         <LeftTab/>
         <div className={style.main}>
-          <div className={style.fixed}>
-            <HeaderBar/>
-          </div>
-          {page === "maintab" && (<MainTab/>)}
+          <HeaderBar/>
+          {page === "home" && (<HomePage/>)}
           {page === "track" && (<TrackPage/>)}
+          {page === "showmore" && (<ShowMorePage/>)}
+          {page === "profile" && (<ProfilePage/>)}
         </div>
         <RightTab/>
       </div>

@@ -4,7 +4,6 @@
     width: 100%;
     justify-content: space-between;
     overflow: hidden;
-    position: relative;
 }
 
 .layout{
@@ -19,14 +18,16 @@
     display: flex;
     background-color: #000;
     flex-direction: column;
-    flex-grow: 1;
+    /* flex-grow: 1; */
+    width: calc(100% - 600px);
     overflow-y: auto;
     position: relative;
 }
 
 .fixed{
-    /* position: fixed; */
-    background-color: #181818;
+    position: sticky;
+    background-color: green;
     /* margin: 6px 3px 0px; */
     width: 100%;
+    display: block;
 }

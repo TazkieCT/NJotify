@@ -1,6 +1,6 @@
 import SignNav from '../../components/layout/SignNav'
 import SignFooter from '../../components/layout/SignFooter'
-import styles from '../../styles/SignPage/Sign.module.css'
+import styles from '../../styles/signPage/Sign.module.css'
 
 const ResetPasswordForm = () => {
   return (
@@ -28,7 +28,7 @@ const ResetPasswordForm = () => {
         <button className={styles["button-1"]}>Reset Password</button>
       </div>
       <SignFooter />
-</div>
+     </div>
     </>
   )
 }

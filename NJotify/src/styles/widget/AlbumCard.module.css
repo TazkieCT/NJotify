@@ -1,0 +1,39 @@
+
+.card {
+    border-radius: 8px;
+    padding: 10px;
+    display: flex;
+    width: 14%;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.card:hover {
+    background-color: #1c1c1c;
+}
+
+.card-image {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.card-text {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    padding-top: 10px;
+    gap: 1rem;
+}
+
+.card-name {
+    font-size: 1rem;
+    color: #fff;
+}
+
+.card-desc {
+    font-size: 0.8rem;
+    color: #a6a6a6;
+}

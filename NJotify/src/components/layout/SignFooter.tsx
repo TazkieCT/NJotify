@@ -1,4 +1,4 @@
-import styles from '../../styles/SignPage/Sign.module.css'
+import styles from '../../styles/signPage/Sign.module.css'
 import logo from '../../assets/NJOTIFY.png'
 const SignFooter = () => {
   return (

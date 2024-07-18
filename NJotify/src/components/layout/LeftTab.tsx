@@ -1,17 +1,21 @@
 import { IoSearch } from "react-icons/io5";
 import { GoHome } from "react-icons/go";
-import style from "../../styles/LayoutPage/LeftTab.module.css"
+import style from "../../styles/layoutPage/LeftTab.module.css"
 import { VscLibrary } from "react-icons/vsc";
 import { FiPlus } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";
 import { LuList } from "react-icons/lu";
+import usePageStore from "../../state/page";
 
 
 const LeftTab = () => {
+  const page = usePageStore((state) => state.page)
+  const changePage = usePageStore((state) => state.changePage)
+
   return (
     <div className={style.container}>
       <div className={style.navigation}>
-        <a className={style.links}><span className={style.big}><GoHome /></span> Home</a>
+        <a className={`${style.links} ${page === "home" ? (style.active) : ("")}`} onClick={() => {changePage("home");}}><span className={style.big}><GoHome /></span> Home</a>
         <a className={style.links}><span className={style.big}><IoSearch /></span> Search</a>
       </div>
       <div className={style.library}>

@@ -1,13 +1,18 @@
 .header{
     border-radius: 2%;
-    overflow-y: auto;
     display: flex;
     align-items: center;
+    position: absolute;
+    width: 100%;
+}
+
+.header.scrolled {
+    background-color: blue;
 }
 
 .flex-between {
     justify-content: space-between;
-    padding: 10px 20px 5px;
+    padding: 1.5rem 20px 5px;
     box-sizing: border-box;
 }
 

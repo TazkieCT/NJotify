@@ -1,4 +1,4 @@
-.container{
+.container {
     flex-grow: 1;
     background-color: #000;
     color: #fff;
@@ -6,16 +6,26 @@
     padding: 6px 3px 0px;
 }
 
-.content{
-    background-color: #181818;
+.content {
+    background-color: #000;
     border-radius: 1%;
     height: 100%;
-    padding: 60px 20px 5px;
     overflow-y: auto;
     box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.page-button{
+.gallery {
+    padding: 4.5rem 20px 0.5rem;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgba(0, 123, 201, 1) 100%);
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.page-button {
     padding: 5px;
     background-color: #1c1c1c;
     border-radius: 100%;
@@ -25,18 +35,40 @@
 .flex-between {
     display: flex;
     align-items: center;
-    justify-content: center;
     justify-content: space-between;
+}
+
+.section {
     padding: 10px 20px 5px;
 }
 
-.flex{
+.flex {
     display: flex;
     gap: 0.5rem;
+    padding: 0.5rem 0.5rem 0;
 }
 
-.profile-icon{
+.profile-icon {
     width: 2rem;
     height: 2rem;
     border-radius: 100%;
+}
+
+.header {
+    font-size: 1.4rem;
+}
+
+.link {
+    font-size: 0.8rem;
+    color: #a6a6a6;
+    cursor: pointer;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.flex {
+    display: flex;
+    gap: 20px;
 }
