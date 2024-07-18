@@ -7,7 +7,7 @@ import TrackPage from "./page/TrackPage";
 import usePageStore from "../state/page";
 import style from "../styles/layoutPage/Layout.module.css";
 import ShowMorePage from "./page/ShowMorePage";
-import ProfilePage from "./page/ProfilePage";
+import ArtistPage from "./page/ArtistPage";
 
 const HomeLayout = () => {
   const page = usePageStore((state) => state.page)
@@ -22,7 +22,7 @@ const HomeLayout = () => {
           {page === "home" && (<HomePage/>)}
           {page === "track" && (<TrackPage/>)}
           {page === "showmore" && (<ShowMorePage/>)}
-          {page === "profile" && (<ProfilePage/>)}
+          {page === "artist" && (<ArtistPage/>)}
         </div>
         <RightTab/>
       </div>

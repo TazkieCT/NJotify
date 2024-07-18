@@ -1,0 +1,44 @@
+.song-row {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-radius: 0.3rem;
+    color: #a6a6a6;
+}
+
+.song-row:hover{
+    background-color: #1c1c1c;
+    cursor: pointer;
+}
+
+.song-number {
+    flex: 0 0 3rem;
+    text-align: center;
+}
+
+.song-image {
+    flex: 0 0 3rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.song-name {
+    flex: 4;
+    padding: 0 1rem;
+}
+
+.song-popularity {
+    flex: 4;
+    text-align: center;
+}
+
+.song-duration {
+    flex: 1;
+    text-align: center;
+}
+
+.song-row img {
+    width: 100%;
+    border-radius: 0.5rem;
+}

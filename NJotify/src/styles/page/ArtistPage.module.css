@@ -1,0 +1,142 @@
+.container {
+    flex-grow: 1;
+    background-color: #000;
+    color: #fff;
+    overflow-y: auto;
+    padding: 6px 3px 0px;
+}
+
+.content {
+    background-color: #000;
+    border-radius: 1%;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header{
+    padding: 10rem 20px 1.5rem;
+    background: url('https://static.vecteezy.com/system/resources/previews/012/996/500/original/cartoon-nature-landscape-night-time-background-free-vector.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-2{
+    gap: 0.2rem;
+}
+
+.gap-20{
+    gap: 2rem;
+}
+
+.title{
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+.verif-icon{
+    display: flex;
+    align-items: center;
+    color: rgb(61, 144, 243);
+    font-size: 1.5rem;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+.flex-start{
+    display: flex;
+}
+
+.play-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #1ED760;
+    color: black;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.play-btn:hover{
+    transform: scale(1.1);
+}
+
+.play-btn:active{
+    transform: scale(1);
+}
+
+.follow-btn{
+    border: 2px solid #a6a6a6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    font-size: 0.8rem;
+    color: white;
+    text-align: center;
+    cursor: pointer;
+}
+
+.follow-btn:hover{
+    border-color: white;
+    font-weight: 900;
+}
+
+.follow-btn:active{
+    border-color: #a6a6a6;
+    font-weight: lighter;
+}
+
+.medium{
+    display: flex;
+    font-size: 1.5rem;
+    color: #a6a6a6;
+}
+
+.medium:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.medium:active{
+    color: #a6a6a6;
+}
+
+.pad-content{
+    padding: 0 20px 1.5rem;
+}
+
+.pad-up{
+    padding: 1rem 1rem 0;
+}
+
+.title-content{
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.flex-column{
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-3{
+    gap: 1.5rem;
+}
+
+.song-list {
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.pad-col{
+    padding: 0 1rem;
+}

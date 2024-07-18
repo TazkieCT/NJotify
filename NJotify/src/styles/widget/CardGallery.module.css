@@ -16,3 +16,9 @@
     gap: 20px;
     align-items: center;
 }
+
+@media screen and (max-width: 1400px) {
+    .gallery-card{
+        width: calc(50% - 20px);
+    }
+}

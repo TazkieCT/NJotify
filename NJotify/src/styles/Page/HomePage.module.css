@@ -19,7 +19,7 @@
 
 .gallery {
     padding: 4.5rem 20px 0.5rem;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgba(0, 123, 201, 1) 100%);
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgb(0, 4, 117) 100%);
     display: flex;
     gap: 20px;
     flex-wrap: wrap;
@@ -72,3 +72,5 @@
     display: flex;
     gap: 20px;
 }
+
+
