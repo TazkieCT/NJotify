@@ -1,0 +1,229 @@
+.header-text {
+    color: white;
+    font-weight: 600;
+}
+
+.smaller{
+    font-size: 0.9rem;
+}
+
+.content{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.header-button {
+    display: flex;
+    transition: color 0.2s ease-in-out;
+    gap: 6px;
+}
+
+.medium {
+    font-size: 1.2rem;
+    padding: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+    display: flex;
+}
+
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+    padding: 10px 20px 5px;
+}
+
+.medium:hover {
+    color: white;
+}
+
+.medium:hover {
+    background-color: #1c1c1c;
+    border-radius: 100%;
+}
+
+.album{
+    display: flex;
+    flex-direction: column;
+    padding: 0px 20px;
+}
+
+.album-cover {
+    border-radius: 0.5rem;
+    padding: 0.5rem 0px 1rem;
+}
+
+.title{
+    color: white;
+    font-weight: 600;
+    font-size: 1.2rem;
+}
+
+.sticky{
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    background-color: #181818;
+}
+
+.artist{
+    display: flex;
+    flex-direction: column;
+    margin: 0px 20px;
+    position: relative;
+    background-color: rgb(36, 36, 36);
+    border-radius: 0.5rem;
+}
+
+.about-artist {
+    position: absolute;
+    padding: 1rem;
+    color: white;
+    z-index: 20;
+}
+
+.artist-image {
+    border-radius: 0.5rem;
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    position: relative;
+    z-index: 1;
+}
+
+.artist::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 180px;
+    background: linear-gradient(0deg, rgba(255,255,255,0) 68%, rgba(31, 31, 31, 0.689) 100%);
+    border-radius: 0.5rem;
+    z-index: 15;
+}
+
+.follow-btn{
+    border: 2px solid #a6a6a6;
+    padding: 0.2rem 0.5rem;
+    border-radius: 1rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.text-small{
+    font-size: 0.9rem;
+}
+
+.white{
+    color: white;
+}
+
+.between{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    justify-content: space-between;
+}
+
+.p-20{
+    padding: 1rem;
+}
+
+
+/* BUAT ADS */
+
+.learn-more{
+    background-color: #1e29c1;
+    border-radius: 0.2rem;
+    padding: 0.7rem;
+}
+
+.align-center{
+    display: flex;
+    align-items: center;
+}
+
+.line-h0{
+    line-height: 0;
+}
+
+/* BUAT QUEUE */
+.content-queue{
+    padding: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.player-info{
+    display: flex;
+}
+
+.album-title {
+    font-size: 0.9rem;
+    color: white;
+}
+
+.album-subtitle {
+    font-size: 0.8rem;
+    color: #a6a6a6;
+}
+
+.pt-20{
+    padding-top: 1rem;
+}
+
+/* .album-title, .album-subtitle{
+    cursor: pointer;
+    } */
+    
+    /* .album-title:hover, .album-subtitle:hover{
+        text-decoration: underline;
+}
+
+.album-subtitle:hover{
+    color: white;
+} */
+
+.album-cover {
+    border-radius: 10px;
+}   
+
+.song-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.image-song{
+    border-radius: 0.3rem;
+    width: 3rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    /* align-items: center; */
+}
+
+.text-section{
+    font-size: 0.8rem;
+}
+
+.gap{
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+
+.padding-20{
+    padding: 0 20px;
+}

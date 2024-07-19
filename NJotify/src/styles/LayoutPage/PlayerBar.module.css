@@ -29,6 +29,18 @@
     color: #a6a6a6;
 }
 
+.album-title, .album-subtitle{
+    cursor: pointer;
+}
+
+.album-title:hover, .album-subtitle:hover{
+    text-decoration: underline;
+}
+
+.album-subtitle:hover{
+    color: white;
+}
+
 .album-cover {
     border-radius: 4px;
 }
@@ -118,4 +130,26 @@ input[type="range"]::-moz-range-thumb {
     background: #4CAF50;
     cursor: pointer;
     border-radius: 50%;
+}
+
+.flex-center{
+    display: flex;
+    align-items: center;
+}
+
+.icon{
+    color: #a6a6a6;
+    cursor: pointer;
+}
+
+.icon:hover{
+    color: white;
+}
+
+.icon:active{
+    color: #a6a6a6;
+}
+
+.gap-2{
+    gap: 10px;
 }

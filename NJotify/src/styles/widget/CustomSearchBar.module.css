@@ -1,0 +1,23 @@
+.search {
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.icon {
+    position: absolute;
+    left: 10px;
+    top: 25%;
+    color: #757575;
+    pointer-events: none;
+    z-index: 10;
+}
+
+.search-input {
+    width: 100%;
+    background-color: #242424;
+    border-radius: 100px;
+    padding: 0.5rem 2rem;
+    border: none;
+    color: white;
+}

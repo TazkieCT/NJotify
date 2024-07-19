@@ -7,7 +7,8 @@ import { FaBackwardStep } from "react-icons/fa6";
 import { FaForwardStep } from "react-icons/fa6";
 // import { IoIosPause } from "react-icons/io";
 import { FaPlay } from "react-icons/fa6";
-import usePageStore from '../../state/page';
+import usePageStore from '../../state/PageState';
+import useRightTabStore from '../../state/RightBarState';
 
 // import { PiAirplay } from "react-icons/pi"; //Alternatif BsFilePlay
 // import { PiAirplayFill } from "react-icons/pi";
@@ -15,6 +16,14 @@ import usePageStore from '../../state/page';
 
 const PlayerBar = () => {
   const changePage = usePageStore((state) => state.changePage)
+  const { isOpen, changeContent, openRightTab } = useRightTabStore();
+
+  const handleClickRightBar = (content: string) => {
+    changeContent(content);
+    if (!isOpen) {
+      openRightTab();
+    }
+  };
 
   return (
     <div className={`${style['container']} ${style['flex']}`}>
@@ -22,7 +31,7 @@ const PlayerBar = () => {
           <img className={style['album-cover']} width={60} src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c2/Radwimps_Your_Name_Album_Cover.jpg/220px-Radwimps_Your_Name_Album_Cover.jpg" alt="" />
           <div className={style.col}>
             <span className={style['album-title']}>Sparkle - movie ver.</span>
-            <span className={style['album-subtitle']} onClick={() => {changePage("profile")}}>RADWIMPS</span>
+            <span className={style['album-subtitle']} onClick={() => {changePage("artist")}}>RADWIMPS</span>
           </div>
       </div>
       <div className={style['music-control']}>
@@ -38,11 +47,19 @@ const PlayerBar = () => {
         </div>
       </div>
       <div className={`${style['flex']} ${style['gap']}`}>
-        <BsFilePlay/>
-        <HiOutlineQueueList/>
-        <FiVolume2/>
-        <input type="range" id="vol" name="vol" min="0" max="50"></input>
-        <TbArrowsDiagonal/>
+        <span onClick={() => handleClickRightBar('song-detail')} className={`${style['flex-center']} ${style.icon}`}>
+          <BsFilePlay/>
+        </span>
+        <span onClick={() => handleClickRightBar('queue')} className={`${style['flex-center']} ${style.icon}`}>
+          <HiOutlineQueueList/>
+        </span>
+        <span className={`${style['flex-center']} ${style.icon} ${style['gap-2']}`}>
+          <FiVolume2/>
+          <input type="range" id="vol" name="vol" min="0" max="50"></input>
+        </span>
+        <span className={`${style['flex-center']} ${style.icon}`}>
+          <TbArrowsDiagonal/>
+        </span>
       </div>
     </div>
   );

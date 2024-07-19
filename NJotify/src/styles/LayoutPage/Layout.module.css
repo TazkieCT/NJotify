@@ -24,6 +24,10 @@
     position: relative;
 }
 
+.main.fullWidth {
+    width: calc(100% - 300px);
+}
+
 .fixed{
     position: sticky;
     background-color: green;

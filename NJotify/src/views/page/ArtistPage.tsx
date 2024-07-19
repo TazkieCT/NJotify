@@ -1,5 +1,5 @@
 import style from "../../styles/page/ArtistPage.module.css"
-import usePageStore from "../../state/page"
+import usePageStore from "../../state/PageState"
 import { VscVerifiedFilled } from "react-icons/vsc";
 import { FaPlay } from "react-icons/fa6";
 import { RxDotsHorizontal } from "react-icons/rx";

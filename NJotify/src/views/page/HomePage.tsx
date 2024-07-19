@@ -1,5 +1,5 @@
 import style from "../../styles/page/HomePage.module.css"
-import usePageStore from "../../state/page";
+import usePageStore from "../../state/PageState";
 import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
 

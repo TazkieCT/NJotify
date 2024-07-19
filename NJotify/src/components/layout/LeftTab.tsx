@@ -5,7 +5,7 @@ import { VscLibrary } from "react-icons/vsc";
 import { FiPlus } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";
 import { LuList } from "react-icons/lu";
-import usePageStore from "../../state/page";
+import usePageStore from "../../state/PageState";
 
 
 const LeftTab = () => {
@@ -16,7 +16,7 @@ const LeftTab = () => {
     <div className={style.container}>
       <div className={style.navigation}>
         <a className={`${style.links} ${page === "home" ? (style.active) : ("")}`} onClick={() => {changePage("home");}}><span className={style.big}><GoHome /></span> Home</a>
-        <a className={style.links}><span className={style.big}><IoSearch /></span> Search</a>
+        <a className={`${style.links} ${page === "search" ? (style.active) : ("")}`} onClick={() => {changePage("search");}}><span className={style.big}><IoSearch /></span> Search</a>
       </div>
       <div className={style.library}>
         <div className={style['flex-between']}>
