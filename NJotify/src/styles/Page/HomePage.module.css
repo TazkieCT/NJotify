@@ -8,7 +8,7 @@
 
 .content {
     background-color: #000;
-    border-radius: 1%;
+    border-radius: 0.5rem;
     height: 100%;
     overflow-y: auto;
     box-sizing: border-box;

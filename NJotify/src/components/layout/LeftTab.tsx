@@ -16,7 +16,7 @@ const LeftTab = () => {
     <div className={style.container}>
       <div className={style.navigation}>
         <a className={`${style.links} ${page === "home" ? (style.active) : ("")}`} onClick={() => {changePage("home");}}><span className={style.big}><GoHome /></span> Home</a>
-        <a className={`${style.links} ${page === "search" ? (style.active) : ("")}`} onClick={() => {changePage("search");}}><span className={style.big}><IoSearch /></span> Search</a>
+        <a className={`${style.links} ${(page === "search" || page === "result") ? (style.active) : ("")}`} onClick={() => {changePage("search");}}><span className={style.big}><IoSearch /></span> Search</a>
       </div>
       <div className={style.library}>
         <div className={style['flex-between']}>

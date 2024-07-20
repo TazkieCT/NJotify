@@ -18,7 +18,7 @@
 .library {
     background-color: #181818;
     padding: 5px 15px;
-    border-radius: 2%;
+    border-radius: 0.5rem;
     box-sizing: border-box;
     /* margin: 4px 0px; */
 }

@@ -1,0 +1,49 @@
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    color: #a6a6a6;
+    align-items: center;
+    border-radius: 0.2rem;
+}
+
+.select{
+    padding: 0.5rem;
+    cursor: pointer;
+}
+
+.select:hover{
+    background-color: #1c1c1c;
+}
+
+.album-title {
+    font-size: 0.9rem;
+    color: white;
+}
+
+.album-subtitle {
+    font-size: 0.8rem;
+    color: #a6a6a6;
+}
+
+.album-cover {
+    border-radius: 10px;
+}   
+
+.song-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.image-song{
+    border-radius: 0.3rem;
+    width: 3rem;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+    /* align-items: center; */
+}

@@ -1,0 +1,166 @@
+.container {
+    flex-grow: 1;
+    background-color: #000;
+    color: #fff;
+    overflow-y: auto;
+    padding: 6px 3px 0px;
+}
+
+.content {
+    background-color: #000;
+    border-radius: 0.5rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-avatar {
+    width: 13rem;
+    height: 13rem;
+    overflow: hidden;
+    border-radius: 0.4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header{
+    display: flex;
+    gap: 1rem;
+    padding: 8rem 20px 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgba(0, 123, 201, 1) 100%);
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+}
+
+.title{
+    font-size: 3.5rem;
+    font-weight: 900;
+}
+
+.mb-2{
+    margin-bottom: 1rem;
+}
+
+.small{
+    font-size: 1rem;
+}
+
+.gap-20{
+    gap: 2rem;
+}
+
+.pad-lu{
+    padding: 1rem 1rem 0;
+}
+
+.see-more{
+    padding: 1rem 1rem;
+}
+
+.see-more:hover{
+    display: inline;
+    color: white;
+    cursor: pointer;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+
+.play-btn{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    background-color: #1ED760;
+    color: black;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.play-btn:hover{
+    transform: scale(1.1);
+}
+
+.play-btn:active{
+    transform: scale(1);
+}
+
+.medium{
+    display: flex;
+    font-size: 1.5rem;
+    color: #a6a6a6;
+}
+
+.medium:hover{
+    color: white;
+    cursor: pointer;
+}
+
+.medium:active{
+    color: #a6a6a6;
+}
+
+.name{
+    font-size: 1.5rem;
+}
+
+.gray{
+    color: #a6a6a6;
+}
+
+.flex-col{
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-2{
+    gap: 1rem;
+}
+
+
+/* TRACK FROM ALBUM */
+.album-title {
+    font-weight: 400;
+    font-size: 0.9rem;
+    color: white;
+}
+
+.album-subtitle {
+    font-size: 0.8rem;
+    color: #a6a6a6;
+}
+
+.album-cover {
+    border-radius: 4px;
+    width: 4rem;
+}
+
+.player-info {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    background-color: #1c1c1c;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    justify-content: center;
+}

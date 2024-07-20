@@ -23,11 +23,11 @@
     font-weight: 600;
 }
 
-.recent{
+.recent, .result{
     padding: 5rem 0 0.5rem;
 }
 
-.recent, .browse {
+.recent, .browse, .artist {
     background: black;
     display: flex;
     gap: 1rem;
@@ -38,11 +38,12 @@
 .flex {
     display: flex;
     gap: 0.5rem;
+    width: 100%;
 }
 
 .card {
     display: flex;
-    width: 14%;
+    width: 11.5rem;
     flex-direction: column;
     align-items: center;
     cursor: pointer;
@@ -52,4 +53,77 @@
     width: 100%;
     height: auto;
     border-radius: 4px;
+}
+
+/* Buat Search Result */
+.result{
+    gap: 20px;
+}
+
+.top-result{
+    width: 50rem;
+}
+
+.gap-result{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.highlight-song{
+    background-color: #18181865;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    padding: 1rem;
+    transition: background-color 0.2s ease-in-out;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.highlight-song:hover{
+    background-color: #181818;
+}
+
+.songs-result{
+    display: flex;
+    width: 100%;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.top-songs{
+    display: flex;
+    flex-direction: column;
+}
+
+.highlight-image{
+    width: 10rem;
+}
+
+.highlight-text{
+    display: flex;
+    flex-direction: column;
+}
+
+.highlight-title{
+    display: flex;
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.name-subtitle{
+    color: #d2d2d2;
+}
+
+.highlight-subtitle{
+    display: flex;
+    gap: 0.3rem;
+    color: #a6a6a6;
+}
+
+.top-image{
+    border-radius: 0.5rem;
+    width: 100%;
 }

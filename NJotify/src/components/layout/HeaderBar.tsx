@@ -1,16 +1,17 @@
-import { useEffect, useState } from "react";
-import style from "../../styles/layoutPage/HeaderBar.module.css"
-import { GrPrevious } from "react-icons/gr";
-import { GrNext } from "react-icons/gr";
+import { useEffect, useState, useRef } from "react";
+import style from "../../styles/layoutPage/HeaderBar.module.css";
+import { GrPrevious, GrNext } from "react-icons/gr";
 import usePageStore from "../../state/PageState";
-// import { IoSearch } from "react-icons/io5";
 import CustomSearchBar from "../widget/CustomeSearchBar";
+import { PiArrowSquareOut } from "react-icons/pi";
 
 const HeaderBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
-  const page = usePageStore((state) => state.page)
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const page = usePageStore((state) => state.page);
+  const changePage = usePageStore((state) => state.changePage)
+  const menuRef = useRef<HTMLDivElement>(null);
 
-  // BELUM BISA
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -22,18 +23,57 @@ const HeaderBar = () => {
     };
   }, []);
 
+  const toggleMenu = () => {
+    setIsMenuOpen((prev) => !prev);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    const target = event.target as Node;
+    if (menuRef.current && !menuRef.current.contains(target)) {
+      setIsMenuOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isMenuOpen]);
+
+  const handleClickRightBar = (content: string) => {
+    changePage(content);
+    setIsMenuOpen(false);
+  };
+
   return (
     <div className={`${style.header} ${style['flex-between']} ${isScrolled ? style.scrolled : ''}`}>
-        <div className={style.flex}>
-          <span className={style['page-button']}><GrPrevious/></span>
-          <span className={style['page-button']}><GrNext/></span>
-          {page === "search" && (
-            <CustomSearchBar/>
-          )}
+      <div className={style.flex}>
+        <span className={style['page-button']}><GrPrevious/></span>
+        <span className={style['page-button']}><GrNext/></span>
+        {(page === "search" || page === "result") && (
+          <CustomSearchBar/>
+        )}
+      </div>
+      <div className={style['profile-container']} ref={menuRef}>
+        <div className={style['profile-button']} onClick={toggleMenu}>
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Vd_kqZn53ok20t0tVuAukGAHOzVLWvNgKw&s" className={style['profile-icon']} alt="Profile Icon" />
         </div>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Vd_kqZn53ok20t0tVuAukGAHOzVLWvNgKw&s" className={style['profile-icon']} alt="" />
+        {isMenuOpen && (
+          <div className={style['profile-menu']}>
+            <div className={style['menu-item']} onClick={() => {handleClickRightBar("profile")}}>Profile</div>
+            <div className={style['menu-item']}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
+            <hr className={style.hr}/>
+            <div className={style['menu-item']}>Logout</div>
+          </div>
+        )}
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default HeaderBar
+export default HeaderBar;

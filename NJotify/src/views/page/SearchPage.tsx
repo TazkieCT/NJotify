@@ -20,7 +20,6 @@ const SearchPage = () => {
             <div className={style["card"]}>
               <img src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/2abf4e124301423.610137e01f62c.jpg" className={style["card-image"]}/>
             </div>
-            
           </div>
         </div>
       </div>

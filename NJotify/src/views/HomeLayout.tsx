@@ -10,6 +10,8 @@ import ShowMorePage from "./page/ShowMorePage";
 import ArtistPage from "./page/ArtistPage";
 import useRightTabStore from "../state/RightBarState";
 import SearchPage from "./page/SearchPage";
+import ResultSearchPage from "./page/ResultSearchPage";
+import ProfilePage from "./page/ProfilePage";
 
 const HomeLayout = () => {
   const page = usePageStore((state) => state.page)
@@ -23,10 +25,12 @@ const HomeLayout = () => {
         <div className={`${style.main} ${!isOpen ? style.fullWidth : ''}`}>
           <HeaderBar />
           {page === "home" && <HomePage />}
-          {page === "track" && <TrackPage />}
           {page === "showmore" && <ShowMorePage />}
           {page === "artist" && <ArtistPage />}
           {page === "search" && <SearchPage />}
+          {page === "result" && <ResultSearchPage />}
+          {page === "profile" && <ProfilePage />}
+          {page === "track" && <TrackPage />}
         </div>
         {isOpen && <RightTab/>} 
       </div>

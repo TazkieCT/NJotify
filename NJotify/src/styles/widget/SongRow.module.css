@@ -42,3 +42,32 @@
     width: 100%;
     border-radius: 0.5rem;
 }
+
+.song-image-album {
+    flex: 0 0 3rem;
+    text-align: center;
+    display: flex;
+    align-items: center;
+}
+
+.song-number-album {
+    flex: 0 0 3rem;
+    text-align: center;
+}
+
+.song-name-album {
+    flex: 8;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-duration-album {
+    flex: 1;
+    text-align: center;
+}
+
+.name{
+    color: white;
+}

@@ -20,4 +20,9 @@
     padding: 0.5rem 2rem;
     border: none;
     color: white;
+    
+}
+
+.search-input:focus{
+    outline: 2px solid white;
 }

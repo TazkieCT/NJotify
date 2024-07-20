@@ -14,10 +14,6 @@
     display: flex;
 }
 
-.player-info{
-    display: flex;
-}
-
 .album-title {
     font-weight: 400;
     font-size: 0.9rem;

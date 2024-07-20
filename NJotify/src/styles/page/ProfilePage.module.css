@@ -1,0 +1,82 @@
+.container {
+    flex-grow: 1;
+    background-color: #000;
+    color: #fff;
+    overflow-y: auto;
+    padding: 6px 3px 0px;
+}
+
+.content {
+    background-color: #000;
+    border-radius: 0.5rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.profile-avatar {
+    width: 13rem;
+    height: 13rem;
+    overflow: hidden;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.header{
+    display: flex;
+    gap: 1rem;
+    padding: 8rem 20px 0;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgba(0, 123, 201, 1) 100%);
+}
+
+.profile-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.title{
+    font-size: 3.5rem;
+    font-weight: 900;
+}
+
+.mb-2{
+    margin-bottom: 1rem;
+}
+
+.small{
+    font-size: 1rem;
+}
+
+.subtitle{
+    font-size: 1.5rem;
+    margin: 0.5rem 0;
+}
+
+.flex {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.flex-between {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.section {
+    padding: 10px 20px 5px;
+}
