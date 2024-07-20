@@ -25,6 +25,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
 }
 
 .profile-image {
@@ -105,14 +106,25 @@
     display: flex;
     font-size: 1.5rem;
     color: #a6a6a6;
-}
-
-.medium:hover{
-    color: white;
     cursor: pointer;
 }
 
-.medium:active{
+.medium:hover, .menu-item:hover{
+    color: white;
+}
+
+.medium:active, .menu-item:active, .see-more:active{
+    color: #a6a6a6;
+}
+
+.menu-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    gap: 1rem;
+    cursor: pointer;
+    font-size: 1rem;
+    border-radius: 0.2rem;
     color: #a6a6a6;
 }
 
@@ -141,7 +153,7 @@
     color: white;
 }
 
-.album-subtitle {
+.album-subtitle, .license {
     font-size: 0.8rem;
     color: #a6a6a6;
 }
@@ -163,4 +175,86 @@
     flex-direction: column;
     gap: 2px;
     justify-content: center;
+}
+
+.mt-sl{
+    margin-top: 0.5rem;
+}
+
+
+/* BUAT Album Page */
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.song-row {
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 0;
+    border-radius: 0.3rem;
+    color: #a6a6a6;
+}
+
+.song-number-album {
+    flex: 0 0 3rem;
+    text-align: center;
+}
+
+.song-name-album {
+    flex: 12;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-duration-album {
+    flex: 1;
+    text-align: center;
+}
+
+.hr{
+    width: calc(100% - 2px);
+    margin-top: 0;
+    border: 1px solid #4b4b4b6c;
+}
+
+/* BUAT PLAYLIST PAGE */
+.hdesc-2{
+    height: 2rem;
+}
+
+.song-number-playlist {
+    flex: 0 0 3rem;
+    text-align: center;
+}
+
+.song-name-playlist {
+    flex: 6;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-album-playlist {
+    flex: 3;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-date-playlist {
+    flex: 3;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-duration-playlist {
+    flex: 1;
+    text-align: center;
 }

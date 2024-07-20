@@ -12,6 +12,7 @@ const HeaderBar = () => {
   const changePage = usePageStore((state) => state.changePage)
   const menuRef = useRef<HTMLDivElement>(null);
 
+  // SCROLL BELUM BISA
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);

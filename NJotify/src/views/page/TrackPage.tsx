@@ -48,14 +48,14 @@ const TrackPage = () => {
                   <span className={style['album-title']}>Goddes</span>
                 </div>
               </div>
-              <div className="">
+              <div className={`${style['mt-sl']}`}>
                 <SongRowAlbum/>
               </div>
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>
-              <span className={style['album-subtitle']}>March 6, 2024</span>
-              <span className={style['album-subtitle']}>&copy; 2024 Vingolf Recordings under exclusive license to AWAL Recordings America, Inc.</span>
-              <span className={style['album-subtitle']}>&copy; 2024 Vingolf Recordings under exclusive license to AWAL Recordings America, Inc.</span>
+              <span className={style['license']}>March 6, 2024</span>
+              <span className={style['license']}>&copy; 2024 Vingolf Recordings under exclusive license to AWAL Recordings America, Inc.</span>
+              <span className={style['license']}>&copy; 2024 Vingolf Recordings under exclusive license to AWAL Recordings America, Inc.</span>
             </div>
         </div>
         <Footer/>

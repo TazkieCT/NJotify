@@ -12,6 +12,8 @@ import useRightTabStore from "../state/RightBarState";
 import SearchPage from "./page/SearchPage";
 import ResultSearchPage from "./page/ResultSearchPage";
 import ProfilePage from "./page/ProfilePage";
+import AlbumPage from "./page/AlbumPage";
+import PlaylistPage from "./page/PlaylistPage";
 
 const HomeLayout = () => {
   const page = usePageStore((state) => state.page)
@@ -31,6 +33,8 @@ const HomeLayout = () => {
           {page === "result" && <ResultSearchPage />}
           {page === "profile" && <ProfilePage />}
           {page === "track" && <TrackPage />}
+          {page === "album" && <AlbumPage />}
+          {page === "playlist" && <PlaylistPage />}
         </div>
         {isOpen && <RightTab/>} 
       </div>

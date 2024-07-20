@@ -1,9 +1,14 @@
 .gallery-card{
     width: calc(25% - 20px);
     height: 5rem;
-    display: flex;
+    display: flex;  
     align-items: center;
     background-color: rgba(82, 82, 82, 0.4);
+    cursor: pointer;
+}
+
+.gallery-card:hover{
+    background-color: rgba(82, 82, 82, 0.651);
 }
 
 .gallery-image{

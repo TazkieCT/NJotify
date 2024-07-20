@@ -24,12 +24,12 @@
 }
 
 .song-name {
-    flex: 4;
+    flex: 7;
     padding: 0 1rem;
 }
 
 .song-popularity {
-    flex: 4;
+    flex: 5;
     text-align: center;
 }
 
@@ -43,20 +43,14 @@
     border-radius: 0.5rem;
 }
 
-.song-image-album {
-    flex: 0 0 3rem;
-    text-align: center;
-    display: flex;
-    align-items: center;
-}
-
+/* BUAT SONG ROW ALBUM */
 .song-number-album {
     flex: 0 0 3rem;
     text-align: center;
 }
 
 .song-name-album {
-    flex: 8;
+    flex: 12;
     padding: 0 1rem;
     display: flex;
     flex-direction: column;
@@ -70,4 +64,53 @@
 
 .name{
     color: white;
+}
+
+/* BUAT SONG ROW PLAYLIST */
+.song-number-playlist {
+    flex: 0 0 3rem;
+    text-align: center;
+}
+
+.song-name-playlist {
+    flex: 6;
+    padding: 0 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.1rem;
+}
+
+.song-album-playlist {
+    flex: 3;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-date-playlist {
+    flex: 3;
+    padding: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+}
+
+.song-duration-playlist {
+    flex: 1;
+    text-align: center;
+}
+
+.pad-1{
+    padding-left: 1rem;
+}
+
+.image-playlist{
+    width: 3rem;
+    height: 3rem;
+}
+
+.flex{
+    display: flex;
+    gap: 1rem;
 }

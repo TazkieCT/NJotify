@@ -6,6 +6,7 @@ import { FiPlus } from "react-icons/fi";
 import { IoArrowForward } from "react-icons/io5";
 import { LuList } from "react-icons/lu";
 import usePageStore from "../../state/PageState";
+import PlaylistItem from "../widget/PlaylistItem";
 
 
 const LeftTab = () => {
@@ -31,62 +32,9 @@ const LeftTab = () => {
             <a className={style.medium}><IoSearch /></a>
             <a className={style.recent}>Recents<span className={style.medium}><LuList/></span></a>
           </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
-          <div className={style.item}>
-            <img className={style['album-cover']} width={40} src="https://i1.sndcdn.com/artworks-y6qitUuZoS6y8LQo-5s2pPA-t1080x1080.jpg" alt="" />
-            <div className={style.col}>
-              <span className={style['album-title']}>My Playlist</span>
-              <span className={style['album-subtitle']}>Playlist • User</span>
-            </div>
-          </div>
+          <PlaylistItem/>
+          <PlaylistItem/>
+          <PlaylistItem/>
         </div>
       </div>
     </div>
