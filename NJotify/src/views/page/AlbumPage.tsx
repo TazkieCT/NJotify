@@ -20,7 +20,7 @@ const AlbumPage = () => {
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Album</span>
             <span className={`${style.title} ${style['mb-2']}`}>as long as you're okay</span>
-            <span className={style.small}>Slchld · 2020 · 5 Songs · 25 min 7 sec</span>
+            <span className={style.small}>slchld · 2020 · 5 Songs · 25 min 7 sec</span>
           </div>
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>

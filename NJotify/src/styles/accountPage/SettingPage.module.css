@@ -1,0 +1,120 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #121212;
+}
+
+.screen{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    background-color: #121212;
+}
+
+.content{
+    width: 40rem;
+}
+
+.section{
+    background-color: #232323;
+    padding: 1rem;
+    border-radius: 0.3rem;
+}
+
+.title{
+    font-size: 1.5rem;
+}
+
+.mb-1{
+    margin-bottom: 1rem;
+}
+
+.menu{
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    color: #e9e9e9;
+}
+
+.medium{
+    display:  flex;
+    font-size: 1rem;
+    background-color: #323232;
+    padding: 0.5rem;
+    border-radius: 0.2rem;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+}
+
+
+.menu:hover{
+    background-color: #323232;
+    color: white;
+}
+
+.navbar {
+    background-color: #121212;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: center;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.flex-footer {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+}
+
+.width-50{
+    width: 50%;
+}
+
+.width-3{
+    width: 50%;
+}
+
+.w-full{
+    width: 100%;
+}
+
+.logo {
+    height: 40px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.content{
+    height: 100%;
+}
+
+.profileIcon {
+    margin-left: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.pad-2{
+    padding: 2rem;
+}
+
+.gap-1{
+    gap: 1rem;
+}

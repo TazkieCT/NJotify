@@ -31,7 +31,7 @@ const PlaylistPage = () => {
                         <span className={style.medium}><BsPlusCircle/></span>
                         <span className={style.medium}><RxDotsHorizontal/></span>
                     </div>
-                    <div className={style['menu-item']}>List <span className={style['box-icon']}><LuList/></span></div>
+                    <div className={style['menu-item']}>List <span><LuList/></span></div>
                 </div>
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>

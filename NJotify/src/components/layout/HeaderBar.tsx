@@ -4,6 +4,7 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 import usePageStore from "../../state/PageState";
 import CustomSearchBar from "../widget/CustomeSearchBar";
 import { PiArrowSquareOut } from "react-icons/pi";
+import { useNavigate } from "react-router-dom";
 
 const HeaderBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -11,6 +12,7 @@ const HeaderBar = () => {
   const page = usePageStore((state) => state.page);
   const changePage = usePageStore((state) => state.changePage)
   const menuRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
   // SCROLL BELUM BISA
   useEffect(() => {
@@ -67,7 +69,10 @@ const HeaderBar = () => {
         {isMenuOpen && (
           <div className={style['profile-menu']}>
             <div className={style['menu-item']} onClick={() => {handleClickRightBar("profile")}}>Profile</div>
-            <div className={style['menu-item']}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
+            <div className={style['menu-item']} onClick={(e) => {
+              e.preventDefault();
+              navigate("/setting");
+            }}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
             <hr className={style.hr}/>
             <div className={style['menu-item']}>Logout</div>
           </div>

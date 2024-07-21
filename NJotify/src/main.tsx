@@ -7,6 +7,7 @@ import RegisForm from './views/signPages/RegisForm';
 import ForgetForm from './views/signPages/ForgetForm';
 import ResetPasswordForm from './views/signPages/ResetForm';
 import HomeLayout from './views/HomeLayout';
+import AccountSettingPage from './views/accountPage/AccountSettingPage';
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <HomeLayout />,
+  },
+  {
+    path: "/setting",
+    element: <AccountSettingPage />,
   },
 ]);
 
