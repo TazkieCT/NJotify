@@ -9,7 +9,7 @@ type Action = {
 }
 
 const useSettingStore = create<State & Action>((set) => ({
-  setting: 'home',
+  setting: 'menu',
   changeSetting: (setting) => set(() => ({ setting: setting })),
 }))
 

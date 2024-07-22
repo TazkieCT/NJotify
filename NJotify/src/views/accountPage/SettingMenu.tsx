@@ -6,8 +6,11 @@ import { FiLock } from "react-icons/fi";
 import { TbBell } from "react-icons/tb";
 import { IoArrowForward } from "react-icons/io5";
 import style from "../../styles/accountPage/SettingPage.module.css";
+import useSettingStore from "../../state/SettingState";
 
 const SettingMenu = () => {
+  const changeSetting = useSettingStore((state) => state.changeSetting)
+
   return (
     <>
     <div className={`${style['section']} ${style['mb-1']}`}>
@@ -15,16 +18,16 @@ const SettingMenu = () => {
         Account
         </div>
         <div className={`${style['flex-between']} ${style['menu']}`}>
-        <div className={style['menu-item']}><span className={style['medium']}><RiShoppingBasketLine/></span>Order History</div>
-        <MdArrowForwardIos/>
+          <div className={style['menu-item']}><span className={style['medium']}><RiShoppingBasketLine/></span>Order History</div>
+          <MdArrowForwardIos/>
         </div>
-        <div className={`${style['flex-between']} ${style['menu']}`}>
-        <div className={style['menu-item']}><span className={style['medium']}><HiOutlinePencil/></span>Edit Profile</div>
-        <MdArrowForwardIos/>
+        <div className={`${style['flex-between']} ${style['menu']}`} onClick={() => changeSetting('edit')}>
+          <div className={style['menu-item']}><span className={style['medium']}><HiOutlinePencil/></span>Edit Profile</div>
+          <MdArrowForwardIos/>
         </div>
-        <div className={`${style['flex-between']} ${style['menu']}`}>
-        <div className={style['menu-item']}><span className={style['medium']}><BsCheckLg/></span>Get Verified</div>
-        <MdArrowForwardIos/>
+        <div className={`${style['flex-between']} ${style['menu']}`} onClick={() => changeSetting('verify')}>
+          <div className={style['menu-item']}><span className={style['medium']}><BsCheckLg/></span>Get Verified</div>
+          <MdArrowForwardIos/>
         </div>
     </div>
     <div className={`${style['section']} ${style['mb-1']}`}>
@@ -35,7 +38,7 @@ const SettingMenu = () => {
         <div className={style['menu-item']}><span className={style['medium']}><FiLock/></span>Change Password</div>
         <MdArrowForwardIos/>
         </div>
-        <div className={`${style['flex-between']} ${style['menu']}`}>
+        <div className={`${style['flex-between']} ${style['menu']}`} onClick={() => changeSetting('notification')}>
         <div className={style['menu-item']}><span className={style['medium']}><TbBell/></span>Notification Setting</div>
         <MdArrowForwardIos/>
         </div>
