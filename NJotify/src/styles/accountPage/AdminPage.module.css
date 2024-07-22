@@ -1,0 +1,164 @@
+.screen {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #ffffff;
+}
+
+.title{
+    font-size: 1.5rem;
+}
+
+.navbar {
+    background-color: #121212;
+    padding: 1rem 0rem;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex-grow: 1;
+    padding: 2rem 1rem;
+    color: black;
+}
+
+.content {
+    width: 40rem;
+}
+
+.flex-footer {
+    background-color: black;
+    display: flex;
+    justify-content: center;
+    position: sticky;
+    bottom: 0;
+    z-index: 1000;
+    width: 100%;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.width-50 {
+    width: 50%;
+}
+
+.logo {
+    cursor: pointer;
+    height: 40px;
+}
+
+.userInfo {
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.profileIcon {
+    margin-left: 0.5rem;
+    font-size: 1.5rem;
+}
+
+.pad-2 {
+    padding: 2rem;
+}
+
+.gap-1 {
+    gap: 1rem;
+}
+
+.gap-sl {
+    gap: 0.5rem;
+}
+
+.bold {
+    font-weight: 900;
+}
+
+.flex {
+    display: flex;
+}
+
+.flex-end {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.between {
+    justify-content: space-between;
+}
+
+.small {
+    font-size: smaller;
+}
+
+.avatar {
+    width: 8rem;
+}
+
+.photo {
+    width: 100%;
+    border-radius: 50%;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.button {
+    display: flex;
+    padding: 0.5rem 0.5rem;
+    background-color: #d6d6d6;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #c4c4c4;
+}
+
+.button:active {
+    background-color: #b2b2b2;
+}
+
+.decline {
+    color: red;
+    font-size: 2rem;
+}
+
+.accept {
+    font-size: 2rem;
+    color: green;
+}
+
+.logout {
+    cursor: pointer;
+}
+
+.logout:hover {
+    color: #c4c4c4;
+}
+
+.logout:active {
+    color: #b2b2b2;
+}

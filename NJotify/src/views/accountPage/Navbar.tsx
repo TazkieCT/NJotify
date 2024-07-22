@@ -7,7 +7,7 @@ const Navbar = () => {
   const navigate = useNavigate();
   return (
     <div className={style.navbar}>
-      <div className={`${style['width-3']} ${style['flex-between']}`}>
+      <div className={`${style['width-50']} ${style['flex-between']}`}>
         <img src={logo} alt="Spotify Logo" className={style.logo} onClick={() => navigate('/home')}/>
         <div className={style.userInfo}>
           <span>Free Plan | </span>

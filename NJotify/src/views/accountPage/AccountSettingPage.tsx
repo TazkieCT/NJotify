@@ -6,6 +6,7 @@ import SettingMenu from "./SettingMenu";
 import useSettingStore from "../../state/SettingState";
 import EditProfile from "./EditProfile";
 import GetVerified from "./GetVerified";
+import Notification from "./Notification";
 
 const AccountSettingPage = () => {
   const setting = useSettingStore((state) => state.setting)
@@ -17,7 +18,7 @@ const AccountSettingPage = () => {
           {setting === "menu" && <SettingMenu/>}
           {setting === "edit" && <EditProfile/>}
           {setting === "verify" && <GetVerified/>}
-          {setting === "notification" && <SettingMenu/>}
+          {setting === "notification" && <Notification/>}
         </div>
       </div>
       <div className={`${style['w-full']} ${style['flex-footer']}`}>
