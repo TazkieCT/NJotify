@@ -11,6 +11,7 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
+    min-height: 60rem;
     background-color: #121212;
 }
 
@@ -204,7 +205,6 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     color-scheme: dark;
 }
 
-
 .input {
     padding: 0.5rem;
     border-radius: 0.3rem;
@@ -242,7 +242,7 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     width: 15rem;
     height: 15rem;
     background-color: transparent;
-    border: 2px dashed #ccc;
+    border: 2px dashed #3a3a3a;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -263,8 +263,12 @@ input[type="date"]::-webkit-calendar-picker-indicator {
     transform: translateX(-50%);
 }
 
-input[type="file"] {
+.image-input {
     display: none;
+}
+
+.gray{
+    color: #aeaeae;
 }
 
 /* BUAT NOTIF */

@@ -4,19 +4,17 @@ import { GrPrevious, GrNext } from "react-icons/gr";
 import usePageStore from "../../state/PageState";
 import CustomSearchBar from "../widget/CustomeSearchBar";
 import { PiArrowSquareOut } from "react-icons/pi";
-import { useNavigate } from "react-router-dom";
 import useSettingStore from "../../state/SettingState";
+import { useNavigate } from "react-router-dom";
 
 const HeaderBar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const page = usePageStore((state) => state.page);
-  const changePage = usePageStore((state) => state.changePage)
-  const menuRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
+  const menuRef = useRef<HTMLDivElement>(null);
   const changeSetting = useSettingStore((state) => state.changeSetting)
 
-  // SCROLL BELUM BISA
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 0);
@@ -51,15 +49,28 @@ const HeaderBar = () => {
   }, [isMenuOpen]);
 
   const handleClickRightBar = (content: string) => {
-    changePage(content);
+    navigate(content);
     setIsMenuOpen(false);
   };
+
+  const handleManageAccountClick = () => {
+    changeSetting('menu');
+    window.open('/settings', '_blank');
+  };
+
+  const previousPage = () => {
+    navigate(-1);
+  }
+
+  const nextPage = () => {
+    navigate(1);
+  }
 
   return (
     <div className={`${style.header} ${style['flex-between']} ${isScrolled ? style.scrolled : ''}`}>
       <div className={style.flex}>
-        <span className={style['page-button']}><GrPrevious/></span>
-        <span className={style['page-button']}><GrNext/></span>
+        <span className={style['page-button']} onClick={previousPage}><GrPrevious/></span>
+        <span className={style['page-button']} onClick={nextPage}><GrNext/></span>
         {(page === "search" || page === "result") && (
           <CustomSearchBar/>
         )}
@@ -71,12 +82,9 @@ const HeaderBar = () => {
         {isMenuOpen && (
           <div className={style['profile-menu']}>
             <div className={style['menu-item']} onClick={() => {handleClickRightBar("profile")}}>Profile</div>
-            <div className={style['menu-item']} onClick={() => {
-              changeSetting('menu');
-              navigate("/setting");
-            }}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
+            <div className={style['menu-item']} onClick={handleManageAccountClick}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
             <hr className={style.hr}/>
-            <div className={style['menu-item']}>Logout</div>
+            <div className={style['menu-item']} onClick={() => {handleClickRightBar("login")}}>Logout</div>
           </div>
         )}
       </div>

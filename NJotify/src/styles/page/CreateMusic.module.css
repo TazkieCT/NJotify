@@ -1,0 +1,242 @@
+
+.container {
+    flex-grow: 1;
+    background-color: #000;
+    color: #fff;
+    overflow-y: auto;
+    padding: 6px 3px 0px;
+}
+
+.content {
+    background-color: #000;
+    border-radius: 0.5rem;
+    height: 100%;
+    overflow-y: auto;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.header {
+    padding: 10rem 20px 1.5rem;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1) 10%, rgb(0, 117, 8) 100%);
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-1 {
+    gap: 0.5rem;
+}
+
+.title {
+    font-size: 5rem;
+    font-weight: 800;
+}
+
+.verif-icon {
+    display: flex;
+    align-items: center;
+    color: rgb(61, 144, 243);
+    font-size: 1.5rem;
+}
+
+.flex {
+    display: flex;
+    align-items: center;
+}
+
+.flex-start {
+    display: flex;
+}
+
+.pad-content {
+    padding: 0 20px 1.5rem;
+}
+
+.pad-up {
+    padding: 1rem 1rem 0;
+}
+
+.title-content {
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.gap-3 {
+    gap: 1.5rem;
+}
+
+.align-center {
+    align-items: center;
+}
+
+.pad-col {
+    padding: 0 1rem;
+}
+
+.mb-2 {
+    margin-bottom: 2rem;
+}
+
+.mb-sl {
+    margin-bottom: 0.5rem;
+}
+
+.flex-r {
+    display: flex;
+}
+
+.height-f {
+    height: 100%;
+}
+
+.flex-between {
+    display: flex;
+    justify-content: space-between;
+}
+
+.column {
+    flex-direction: column;
+}
+
+/* BUAT MUSIC */
+.custom-image-upload {
+    display: inline-block;
+    width: 15rem;
+    height: 15rem;
+    background-color: transparent;
+    border: 2px dashed #4e4e4e;
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+}
+
+.custom-image-upload svg {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.custom-image-upload span {
+    position: absolute;
+    bottom: 3rem;
+    width: 10rem;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.image-input {
+    display: none;
+}
+
+.gray {
+    color: #aeaeae;
+}
+
+.input {
+    padding: 0.5rem;
+    border-radius: 0.3rem;
+    border: 1px solid #323232;
+    background-color: #121212;
+    color: #e9e9e9;
+    resize: none;
+}
+
+.input:focus {
+    outline: none;
+    border-color: #e9e9e9;
+}
+
+.post-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: #1db954;
+    color: black;
+    font-weight: 900;
+    cursor: pointer;
+}
+
+.cancel-button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 1rem;
+    background-color: transparent;
+    color: #bcbcbc;
+    font-weight: 700;
+    cursor: pointer;
+}
+
+.cancel-button:hover{
+    color: white;
+}
+
+.post-button:hover {
+    background-color: #1aa64b;
+}
+
+.song-file {
+    display: none;
+}
+
+.custom-song-file {
+    padding: 0.5rem 0.5rem;
+    width: 7rem;
+    border: 1px solid #323232;
+    border-radius: 0.3rem;
+    background-color: #121212;
+    color: #e9e9e9;
+    font-size: 0.8rem;
+    display: flex;
+    justify-content: space-between;
+    cursor: pointer;
+    display: flex;
+    gap: 0.5rem;
+}
+
+.custom-song-file:hover {
+    background-color: #1a1a1a;
+}
+
+.width-f{
+    width: 100%;
+    max-width: 50rem;
+}
+
+.flex-1{
+    flex: 1;
+}
+.flex-2{
+    flex: 2;
+}
+.flex-3{
+    flex: 3;
+}
+.flex-4{
+    flex: 4;
+}
+.flex-5{
+    flex: 5;
+}
+
+.end{
+    align-self: flex-end;
+}
+
+.button {
+    display: flex;
+    padding: 0.5rem 0.5rem;
+    background-color: #5e5e5e;
+    border: none;
+    border-radius: 100%;
+    cursor: pointer;
+}

@@ -1,10 +1,10 @@
-import usePageStore from "../../state/PageState";
+import { useNavigate } from "react-router-dom";
 import style from "../../styles/widget/CardGallery.module.css"
 
 const GalleryCard = () => {
-  const changePage = usePageStore((state) => state.changePage)
+  const navigate = useNavigate();
   return (
-    <div className={style["gallery-card"]} onClick={() => {changePage("album");}}>
+    <div className={style["gallery-card"]} onClick={() => {navigate("/album");}}>
       <div className={style["center"]}>
         <img
           src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/5d4fd3124301423.610137e020199.jpg"

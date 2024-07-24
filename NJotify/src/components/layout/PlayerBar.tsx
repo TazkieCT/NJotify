@@ -9,13 +9,14 @@ import { FaForwardStep } from "react-icons/fa6";
 import { FaPlay } from "react-icons/fa6";
 import usePageStore from '../../state/PageState';
 import useRightTabStore from '../../state/RightBarState';
+import { useNavigate } from 'react-router-dom';
 
 // import { PiAirplay } from "react-icons/pi"; //Alternatif BsFilePlay
 // import { PiAirplayFill } from "react-icons/pi";
 // import { PiArrowsOutSimpleBold } from "react-icons/pi"; //Ketebalan
 
 const PlayerBar = () => {
-  const changePage = usePageStore((state) => state.changePage)
+  const navigate = useNavigate();
   const { isOpen, changeContent, openRightTab } = useRightTabStore();
 
   const handleClickRightBar = (content: string) => {
@@ -31,7 +32,7 @@ const PlayerBar = () => {
           <img className={style['album-cover']} width={60} src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c2/Radwimps_Your_Name_Album_Cover.jpg/220px-Radwimps_Your_Name_Album_Cover.jpg" alt="" />
           <div className={style.col}>
             <span className={style['album-title']}>Sparkle - movie ver.</span>
-            <span className={style['album-subtitle']} onClick={() => {changePage("artist")}}>RADWIMPS</span>
+            <span className={style['album-subtitle']} onClick={() => {navigate("/artist")}}>RADWIMPS</span>
           </div>
       </div>
       <div className={style['music-control']}>

@@ -1,11 +1,51 @@
+import { useState } from "react";
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
 import styles from "../../styles/signPage/Sign.module.css";
 import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginForm = () => {
   const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validateForm = () => {
+    if (!email || !password) {
+      setErrorMessage("All fields are required.");
+      return false;
+    }
+    if (!email.endsWith("@gmail.com")) {
+      setErrorMessage("Email must ends with @gmail.com");
+      return false;
+    }
+    setErrorMessage("");
+    return true;
+  };
+
+  const login = () => {
+    if (!validateForm()) {
+      return;
+    }
+
+    const data = {
+      email: email,
+      password: password,
+    };
+
+    axios
+      .post("http://localhost:8888/login", data)
+      .then((response) => {
+        console.log(response.data);
+        navigate("/home");
+      })
+      .catch((error) => {
+        setErrorMessage("Username or password incorrect");
+        console.error("There was an error logging in!", error);
+      });
+  };
 
   return (
     <>
@@ -26,6 +66,8 @@ const LoginForm = () => {
                 className={styles["input-text"]}
                 type="text"
                 placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className={styles["group-form"]}>
@@ -36,10 +78,13 @@ const LoginForm = () => {
                 className={styles["input-text"]}
                 type="password"
                 placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
           </div>
-          <button className={styles["button-1"]}>Log In</button>
+          {errorMessage && <span className={styles["error-message"]}>{errorMessage}</span>}
+          <button className={styles["button-1"]} onClick={login}>Log In</button>
           <a
             className={`${styles.link2} ${styles.pointer}`}
             onClick={(e) => {

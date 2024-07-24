@@ -1,10 +1,10 @@
 import style from "../../styles/page/HomePage.module.css"
-import usePageStore from "../../state/PageState";
 import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
-  const changePage = usePageStore((state) => state.changePage)
+  const navigate = useNavigate();
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -14,7 +14,7 @@ const HomePage = () => {
         <div className={style.section}>
           <div className={style["flex-between"]}>
             <span className={style.header}>Recently Played</span>
-            <span className={style.link} onClick={() => {changePage("showmore")}}>Show all</span>
+            <span className={style.link} onClick={() => {navigate("/showmore")}}>Show all</span>
           </div>
           <div className={style.flex}>
             <AlbumCard/>

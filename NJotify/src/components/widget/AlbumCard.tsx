@@ -1,11 +1,11 @@
-import usePageStore from "../../state/PageState";
+import { useNavigate } from "react-router-dom";
 import style from "../../styles/widget/AlbumCard.module.css"
 
 const AlbumCard = () => {
-  const changePage = usePageStore((state) => state.changePage)
+  const navigate = useNavigate();
 
   return (
-    <div className={style["card"]} onClick={() => {changePage("track");}}>
+    <div className={style["card"]} onClick={() => {navigate("/track");}}>
       <img
         src="https://upload.wikimedia.org/wikipedia/en/3/39/The_Weeknd_-_Starboy.png"
         className={style["card-image"]}

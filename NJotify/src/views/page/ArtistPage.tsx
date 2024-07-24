@@ -8,7 +8,7 @@ import AlbumCard from "../../components/widget/AlbumCard";
 import Footer from "../../components/layout/Footer";
 
 const ArtistPage = () => {
-  const changePage = usePageStore((state) => state.changePage)
+  // const changePage = usePageStore((state) => state.changePage)
   return (
     <div className={style.container}>
       <div className={style.content}>

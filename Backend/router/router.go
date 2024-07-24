@@ -24,7 +24,7 @@ func NewRouter(userController *controller.UserController) *gin.Engine {
 
 	router.POST("/signup", userController.CreateUser)
 	router.POST("/activate", userController.ActivateUser)
-	router.GET("/login/:email", userController.GetUser)
+	router.GET("/login", userController.GetUser)
 
 	return router
 }

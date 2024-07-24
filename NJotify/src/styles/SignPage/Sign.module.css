@@ -164,3 +164,9 @@
 .radio:checked {
   background-color: green;
 }
+
+.error-message{
+  color: red;
+  font-size: 0.8rem;
+  margin: 0.5rem;
+}

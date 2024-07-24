@@ -67,9 +67,11 @@ func (controller *UserController) ActivateUser(ctx *gin.Context) {
 
 func (controller *UserController) GetUser(ctx *gin.Context) {
 	// fmt.Println("Find user...")
-	email := ctx.Param("email")
-	// fmt.Println(email)
-	userResponse := controller.userService.GetUser(email)
+	activateUserRequest := request.ActivateUserRequest{}
+	err := ctx.ShouldBindJSON(&activateUserRequest)
+	helper.CheckPanic(err)
+
+	userResponse := controller.userService.GetUser(activateUserRequest.Email)
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",

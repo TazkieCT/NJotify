@@ -34,9 +34,18 @@
 
 .page-button {
     padding: 0.5rem;
-    background-color: #1c1c1c;
+    background-color: #1c1c1cc2;
     border-radius: 100%;
     display: flex;
+    cursor: pointer;
+}
+
+.page-button:hover{
+    background-color: #0e0e0e;
+}
+
+.page-button:active{
+    background-color: #1c1c1cc2;
 }
 
 .profile-button {

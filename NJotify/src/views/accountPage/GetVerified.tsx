@@ -20,12 +20,12 @@ const GetVerified = () => {
         <div className={`${style["flex"]} ${style["gap-1"]}`}>
           <div className={style["flex-column"]}>
             <label htmlFor="file-upload" className={style["custom-file-upload"]}>
-              <div className={style['flex-column']}>
+              <div className={`${style['flex-column']} ${style['gray']}`}>
                 <SlCamera size={100} />
                 <span>Upload Banner Image</span>
               </div>
             </label>
-            <input id="file-upload" type="file" className={style["file-input"]} />
+            <input id="file-upload" type="file" className={`${style['image-input']} ${style["file-input"]}`} />
           </div>
           <div className={`${style["flex-column"]} ${style.between} ${style['w-full']}`}>
             <div className={`${style["flex-column"]}`}>
