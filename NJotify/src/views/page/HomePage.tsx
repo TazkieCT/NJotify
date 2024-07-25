@@ -2,6 +2,7 @@ import style from "../../styles/page/HomePage.module.css"
 import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../state/AccountState";
 
 const HomePage = () => {
   const navigate = useNavigate();

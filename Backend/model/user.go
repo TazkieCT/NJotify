@@ -10,6 +10,6 @@ type User struct {
 	Email    string    `gorm:"type:varchar(255);unique"`
 	Password string    `gorm:"type:varchar(255)"`
 	Gender   string    `gorm:"type:varchar(255)"`
-	Dob      *string   `gorm:"type:date"`
+	Dob      string    `gorm:"type:date;default:NULL"`
 	Roles    string    `gorm:"type:varchar(255);default:"listener"`
 }

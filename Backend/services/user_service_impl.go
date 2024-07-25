@@ -40,10 +40,18 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
 	helper.CheckPanic(err)
 
+	name := strings.Split(user.Email, "@")
+	if len(name) == 0 {
+		helper.CheckPanic(fmt.Errorf("invalid email format"))
+	}
+	username := strings.ReplaceAll(name[0], "_", " ")
+
 	userModel := model.User{
 		Id:       uuidV4,
+		Username: username,
 		Email:    user.Email,
 		Password: string(hashedPassword),
+		Roles:    "listener",
 	}
 	c.UserRepository.SignIn(userModel)
 
@@ -51,6 +59,7 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
 	token, err := generateJWT(user.Email)
 	helper.CheckPanic(err)
 
+	// Send email activation (masih belum bisa)
 	to := []string{user.Email}
 	cc := []string{"tazkiect25@gmail.com"}
 	subject := "Account Activation - NJotify"
@@ -66,17 +75,18 @@ func (u *UserServiceImpl) ActivateUser(email string) {
 	u.UserRepository.Activate(user)
 }
 
-func (r *UserServiceImpl) GetUser(email string) response.UserResponse {
+func (r *UserServiceImpl) GetUser(email string, password string) response.UserResponse {
 	result := r.UserRepository.GetUser(email)
+	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(password))
+	helper.CheckPanic(err)
 
 	user := response.UserResponse{
 		Id:       result.Id,
 		Username: result.Username,
 		Email:    result.Email,
-		Password: result.Password,
 		Gender:   result.Gender,
-		Dob:      *result.Dob,
-		Role:     "inactive",
+		Dob:      result.Dob,
+		Role:     result.Roles,
 	}
 
 	return user

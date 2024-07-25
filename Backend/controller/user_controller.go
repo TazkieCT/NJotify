@@ -34,12 +34,6 @@ func (controller *UserController) CreateUser(ctx *gin.Context) {
 		Status: "Ok",
 		Data:   nil,
 	}
-	ctx.Header("Access-Control-Allow-Origin", "*")
-	ctx.Header("Access-Control-Max-Age", "86400")
-	ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-	ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max")
-	ctx.Header("Access-Control-Allow-Credentials", "true")
-	ctx.Header("Content-type", "application/json")
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
@@ -56,33 +50,25 @@ func (controller *UserController) ActivateUser(ctx *gin.Context) {
 		Status: "Ok",
 		Data:   nil,
 	}
-	ctx.Header("Access-Control-Allow-Origin", "*")
-	ctx.Header("Access-Control-Max-Age", "86400")
-	ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-	ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max")
-	ctx.Header("Access-Control-Allow-Credentials", "true")
-	ctx.Header("Content-type", "application/json")
+
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
 func (controller *UserController) GetUser(ctx *gin.Context) {
 	// fmt.Println("Find user...")
-	activateUserRequest := request.ActivateUserRequest{}
-	err := ctx.ShouldBindJSON(&activateUserRequest)
-	helper.CheckPanic(err)
+	createUserRequest := request.CreateUserRequest{}
+	if err := ctx.ShouldBindJSON(&createUserRequest); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
 
-	userResponse := controller.userService.GetUser(activateUserRequest.Email)
+	userResponse := controller.userService.GetUser(createUserRequest.Email, createUserRequest.Password)
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   userResponse,
 	}
 
-	ctx.Header("Access-Control-Allow-Origin", "*")
-	ctx.Header("Access-Control-Max-Age", "86400")
-	ctx.Header("Access-Control-Allow-Methods", "POST, GET, OPTIONS, PUT, DELETE, UPDATE")
-	ctx.Header("Access-Control-Allow-Headers", "Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization, X-Max")
-	ctx.Header("Access-Control-Allow-Credentials", "true")
-	ctx.Header("Content-type", "application/json")
 	ctx.JSON(http.StatusOK, WebResponse)
 }

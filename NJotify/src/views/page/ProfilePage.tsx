@@ -1,8 +1,14 @@
-import AlbumCard from "../../components/widget/AlbumCard"
-import ArtistCard from "../../components/widget/ArtistCard"
-import style from "../../styles/page/ProfilePage.module.css"
+import React from 'react';
+import AlbumCard from "../../components/widget/AlbumCard";
+import ArtistCard from "../../components/widget/ArtistCard";
+import useUserStore from "../../state/AccountState";
+import style from "../../styles/page/ProfilePage.module.css";
 
-const ProfilePage = () => {
+const ProfilePage: React.FC = () => {
+  const { user } = useUserStore();
+
+  console.log('User data:', user);
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -12,7 +18,7 @@ const ProfilePage = () => {
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small} ${style['mb-2']}`}>Profile</span>
-            <span className={`${style.title}`}>XIO</span>
+            <span className={`${style.title} ${style['mb-sl']}`}>{user.Username}</span>
             <span className={style.small}>4 Public · 15 Followers · 14 Following</span>
           </div>
         </div>
@@ -47,7 +53,7 @@ const ProfilePage = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfilePage
+export default ProfilePage;

@@ -5,12 +5,14 @@ import styles from "../../styles/signPage/Sign.module.css";
 import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import useUserStore from "../../state/AccountState";
 
 const LoginForm = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const { user, setUser } = useUserStore();
 
   const validateForm = () => {
     if (!email || !password) {
@@ -25,27 +27,38 @@ const LoginForm = () => {
     return true;
   };
 
-  const login = () => {
+  const login = async () => {
     if (!validateForm()) {
       return;
     }
-
+  
     const data = {
       email: email,
       password: password,
     };
-
-    axios
-      .post("http://localhost:8888/login", data)
-      .then((response) => {
-        console.log(response.data);
-        navigate("/home");
-      })
-      .catch((error) => {
-        setErrorMessage("Username or password incorrect");
-        console.error("There was an error logging in!", error);
+  
+    try {
+      const response = await axios.post("http://localhost:8888/login", data);
+      const userData = response.data.data;
+      console.log(userData);
+      setUser({
+        Id: userData.Id,
+        Email: userData.Email,
+        Username: userData.username,
+        Gender: userData.gender,
+        Dob: userData.dob,
+        Role: userData.role,
       });
+
+      navigate("/home");
+    } catch (error) {
+      if (error) {
+        setErrorMessage("Username or password incorrect");
+        // console.error("Response error:", error);
+      }
+    }
   };
+  
 
   return (
     <>

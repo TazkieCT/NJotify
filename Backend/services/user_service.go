@@ -8,5 +8,5 @@ import (
 type UserService interface {
 	CreateUser(user request.CreateUserRequest)
 	ActivateUser(email string)
-	GetUser(email string) response.UserResponse
+	GetUser(email string, password string) response.UserResponse
 }
