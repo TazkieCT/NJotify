@@ -11,4 +11,5 @@ type UserService interface {
 	GetUser(email string, password string) response.UserResponse
 	EditUser(user request.EditUserRequest)
 	GetVerifiedUser(user request.GetVerifiedUser)
+	GetAllVerifiedUser() []response.UserVerifiedResponse
 }

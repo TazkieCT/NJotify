@@ -184,3 +184,19 @@ func SavePicture(path string, data []byte, userId string) (string, error) {
 
 	return filePath, nil
 }
+
+func (r *UserServiceImpl) GetAllVerifiedUser() []response.UserVerifiedResponse {
+	users := r.UserRepository.GetVerifyUser()
+
+	var verifiedUsers []response.UserVerifiedResponse
+	for _, user := range users {
+		verifiedUser := response.UserVerifiedResponse{
+			Id:       user.Id,
+			Username: user.Username,
+			Role:     user.Roles,
+		}
+		verifiedUsers = append(verifiedUsers, verifiedUser)
+	}
+
+	return verifiedUsers
+}

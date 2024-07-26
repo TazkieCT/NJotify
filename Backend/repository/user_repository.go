@@ -11,4 +11,5 @@ type UserRepository interface {
 	GetUser(email string) model.User
 	EditUser(user model.User, edit request.EditUserRequest)
 	GetVerified(user model.Artist)
+	GetVerifyUser() []model.User
 }

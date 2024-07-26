@@ -27,10 +27,10 @@ const LoginForm = () => {
       setErrorMessage("All fields are required.");
       return false;
     }
-    if (!email.endsWith("@gmail.com")) {
-      setErrorMessage("Email must ends with @gmail.com");
-      return false;
-    }
+    // if (!email.endsWith("@gmail.com")) {
+    //   setErrorMessage("Email must ends with @gmail.com");
+    //   return false;
+    // }
     setErrorMessage("");
     return true;
   };
@@ -58,7 +58,12 @@ const LoginForm = () => {
         Country: userData.country,
         Role: userData.role,
       });
-      navigate("/home");
+
+      if(userData.role === "admin") {
+        navigate("/admin");
+      }else{
+        navigate("/home");
+      }
     } catch (error) {
       if (error) {
         setErrorMessage("Username or password incorrect");

@@ -8,23 +8,11 @@ import useSettingStore from "../../state/SettingState";
 import { useNavigate } from "react-router-dom";
 
 const HeaderBar = () => {
-  const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const page = usePageStore((state) => state.page);
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
   const changeSetting = useSettingStore((state) => state.changeSetting)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => {
-      window.removeEventListener("scroll", handleScroll);
-    };
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -77,7 +65,7 @@ const HeaderBar = () => {
   }
 
   return (
-    <div className={`${style.header} ${style['flex-between']} ${isScrolled ? style.scrolled : ''}`}>
+    <div className={`${style.header} ${style['flex-between']}`}>
       <div className={style.flex}>
         <span className={style['page-button']} onClick={previousPage}><GrPrevious/></span>
         <span className={style['page-button']} onClick={nextPage}><GrNext/></span>

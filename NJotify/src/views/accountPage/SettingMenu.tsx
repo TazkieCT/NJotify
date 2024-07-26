@@ -32,7 +32,7 @@ const SettingMenu = () => {
     </div>
     <div className={`${style['section']} ${style['mb-1']}`}>
         <div className={`${style['title']} ${style['mb-1']}`}>
-        Security & Privacy
+          Security & Privacy
         </div>
         <div className={`${style['flex-between']} ${style['menu']}`}>
         <div className={style['menu-item']}><span className={style['medium']}><FiLock/></span>Change Password</div>

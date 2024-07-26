@@ -30,6 +30,7 @@ func NewRouter(userController *controller.UserController) *gin.Engine {
 	router.POST("/login", userController.GetUser)
 	router.POST("/edit", userController.UpdateUser)
 	router.POST("/verify", userController.GetVerified)
+	router.GET("/admin", userController.GetAllVerifiedUser)
 
 	return router
 }

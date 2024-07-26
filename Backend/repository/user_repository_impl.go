@@ -42,3 +42,12 @@ func (c *UserRepositoryImpl) GetVerified(artist model.Artist) {
 	result := c.Db.Create(&artist)
 	helper.CheckPanic(result.Error)
 }
+
+func (r *UserRepositoryImpl) GetVerifyUser() []model.User {
+	var users []model.User
+	result := r.Db.Joins("JOIN artists ON artists.user_id = users.id").
+		Where("users.roles = ?", "listener").
+		Find(&users)
+	helper.CheckPanic(result.Error)
+	return users
+}

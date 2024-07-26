@@ -34,7 +34,6 @@ const YourPostPage = () => {
               <AlbumCard />
               <AlbumCard />
               <AlbumCard />
-              <AlbumCard />
             </div>
           </div>
         </div>

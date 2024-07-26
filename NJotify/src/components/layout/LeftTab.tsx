@@ -9,17 +9,21 @@ import usePageStore from "../../state/PageState";
 import PlaylistItem from "../widget/PlaylistItem";
 import { PiMusicNotesSimpleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../state/AccountState";
 
 const LeftTab = () => {
   const page = usePageStore((state) => state.page)
   const changePage = usePageStore((state) => state.changePage)
   const navigate = useNavigate();
+  const { user } = useUserStore();
   return (
     <div className={style.container}>
       <div className={style.navigation}>
         <a className={`${style.links} ${page === "home" ? (style.active) : ("")}`} onClick={() => {changePage("home"); navigate("/home")}}><span className={style.big}><GoHome /></span> Home</a>
         <a className={`${style.links} ${(page === "search" || page === "result") ? (style.active) : ("")}`} onClick={() => {changePage("search"); navigate("/search")}}><span className={style.big}><IoSearch /></span> Search</a>
-        <a className={`${style.links} ${(page === "post") ? (style.active) : ("")}`} onClick={() => {changePage("post"); navigate("/post")}}><span className={style.big}><PiMusicNotesSimpleFill /></span> Your Music</a>
+        {user.Role === "artist" && (
+          <a className={`${style.links} ${(page === "post") ? (style.active) : ("")}`} onClick={() => {changePage("post"); navigate("/post")}}><span className={style.big}><PiMusicNotesSimpleFill /></span> Your Music</a>
+        )}
       </div>
       <div className={style.library}>
         <div className={style['flex-between']}>  

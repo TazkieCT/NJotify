@@ -104,3 +104,15 @@ func (controller *UserController) GetVerified(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, WebResponse)
 }
+
+func (controller *UserController) GetAllVerifiedUser(ctx *gin.Context) {
+
+	userResponse := controller.userService.GetAllVerifiedUser()
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   userResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
