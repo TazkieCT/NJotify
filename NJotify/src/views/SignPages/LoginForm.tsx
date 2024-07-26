@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
 import styles from "../../styles/signPage/Sign.module.css";
@@ -12,7 +12,15 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+      navigate("/home");
+    }
+  }, [setUser, navigate]);
 
   const validateForm = () => {
     if (!email || !password) {
@@ -47,9 +55,9 @@ const LoginForm = () => {
         Username: userData.username,
         Gender: userData.gender,
         Dob: userData.dob,
+        Country: userData.country,
         Role: userData.role,
       });
-
       navigate("/home");
     } catch (error) {
       if (error) {

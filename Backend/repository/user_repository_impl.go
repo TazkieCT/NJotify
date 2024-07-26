@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"github.com/TazkieCT/njotify/data/request"
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
 	"gorm.io/gorm"
@@ -30,4 +31,14 @@ func (r *UserRepositoryImpl) GetUser(email string) model.User {
 	result := r.Db.First(&user, "email = ?", email)
 	helper.CheckPanic(result.Error)
 	return user
+}
+
+func (u *UserRepositoryImpl) EditUser(user model.User, reqUser request.EditUserRequest) {
+	result := u.Db.Model(&user).Where("email = ?", user.Email).Updates(reqUser)
+	helper.CheckPanic(result.Error)
+}
+
+func (c *UserRepositoryImpl) GetVerified(artist model.Artist) {
+	result := c.Db.Create(&artist)
+	helper.CheckPanic(result.Error)
 }

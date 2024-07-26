@@ -53,6 +53,16 @@ const HeaderBar = () => {
     setIsMenuOpen(false);
   };
 
+  const logout = () => {
+    const savedUser = localStorage.getItem("user");
+
+    if (savedUser) {
+        localStorage.removeItem("user");
+    }
+    navigate("login");
+    setIsMenuOpen(false);
+  };
+
   const handleManageAccountClick = () => {
     changeSetting('menu');
     window.open('/settings', '_blank');
@@ -84,7 +94,7 @@ const HeaderBar = () => {
             <div className={style['menu-item']} onClick={() => {handleClickRightBar("profile")}}>Profile</div>
             <div className={style['menu-item']} onClick={handleManageAccountClick}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
             <hr className={style.hr}/>
-            <div className={style['menu-item']} onClick={() => {handleClickRightBar("login")}}>Logout</div>
+            <div className={style['menu-item']} onClick={() => {logout()}}>Logout</div>
           </div>
         )}
       </div>

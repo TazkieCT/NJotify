@@ -1,8 +1,13 @@
 package services
 
 import (
+	"bytes"
 	"fmt"
+	"image"
+	"image/png"
 	"net/smtp"
+	"os"
+	"path/filepath"
 	"strings"
 	"time"
 
@@ -45,6 +50,7 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
 		helper.CheckPanic(fmt.Errorf("invalid email format"))
 	}
 	username := strings.ReplaceAll(name[0], "_", " ")
+	user.Email = strings.ToLower(user.Email)
 
 	userModel := model.User{
 		Id:       uuidV4,
@@ -76,6 +82,7 @@ func (u *UserServiceImpl) ActivateUser(email string) {
 }
 
 func (r *UserServiceImpl) GetUser(email string, password string) response.UserResponse {
+	email = strings.ToLower(email)
 	result := r.UserRepository.GetUser(email)
 	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(password))
 	helper.CheckPanic(err)
@@ -86,10 +93,19 @@ func (r *UserServiceImpl) GetUser(email string, password string) response.UserRe
 		Email:    result.Email,
 		Gender:   result.Gender,
 		Dob:      result.Dob,
+		Country:  result.Country,
 		Role:     result.Roles,
 	}
 
 	return user
+}
+
+func (u *UserServiceImpl) EditUser(userReq request.EditUserRequest) {
+	// fmt.Println("AAAAAAAAAAA")
+	user := u.UserRepository.GetUser(userReq.Email)
+	// fmt.Println("BBBBBBBBBBBB")
+	u.UserRepository.EditUser(user, userReq)
+	// fmt.Println("CCCCCCCCCCCC")
 }
 
 func sendMail(to []string, cc []string, subject, message string) error {
@@ -122,4 +138,49 @@ func generateJWT(email string) (string, error) {
 	}
 
 	return tokenString, nil
+}
+
+func (c *UserServiceImpl) GetVerifiedUser(user request.GetVerifiedUser) {
+	userId, err := uuid.Parse(user.UserId)
+	helper.CheckPanic(err)
+
+	imagePath, err := SavePicture("./public/image/", user.Banner, userId.String())
+	helper.CheckPanic(err)
+
+	artist := model.Artist{
+		UserId:      userId.String(),
+		BannerImage: imagePath,
+		About:       user.About,
+	}
+
+	c.UserRepository.GetVerified(artist)
+}
+
+func SavePicture(path string, data []byte, userId string) (string, error) {
+	now := time.Now().Format("20060102150405")
+	ext := ".png"
+	fileName := fmt.Sprintf("%s_%s%s", now, userId, ext)
+	filePath := filepath.Join(path, fileName)
+
+	err := os.MkdirAll(path, os.ModePerm)
+	if err != nil {
+		return "", fmt.Errorf("failed to create directory: %w", err)
+	}
+
+	img, _, err := image.Decode(bytes.NewReader(data))
+	if err != nil {
+		return "", fmt.Errorf("failed to decode image: %w", err)
+	}
+	outFile, err := os.Create(filePath)
+	if err != nil {
+		return "", fmt.Errorf("failed to create file: %w", err)
+	}
+	defer outFile.Close()
+
+	err = png.Encode(outFile, img)
+	if err != nil {
+		return "", fmt.Errorf("failed to encode image: %w", err)
+	}
+
+	return filePath, nil
 }

@@ -26,7 +26,7 @@ func main() {
 	// })
 
 	db := database.ConnectionDatabase()
-	db.AutoMigrate(&model.User{})
+	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{})
 
 	validator := validator.New()
 

@@ -1,13 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import AlbumCard from "../../components/widget/AlbumCard";
 import ArtistCard from "../../components/widget/ArtistCard";
 import useUserStore from "../../state/AccountState";
 import style from "../../styles/page/ProfilePage.module.css";
 
 const ProfilePage: React.FC = () => {
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
 
-  console.log('User data:', user);
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, [setUser]);
 
   return (
     <div className={style.container}>

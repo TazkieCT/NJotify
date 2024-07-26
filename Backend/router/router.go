@@ -22,9 +22,14 @@ func NewRouter(userController *controller.UserController) *gin.Engine {
 
 	router.Use(corsMiddleware)
 
+	router.Static("/public/image/", "./public/image/")
+
+	// UNTUK USER
 	router.POST("/signup", userController.CreateUser)
 	router.POST("/activate", userController.ActivateUser)
 	router.POST("/login", userController.GetUser)
+	router.POST("/edit", userController.UpdateUser)
+	router.POST("/verify", userController.GetVerified)
 
 	return router
 }

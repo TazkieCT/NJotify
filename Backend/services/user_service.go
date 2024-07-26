@@ -9,4 +9,6 @@ type UserService interface {
 	CreateUser(user request.CreateUserRequest)
 	ActivateUser(email string)
 	GetUser(email string, password string) response.UserResponse
+	EditUser(user request.EditUserRequest)
+	GetVerifiedUser(user request.GetVerifiedUser)
 }

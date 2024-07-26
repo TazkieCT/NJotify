@@ -2,10 +2,16 @@ import style from "../../styles/page/HomePage.module.css"
 import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
 import { useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 import useUserStore from "../../state/AccountState";
 
 const HomePage = () => {
   const navigate = useNavigate();
+  const { user } = useUserStore();
+  
+  useEffect(() => {
+    localStorage.setItem("user", JSON.stringify(user));
+  })
   return (
     <div className={style.container}>
       <div className={style.content}>

@@ -6,6 +6,7 @@ interface User {
   Email: string;
   Gender: string;
   Dob: string;
+  Country: string;
   Role: string;
 }
 
@@ -21,6 +22,7 @@ const useUserStore = create<UserStore>((set) => ({
     Email: '',
     Gender: '',
     Dob: '',
+    Country: '',
     Role: '',
   },
   setUser: (user) => set({ user : user }),
