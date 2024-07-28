@@ -16,10 +16,6 @@ const ArtistPage = () => {
           <div className={`${style['flex']} ${style['gap-2']}`}><span className={style['verif-icon']}><VscVerifiedFilled /></span> Verified Artist</div>
             <span className={style.title}>Sang Artist</span>
             <span>1,778,185 monthly listeners</span>
-            {/* <button onClick={(e) => {
-              e.preventDefault();
-              changePage("home");
-            }}>Back Home Page</button> */}
           </div>
           <div className={`${style['pad-content']} ${style['flex-column']} ${style['gap-3']}`}>
             <div className={`${style.flex} ${style['gap-20']} ${style['pad-up']}`}>

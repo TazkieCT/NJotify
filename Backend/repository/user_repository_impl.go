@@ -51,3 +51,15 @@ func (r *UserRepositoryImpl) GetVerifyUser() []model.User {
 	helper.CheckPanic(result.Error)
 	return users
 }
+
+func (u *UserRepositoryImpl) SetArtist(id string) {
+	var user model.User
+	result := u.Db.Model(&user).Where("id = ?", id).Update("roles", "artist")
+	helper.CheckPanic(result.Error)
+}
+
+func (d *UserRepositoryImpl) RemoveArtist(id string) {
+	var artist model.Artist
+	result := d.Db.Where("user_id = ?", id).Delete(&artist)
+	helper.CheckPanic(result.Error)
+}

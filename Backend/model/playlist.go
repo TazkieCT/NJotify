@@ -1,8 +1,10 @@
 package model
 
+import "github.com/google/uuid"
+
 type Playlist struct {
-	ID           uint   `gorm:"primaryKey"`
-	UserID       uint   `gorm:"not null"`
-	User         User   `gorm:"foreignKey:UserID"`
-	PlaylistName string `gorm:"not null"`
+	Id           uuid.UUID `gorm:"primaryKey"`
+	UserId       uuid.UUID `gorm:"type:uuid;not null"`
+	User         User      `gorm:"foreignKey:UserId"`
+	PlaylistName string    `gorm:"type:varchar(255);not null"`
 }

@@ -1,0 +1,11 @@
+package services
+
+import (
+	"github.com/TazkieCT/njotify/data/response"
+	"github.com/google/uuid"
+)
+
+type TrackService interface {
+	CreateMusic(album_id uuid.UUID, name string, filePath string)
+	GetTrackByAlbum(album_id string) []response.TrackAlbum
+}

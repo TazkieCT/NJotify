@@ -1,17 +1,42 @@
-import React from 'react';
+import { useEffect, useState } from "react";
 import style from "../../styles/accountPage/AdminPage.module.css";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
+import axios from "axios";
 
-interface VerifyUser {
-  user: {
-    Id: string;
-    username: string;
-    role: string;
+
+const VerifyUser = ({ user } : {user:userVerify}) => {
+  
+  const[users, setUsers] =  useState<userVerify>()
+
+  useEffect(() => {
+    if(user){
+      setUsers(user)
+    }
+  })
+
+  const accept = () => {
+    axios.get(`http://localhost:8888/set-artist/${user.Id}`)
+    .then(response => {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error(error);
+    });
   }
-}
 
-const VerifyUser: React.FC<VerifyUser> = ({ user }) => {
+  const decline = () => {
+    axios.get(`http://localhost:8888/remove-artist/${user.Id}`)
+    .then(response => {
+      console.log(response);
+      window.location.reload();
+    })
+    .catch(error => {
+      console.error(error);
+    });
+  }
+
   return (
     <div className={`${style["flex"]} ${style["between"]}`}>
       <div className={`${style["gap-1"]} ${style["flex"]}`}>
@@ -23,17 +48,17 @@ const VerifyUser: React.FC<VerifyUser> = ({ user }) => {
           />
         </div>
         <div className={`${style["flex-column"]} ${style["justify-center"]}`}>
-          <span>{user.username}</span>
-          <span>Role: {user.role}</span>
+          <span>{users?.username}</span>
+          <span>Role: {users?.role}</span>
         </div>
       </div>
       <div
         className={`${style["flex"]} ${style["align-center"]} ${style["gap-sl"]}`}
       >
-        <button className={`${style["button"]} ${style["decline"]}`}>
+        <button className={`${style["button"]} ${style["decline"]}`} onClick={decline}>
           <IoClose />
         </button>
-        <button className={`${style["button"]} ${style["accept"]}`}>
+        <button className={`${style["button"]} ${style["accept"]}`} onClick={accept}>
           <FaCheck />
         </button>
       </div>

@@ -148,7 +148,7 @@ func (c *UserServiceImpl) GetVerifiedUser(user request.GetVerifiedUser) {
 	helper.CheckPanic(err)
 
 	artist := model.Artist{
-		UserId:      userId.String(),
+		UserId:      userId,
 		BannerImage: imagePath,
 		About:       user.About,
 	}
@@ -199,4 +199,12 @@ func (r *UserServiceImpl) GetAllVerifiedUser() []response.UserVerifiedResponse {
 	}
 
 	return verifiedUsers
+}
+
+func (u *UserServiceImpl) SetArtist(id string) {
+	u.UserRepository.SetArtist(id)
+}
+
+func (d *UserServiceImpl) RemoveArtist(id string) {
+	d.UserRepository.RemoveArtist(id)
 }

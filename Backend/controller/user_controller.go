@@ -106,12 +106,39 @@ func (controller *UserController) GetVerified(ctx *gin.Context) {
 }
 
 func (controller *UserController) GetAllVerifiedUser(ctx *gin.Context) {
-
 	userResponse := controller.userService.GetAllVerifiedUser()
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   userResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) SetArtist(ctx *gin.Context) {
+	idUser := ctx.Param("userId")
+	// fmt.Println(idUser)
+
+	controller.userService.SetArtist(idUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) RemoveArtist(ctx *gin.Context) {
+	idUser := ctx.Param("userId")
+	// fmt.Println(idUser)
+
+	controller.userService.RemoveArtist(idUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
 	}
 
 	ctx.JSON(http.StatusOK, WebResponse)

@@ -2,16 +2,30 @@ import style from "../../styles/page/HomePage.module.css"
 import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import useUserStore from "../../state/AccountState";
+import axios from "axios";
 
 const HomePage = () => {
   const navigate = useNavigate();
   const { user } = useUserStore();
-  
+  const [albums, setAlbums] = useState<albumCard[]>([]);
+
+  useEffect(() => {
+    axios.get('http://localhost:8888/get-all-album')
+      .then(response => {
+        setAlbums(response.data.data);
+        // console.log(response.data.data)
+      })
+      .catch(error => {
+        console.error("Error fetching album!", error);
+      });
+  }, []);
+
   useEffect(() => {
     localStorage.setItem("user", JSON.stringify(user));
   })
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -24,27 +38,31 @@ const HomePage = () => {
             <span className={style.link} onClick={() => {navigate("/showmore")}}>Show all</span>
           </div>
           <div className={style.flex}>
-            <AlbumCard/>
-            <AlbumCard/>
-            <AlbumCard/>
+            {albums && albums.map(albums => (
+              <AlbumCard key={albums.album_id} album={albums} />
+            ))}
           </div>
         </div>
-        <div className={style.section}>
+        {/* <div className={style.section}>
           <div className={style["flex-between"]}>
             <span className={style.header}>Podcast</span>
             <span className={style.link}>Show all</span>
           </div>
           <div className={style.flex}>
-            <AlbumCard/>
+            {albums && albums.map(albums => (
+              <AlbumCard key={albums.album_id} album={albums} />
+            ))}
           </div>
-        </div>
+        </div> */}
         <div className={style.section}>
           <div className={style["flex-between"]}>
             <span className={style.header}>Recommended For You</span>
             <span className={style.link}>Show all</span>
           </div>
           <div className={style.flex}>
-            <AlbumCard/>
+            {albums && albums.map(albums => (
+              <AlbumCard key={albums.album_id} album={albums} />
+            ))}
           </div>
         </div>
       </div>

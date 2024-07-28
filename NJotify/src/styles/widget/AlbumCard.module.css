@@ -13,9 +13,22 @@
     background-color: #1c1c1c;
 }
 
-.card-image {
+.card-image-wrapper {
     width: 100%;
-    height: auto;
+    padding-bottom: 100%; /* Creates a square aspect ratio */
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.card-image {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ensures the image covers the container */
+    transform: translate(-50%, -50%);
     border-radius: 8px;
 }
 

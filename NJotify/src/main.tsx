@@ -74,7 +74,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
                   <Route path="/search" element={<SearchPage/>}/>
                   <Route path="/profile" element={<ProfilePage/>}/>
                   <Route path="/track" element={<TrackPage/>}/>
-                  <Route path="/album" element={<AlbumPage/>}/>
+                  <Route path="/album/:albumId" element={<AlbumPage/>}/>
                   <Route path="/playlist" element={<PlaylistPage/>}/>
                   <Route path="/post" element={<YourPostPage/>}/>
                   <Route path="/create" element={<CreateMusicPage/>}/>

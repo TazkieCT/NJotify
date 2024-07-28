@@ -47,7 +47,7 @@ const GetVerified = () => {
     // @ts-ignore
     reader.onload = () => resolve(reader.result.split(',')[1]);
     reader.onerror = error => reject(error);
-});
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -30,10 +30,10 @@ const YourPostPage = () => {
                     <HiPlus/>
                 </div>
               </div>
+              {/* <AlbumCard />
               <AlbumCard />
               <AlbumCard />
-              <AlbumCard />
-              <AlbumCard />
+              <AlbumCard /> */}
             </div>
           </div>
         </div>

@@ -12,4 +12,6 @@ type UserService interface {
 	EditUser(user request.EditUserRequest)
 	GetVerifiedUser(user request.GetVerifiedUser)
 	GetAllVerifiedUser() []response.UserVerifiedResponse
+	SetArtist(id string)
+	RemoveArtist(id string)
 }

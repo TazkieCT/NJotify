@@ -1,6 +1,8 @@
 package model
 
+import "github.com/google/uuid"
+
 type PlaylistTrack struct {
-	PlaylistID uint `gorm:"primaryKey"`
-	TrackID    uint `gorm:"primaryKey"`
+	PlaylistId uuid.UUID `gorm:"primaryKey"`
+	TrackId    uuid.UUID `gorm:"primaryKey"`
 }

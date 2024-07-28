@@ -1,8 +1,11 @@
 package model
 
+import "github.com/google/uuid"
+
 type Track struct {
-	ID        uint   `gorm:"primaryKey"`
-	TrackName string `gorm:"not null"`
-	AlbumID   uint   `gorm:"not null"`
-	Album     Album  `gorm:"foreignKey:AlbumID"`
+	Id        uuid.UUID `gorm:"primaryKey"`
+	TrackName string    `gorm:"type:varchar(255);not null"`
+	TrackFile string    `gorm:"type:varchar(255);not null"`
+	AlbumId   uuid.UUID `gorm:"type:uuid;not null"`
+	Album     Album     `gorm:"foreignKey:AlbumId"`
 }

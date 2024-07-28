@@ -6,22 +6,21 @@ import logo from '../../assets/NJOTIFY.png';
 import VerifyUser from "./VerifyUser";
 import { useNavigate } from "react-router-dom";
 
-interface verifyUser {
-  user: {
-    Id: string;
-    username: string;
-    role: string;
-  }
-}
+// interface verifyUser {
+//   Id: string;
+//   username: string;
+//   role: string;
+// }
 
 const AdminPage: React.FC = () => {
-  const [users, setUsers] = useState<verifyUser[]>([]);
+  const [users, setUsers] = useState<userVerify[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get<{ data: verifyUser[] }>('/admin')
+    axios.get('http://localhost:8888/admin')
       .then(response => {
         setUsers(response.data.data);
+        // console.log(response.data.data)
       })
       .catch(error => {
         console.error("There was an error fetching the users!", error);
@@ -54,9 +53,9 @@ const AdminPage: React.FC = () => {
             <span className={`${style['title']} ${style['bold']}`}>Admin Page</span>
             <span className={`${style['bold']}`}>Verify Artist</span>
           </div>
-          {/* {users.map(user => (
-            <VerifyUser key={user.user.Id} user={user.user} />
-          ))} */}
+          {users && users.map(users => (
+            <VerifyUser key={users.Id} user={users} />
+          ))}
         </div>
       </div>
       <div className={`${style['w-full']} ${style['flex-footer']}`}>

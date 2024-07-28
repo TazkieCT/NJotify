@@ -7,20 +7,50 @@ import SongRowAlbum from "../../components/widget/SongRowAlbum";
 import AlbumCard from "../../components/widget/AlbumCard";
 import { LuList } from "react-icons/lu";
 import { LuClock3 } from "react-icons/lu";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
 
 
 const AlbumPage = () => {
+  const { albumId } = useParams<{ albumId: string }>();
+  const [albums, setAlbums] = useState<albumCard>();
+  const [tracks, setTracks] = useState<trackAlbum[]>([]);
+
+  useEffect(() => {
+    const fetchAlbum = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8888/get-album/${albumId}`);
+        setAlbums(response.data.data);
+      } catch (error) {
+        console.error("Error fetching album!", error);
+      }
+    };
+
+    const fetchTrack = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8888/get-track-album/${albumId}`);
+        setTracks(response.data.data);
+      } catch (error) {
+        console.error("Error fetching track!", error);
+      }
+    };
+
+    fetchAlbum();
+    fetchTrack();
+  }, [albumId]);
+
   return (
     <div className={style.container}>
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRp1pgW0XW3EnXrGBDYcfeKVESLSSuRyptRrQ&s" className={style['profile-image']} alt="" />
+            <img src={`http://localhost:8888/${albums?.album_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
-            <span className={`${style.small}`}>Album</span>
-            <span className={`${style.title} ${style['mb-2']}`}>as long as you're okay</span>
-            <span className={style.small}>slchld · 2020 · 5 Songs · 25 min 7 sec</span>
+            <span className={`${style.small}`}>{albums?.album_type}</span>
+            <span className={`${style.title} ${style['mb-2']}`}>{albums?.album_name}</span>
+            <span className={style.small}>{albums?.album_artist} · 2020 · {tracks?.length} Songs · 25 min 7 sec</span>
           </div>
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>
@@ -43,10 +73,9 @@ const AlbumPage = () => {
                 <div className={style["song-duration-album"]}><LuClock3/></div>
               </div>
               <hr className={`${style.hr} ${style['mb-2']}`}/>
-              <SongRowAlbum/>
-              <SongRowAlbum/>
-              <SongRowAlbum/>
-              <SongRowAlbum/>
+              {tracks && tracks.map((track, index) => (
+              <SongRowAlbum key={track.song_id} track={track} index={index + 1} />
+              ))}
             </div>
             <div className={`${style['pad-lu']}`}>
               <div className={`${style['flex-between']}`}> 
@@ -63,10 +92,10 @@ const AlbumPage = () => {
                     <span className={`${style['gray']} ${style['see-more']}`}>See discography</span>
                 </div>
               <div className={`${style.flex} `}>
+                {/* <AlbumCard/>
                 <AlbumCard/>
                 <AlbumCard/>
-                <AlbumCard/>
-                <AlbumCard/>
+                <AlbumCard/> */}
               </div>
             </div>
         </div>

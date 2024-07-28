@@ -14,30 +14,27 @@ import (
 )
 
 func main() {
-	// r := gin.Default()
-	// id := uuid.New()
-
-	// fmt.Println(id)
-	// r.GET("/ping", func(c *gin.Context) {
-	// 	c.JSON(200, gin.H{
-	// 		"message_id": id,
-	// 		"version":    "1.0.0",
-	// 	})
-	// })
-
 	db := database.ConnectionDatabase()
 	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{})
 
 	validator := validator.New()
 
 	userRepository := repository.NewUserRepositoryImpl(db)
-	userService := services.NewUserServiceImpl(userRepository, validator)
-	userController := controller.NewUserController(userService)
-	routes := router.NewRouter(userController)
+	albumRepository := repository.NewAlbumRepositoryImpl(db)
+	trackRepository := repository.NewTrackRepositoryImpl(db)
 
+	userService := services.NewUserServiceImpl(userRepository, validator)
+	albumService := services.NewAlbumServiceImpl(albumRepository, validator)
+	trackService := services.NewTrackServiceImpl(trackRepository, validator)
+
+	userController := controller.NewUserController(userService)
+	albumController := controller.NewAlbumController(albumService)
+	trackController := controller.NewTrackController(trackService)
+
+	routers := router.NewRouter(userController, albumController, trackController)
 	server := &http.Server{
 		Addr:    ":8888",
-		Handler: routes,
+		Handler: routers,
 	}
 
 	err := server.ListenAndServe()

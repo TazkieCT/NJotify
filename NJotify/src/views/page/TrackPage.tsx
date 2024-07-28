@@ -49,7 +49,7 @@ const TrackPage = () => {
                 </div>
               </div>
               <div className={`${style['mt-sl']}`}>
-                <SongRowAlbum/>
+                {/* <SongRowAlbum/> */}
               </div>
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>
