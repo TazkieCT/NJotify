@@ -41,8 +41,8 @@ const ResultSearchPage = () => {
         <div className={style['browse']}>
           <span className={style.header}>Collections</span>
           <div className={style.flex}>
-            <AlbumCard/>
-            <AlbumCard/>
+            {/* <AlbumCard/>
+            <AlbumCard/> */}
           </div>
         </div>
       </div>

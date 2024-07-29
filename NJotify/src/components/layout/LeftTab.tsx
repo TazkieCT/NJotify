@@ -10,8 +10,9 @@ import PlaylistItem from "../widget/PlaylistItem";
 import { PiMusicNotesSimpleFill } from "react-icons/pi";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../state/AccountState";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Modal from "../widget/Modal";
+import axios from "axios";
 
 const LeftTab = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -19,10 +20,42 @@ const LeftTab = () => {
   const changePage = usePageStore((state) => state.changePage)
   const navigate = useNavigate();
   const { user } = useUserStore();
+  const [playlists, setPlaylists] = useState<playlist[]>([]);
 
-  const handleSave = (title: string, description: string) => {
-    console.log('Title:', title);
-    console.log('Description:', description);
+  const fetchPlaylist = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
+      setPlaylists(response.data.data);
+      // console.log(playlists);
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaylist();
+  }, [user.Id]);
+
+  const handleSave = async (title: string, description: string) => {
+    // console.log('Title:', title);
+    // console.log('Description:', description);
+
+    console.log(user);
+    const data = {
+      user_id: user.Id,
+      playlist_name: title,
+      playlist_desc: description,
+    };
+  
+    try {
+      const response = await axios.post("http://localhost:8888/create-playlist", data);
+      console.log(response)
+      fetchPlaylist();
+    } catch (error) {
+      if (error) {
+        console.error("Response error:", error);
+      }
+    }
   };
 
   return (
@@ -48,9 +81,9 @@ const LeftTab = () => {
             <a className={style.medium}><IoSearch /></a>
             <a className={style.recent}>Recents<span className={style.medium}><LuList/></span></a>
           </div>
-          <PlaylistItem/>
-          <PlaylistItem/>
-          <PlaylistItem/>
+          {playlists && playlists.map(playlists => (
+            <PlaylistItem key={playlists.playlist_id} playlist={playlists}/>
+          ))}
         </div>
       </div>
       <Modal

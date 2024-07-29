@@ -44,6 +44,9 @@ func NewRouter(userController *controller.UserController, albumController *contr
 
 	// UNTUK PLAYLIST
 	router.POST("/create-playlist", playlistController.CreatePlaylist)
+	router.GET("/get-playlist-user/:userId", playlistController.GetAllPlaylistByUser)
+	router.GET("/get-playlist-id/:playlistId", playlistController.GetPlaylistById)
+	router.POST("/add-track-playlist", playlistController.AddTrackPlaylist)
 
 	return router
 }

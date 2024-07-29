@@ -6,21 +6,42 @@ import { BsPlusCircle } from "react-icons/bs";
 import { LuList } from "react-icons/lu";
 import { LuClock3 } from "react-icons/lu";
 import SongRowPlaylist from "../../components/widget/SongRowPlaylist";
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import SongRow from "../../components/widget/SongRow";
 
 
 const PlaylistPage = () => {
+  const { playlistId } = useParams<{ playlistId: string }>();
+  const [playlist, setPlaylist] = useState<playlist>();
+
+  const fetchPlaylist = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-playlist-id/${playlistId}`);
+      setPlaylist(response.data.data);
+      // console.log(playlists);
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchPlaylist();
+  }, [playlistId]);
+
   return (
     <div className={style.container}>
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src="https://images.genius.com/2707aecb3f04d3d0ba5cd4432b7442e4.516x517x1.png" className={style['profile-image']} alt="" />
+            <img src={`http://localhost:8888/${playlist?.playlist_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Playlist</span>
-            <span className={`${style.title}`}>my insecurities not yours</span>
-            <span className={`${style.small} ${style.gray} ${style['hdesc-2']}`}>I'd be sad if you were gone</span>
-            <span className={style.small}>XIO · 19,131 likes · 5 Songs · 25 min 7 sec</span>
+            <span className={`${style.title}`}>{playlist?.playlist_name}</span>
+            <span className={`${style.small} ${style.gray} ${style['hdesc-2']}`}>{playlist?.playlist_desc}</span>
+            <span className={style.small}>{playlist?.playlist_user} · 19,131 likes · 5 Songs · 25 min 7 sec</span>
           </div>
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>

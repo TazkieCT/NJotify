@@ -33,17 +33,17 @@ const ArtistPage = () => {
             <div className={`${style['flex-column']} ${style['gap-3']}`}>
               <span className={style['title-content']}>Discography</span>
               <div className={`${style['flex']} ${style['gap-3']} ${style['pad-col']}`}>
+                {/* <AlbumCard/>
                 <AlbumCard/>
                 <AlbumCard/>
                 <AlbumCard/>
-                <AlbumCard/>
-                <AlbumCard/>
+                <AlbumCard/> */}
               </div>
             </div>
             <div className={`${style['flex-column']} ${style['gap-3']}`}>
               <span className={style['title-content']}>Featuring Sang Artist</span>
               <div className={`${style['flex']} ${style['gap-3']} ${style['pad-col']}`}>
-                <AlbumCard/>
+                {/* <AlbumCard/> */}
               </div>
             </div>
           </div>

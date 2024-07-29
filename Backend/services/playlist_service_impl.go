@@ -2,6 +2,7 @@ package services
 
 import (
 	"github.com/TazkieCT/njotify/data/request"
+	"github.com/TazkieCT/njotify/data/response"
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
 	"github.com/TazkieCT/njotify/repository"
@@ -39,4 +40,54 @@ func (c *PlaylistServiceImpl) CreatePlaylist(playlist request.CreatePlaylistRequ
 	}
 
 	c.PlaylistRepository.CreatePlaylist(playlistModel)
+}
+
+func (r *PlaylistServiceImpl) GetPlaylistByUser(id string) []response.PlaylistUser {
+	playlists := r.PlaylistRepository.GetPlaylistByUser(id)
+
+	var playlistUsers []response.PlaylistUser
+	for _, playlist := range playlists {
+		playlistUser := response.PlaylistUser{
+			Id:    playlist.Id.String(),
+			User:  playlist.User.Username,
+			Name:  playlist.PlaylistName,
+			Image: playlist.PlaylistImage,
+			Desc:  playlist.PlaylistDesc,
+		}
+		playlistUsers = append(playlistUsers, playlistUser)
+	}
+
+	return playlistUsers
+}
+
+func (r *PlaylistServiceImpl) GetPlaylistById(id string) response.PlaylistUser {
+	playlist := r.PlaylistRepository.GetPlaylistById(id)
+
+	playlistUser := response.PlaylistUser{
+		Id:    playlist.Id.String(),
+		User:  playlist.User.Username,
+		Name:  playlist.PlaylistName,
+		Image: playlist.PlaylistImage,
+		Desc:  playlist.PlaylistDesc,
+	}
+
+	return playlistUser
+}
+
+func (c *PlaylistServiceImpl) AddTrackToPlaylist(trackPlaylist request.AddTrackToPlaylist) {
+	err := c.Validate.Struct(trackPlaylist)
+	helper.CheckPanic(err)
+
+	trackId, err := uuid.Parse(trackPlaylist.Track)
+	helper.CheckPanic(err)
+
+	playlistId, err := uuid.Parse(trackPlaylist.Playlist)
+	helper.CheckPanic(err)
+
+	playlistTrackModel := model.PlaylistTrack{
+		PlaylistId: playlistId,
+		TrackId:    trackId,
+	}
+
+	c.PlaylistRepository.AddTrackToPlaylist(playlistTrackModel)
 }

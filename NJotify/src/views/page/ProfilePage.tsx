@@ -32,10 +32,10 @@ const ProfilePage: React.FC = () => {
             <span className={style.subtitle}>Public Playlist</span>
           </div>
           <div className={style.flex}>
+            {/* <AlbumCard/>
             <AlbumCard/>
             <AlbumCard/>
-            <AlbumCard/>
-            <AlbumCard/>
+            <AlbumCard/> */}
           </div>
           <div className={style["flex-between"]}>
             <span className={style.subtitle}>Following</span>

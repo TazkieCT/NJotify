@@ -13,6 +13,8 @@ const Modal: React.FC<Modal> = ({ isOpen, onRequestClose, onSave }) => {
 
   const handleSave = () => {
     onSave(title, description);
+    setTitle("");
+    setDescription("");
     onRequestClose();
   };
 
