@@ -8,10 +8,10 @@ const SearchPage = () => {
         <div className={style['recent']}>
           <span className={style.header}>Recent Searches</span>
           <div className={style.flex}>
+            {/* <AlbumCard/>
             <AlbumCard/>
             <AlbumCard/>
-            <AlbumCard/>
-            <AlbumCard/>
+            <AlbumCard/> */}
           </div>
         </div>
         <div className={style['browse']}>

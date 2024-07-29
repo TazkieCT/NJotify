@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"image"
+	"image/jpeg"
 	"image/png"
 	"net/smtp"
 	"os"
@@ -167,17 +168,37 @@ func SavePicture(path string, data []byte, userId string) (string, error) {
 		return "", fmt.Errorf("failed to create directory: %w", err)
 	}
 
-	img, _, err := image.Decode(bytes.NewReader(data))
+	img, format, err := image.Decode(bytes.NewReader(data))
 	if err != nil {
 		return "", fmt.Errorf("failed to decode image: %w", err)
 	}
+
+	switch format {
+	case "jpeg", "jpg":
+		ext = ".jpg"
+		fileName = fmt.Sprintf("%s_%s%s", now, userId, ext)
+		filePath = filepath.Join(path, fileName)
+	case "png":
+		ext = ".png"
+	default:
+		return "", fmt.Errorf("unsupported image format: %s", format)
+	}
+
 	outFile, err := os.Create(filePath)
 	if err != nil {
 		return "", fmt.Errorf("failed to create file: %w", err)
 	}
 	defer outFile.Close()
 
-	err = png.Encode(outFile, img)
+	switch format {
+	case "jpeg", "jpg":
+		err = jpeg.Encode(outFile, img, nil)
+	case "png":
+		err = png.Encode(outFile, img)
+	default:
+		return "", fmt.Errorf("unsupported image format: %s", format)
+	}
+
 	if err != nil {
 		return "", fmt.Errorf("failed to encode image: %w", err)
 	}
