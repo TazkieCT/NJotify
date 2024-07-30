@@ -5,9 +5,9 @@ import (
 )
 
 type UserResponse struct {
-	Id       uuid.UUID `json='id'`
+	Id       uuid.UUID `json="id"`
 	Username string    `json:"username,omitEmpty"`
-	Email    string    `json='email'`
+	Email    string    `json="email"`
 	Gender   string    `json:"gender,omitEmpty"`
 	Dob      string    `json:"dob,omitEmpty"`
 	Country  string    `json:"country,omitEmpty"`

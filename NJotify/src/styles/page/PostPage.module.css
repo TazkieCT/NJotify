@@ -22,6 +22,7 @@
     background: url('https://static.vecteezy.com/system/resources/previews/012/996/500/original/cartoon-nature-landscape-night-time-background-free-vector.jpg');
     background-size: cover;
     background-repeat: no-repeat;
+    background-position: center;
     display: flex;
     flex-direction: column;
 }
@@ -44,6 +45,9 @@
 
 .flex{
     display: flex;
+}
+
+.center{
     align-items: center;
 }
 

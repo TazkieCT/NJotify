@@ -61,7 +61,7 @@ func (controller *PlaylistController) GetPlaylistById(ctx *gin.Context) {
 }
 
 func (controller *PlaylistController) AddTrackPlaylist(ctx *gin.Context) {
-	addTrackPlaylistRequest := request.AddTrackToPlaylist{}
+	addTrackPlaylistRequest := request.TrackToPlaylist{}
 	err := ctx.ShouldBindJSON(&addTrackPlaylistRequest)
 	helper.CheckPanic(err)
 
@@ -71,5 +71,32 @@ func (controller *PlaylistController) AddTrackPlaylist(ctx *gin.Context) {
 		Status: "Ok",
 		Data:   nil,
 	}
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *PlaylistController) DeleteTrackPlaylist(ctx *gin.Context) {
+	addTrackPlaylistRequest := request.TrackToPlaylist{}
+	err := ctx.ShouldBindJSON(&addTrackPlaylistRequest)
+	helper.CheckPanic(err)
+
+	controller.playlistService.RemoveTrackToPlaylist(addTrackPlaylistRequest)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *PlaylistController) GetPlaylistsByArtist(ctx *gin.Context) {
+	idPlaylist := ctx.Param("artistId")
+
+	playlistResponse := controller.playlistService.GetPlaylistsByArtist(idPlaylist)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   playlistResponse,
+	}
+
 	ctx.JSON(http.StatusOK, WebResponse)
 }

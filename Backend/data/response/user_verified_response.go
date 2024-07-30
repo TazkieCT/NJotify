@@ -5,7 +5,7 @@ import (
 )
 
 type UserVerifiedResponse struct {
-	Id       uuid.UUID `json='id'`
+	Id       uuid.UUID `json:"id"`
 	Username string    `json:"username,omitEmpty"`
 	Role     string    `json:"role"`
 }

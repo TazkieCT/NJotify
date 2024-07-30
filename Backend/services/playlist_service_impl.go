@@ -1,6 +1,8 @@
 package services
 
 import (
+	"time"
+
 	"github.com/TazkieCT/njotify/data/request"
 	"github.com/TazkieCT/njotify/data/response"
 	"github.com/TazkieCT/njotify/helper"
@@ -74,7 +76,7 @@ func (r *PlaylistServiceImpl) GetPlaylistById(id string) response.PlaylistUser {
 	return playlistUser
 }
 
-func (c *PlaylistServiceImpl) AddTrackToPlaylist(trackPlaylist request.AddTrackToPlaylist) {
+func (c *PlaylistServiceImpl) AddTrackToPlaylist(trackPlaylist request.TrackToPlaylist) {
 	err := c.Validate.Struct(trackPlaylist)
 	helper.CheckPanic(err)
 
@@ -84,10 +86,37 @@ func (c *PlaylistServiceImpl) AddTrackToPlaylist(trackPlaylist request.AddTrackT
 	playlistId, err := uuid.Parse(trackPlaylist.Playlist)
 	helper.CheckPanic(err)
 
+	now := time.Now().Format("20060102")
+
 	playlistTrackModel := model.PlaylistTrack{
 		PlaylistId: playlistId,
 		TrackId:    trackId,
+		AddedAt:    now,
 	}
 
 	c.PlaylistRepository.AddTrackToPlaylist(playlistTrackModel)
+}
+
+func (d *PlaylistServiceImpl) RemoveTrackToPlaylist(trackPlaylist request.TrackToPlaylist) {
+	err := d.Validate.Struct(trackPlaylist)
+	helper.CheckPanic(err)
+	d.PlaylistRepository.DeletePlaylistTrack(trackPlaylist)
+}
+
+func (r *PlaylistServiceImpl) GetPlaylistsByArtist(id string) []response.PlaylistUser {
+	playlists := r.PlaylistRepository.GetPlaylistsByArtist(id)
+
+	var playlistUsers []response.PlaylistUser
+	for _, playlist := range playlists {
+		playlistUser := response.PlaylistUser{
+			Id:    playlist.Id.String(),
+			User:  playlist.User.Username,
+			Name:  playlist.PlaylistName,
+			Image: playlist.PlaylistImage,
+			Desc:  playlist.PlaylistDesc,
+		}
+		playlistUsers = append(playlistUsers, playlistUser)
+	}
+
+	return playlistUsers
 }

@@ -77,8 +77,8 @@ const GetVerified = () => {
       console.log(response.data);
       changeSetting("menu");
     } catch (error) {
-      setErrorMessage("Error, please try again.");
-      console.error("Verification error:", error);
+      setErrorMessage("Your request is currently pending. Please wait while we process it.");
+      // console.error("Verification error:", error);
     }
   };
 
@@ -90,54 +90,61 @@ const GetVerified = () => {
             <GrPrevious />
           </span>
         </div>
-        <span className={`${style.title} ${style["mb-1"]} ${style["bold"]}`}>
-          Get Verified
-        </span>
-        <div className={`${style["flex"]} ${style["gap-1"]}`}>
-          <div className={style["flex-column"]}>
-            <label htmlFor="file-upload" className={style["custom-file-upload"]}>
-              <div className={`${style['flex-column']} ${style['gray']}`}>
-                <SlCamera size={100} />
-                <span>Upload Banner Image</span>
-              </div>
-            </label>
-            <input 
-              id="file-upload" 
-              type="file" 
-              className={`${style['image-input']} ${style["file-input"]}`} 
-              onChange={handleFileChange}
-            />
-          </div>
-          <div className={`${style["flex-column"]} ${style.between} ${style['w-full']}`}>
-            <div className={`${style["flex-column"]}`}>
-              <span className={style.small}>Current Role:</span>
-              <span className={`${style.small} ${style["mb-1"]} ${style["bold"]}`}>
-                {user.Role}
-              </span>
-            </div>
-            <div className={style.form}>
-              <form className={`${style["flex-column"]} ${style["gap-1"]}`} onSubmit={handleSubmit}>
-                <div className={`${style["mb-1"]} ${style["flex-column"]}`}>
-                  <label className={style.small} htmlFor="about">
-                    About You
-                  </label>
-                  <textarea 
-                    id="about" 
-                    name="about" 
-                    className={`${style["input"]}`} 
-                    rows={5}
-                    value={about}
-                    onChange={(e) => setAbout(e.target.value)}
-                  />
+        {user.Role !== "artist" && (
+          <>
+          <span className={`${style.title} ${style["mb-1"]} ${style["bold"]}`}>
+            Get Verified
+          </span>
+          <div className={`${style["flex"]} ${style["gap-1"]}`}>
+            <div className={style["flex-column"]}>
+              <label htmlFor="file-upload" className={style["custom-file-upload"]}>
+                <div className={`${style['flex-column']} ${style['gray']}`}>
+                  <SlCamera size={100} />
+                  <span>Upload Banner Image</span>
                 </div>
-                {errorMessage && <span className={style["error-message"]}>{errorMessage}</span>}
-                <button type="submit" className={style["submit-button"]}>
-                  Get Verified
-                </button>
-              </form>
+              </label>
+              <input 
+                id="file-upload" 
+                type="file" 
+                className={`${style['image-input']} ${style["file-input"]}`} 
+                onChange={handleFileChange}
+              />
+            </div>
+            <div className={`${style["flex-column"]} ${style.between} ${style['w-full']}`}>
+              <div className={`${style["flex-column"]}`}>
+                <span className={style.small}>Current Role:</span>
+                <span className={`${style.small} ${style["mb-1"]} ${style["bold"]}`}>
+                  {user.Role}
+                </span>
+              </div>
+              <div className={style.form}>
+                <form className={`${style["flex-column"]} ${style["gap-1"]}`} onSubmit={handleSubmit}>
+                  <div className={`${style["mb-1"]} ${style["flex-column"]}`}>
+                    <label className={style.small} htmlFor="about">
+                      About You
+                    </label>
+                    <textarea 
+                      id="about" 
+                      name="about" 
+                      className={`${style["input"]}`} 
+                      rows={5}
+                      value={about}
+                      onChange={(e) => setAbout(e.target.value)}
+                    />
+                  </div>
+                  {errorMessage && <span className={style["error-message"]}>{errorMessage}</span>}
+                  <button type="submit" className={style["submit-button"]}>
+                    Get Verified
+                  </button>
+                </form>
+              </div>
             </div>
           </div>
-        </div>
+          </>
+        )}
+        {user.Role === "artist" && (
+          <span className={style['already']}>You are already verified as an artist.</span>
+        )}
       </div>
     </>
   );

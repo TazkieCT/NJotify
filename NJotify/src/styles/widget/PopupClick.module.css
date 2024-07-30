@@ -3,11 +3,13 @@
   background-color: #282828;
   z-index: 1000;
   padding: 5px;
+  gap: 5px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   pointer-events: auto;
   border-radius: 0.2rem;
   display: flex;
   flex-direction: column;
+  color: #FFFFFFE6;
 }
 
 .context-menu-button {

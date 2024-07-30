@@ -23,18 +23,21 @@ func main() {
 	albumRepository := repository.NewAlbumRepositoryImpl(db)
 	trackRepository := repository.NewTrackRepositoryImpl(db)
 	playlistRepository := repository.NewPlaylistRepositoryImpl(db)
+	artistRepository := repository.NewArtistRepositoryImpl(db)
 
 	userService := services.NewUserServiceImpl(userRepository, validator)
 	albumService := services.NewAlbumServiceImpl(albumRepository, validator)
 	trackService := services.NewTrackServiceImpl(trackRepository, validator)
 	playlistService := services.NewPlaylistServiceImpl(playlistRepository, validator)
+	artistService := services.NewArtistServiceImpl(artistRepository, validator)
 
 	userController := controller.NewUserController(userService)
 	albumController := controller.NewAlbumController(albumService)
 	trackController := controller.NewTrackController(trackService)
 	playlistController := controller.NewPlaylistController(playlistService)
+	artistController := controller.NewArtistController(artistService)
 
-	routers := router.NewRouter(userController, albumController, trackController, playlistController)
+	routers := router.NewRouter(userController, albumController, trackController, playlistController, artistController)
 	server := &http.Server{
 		Addr:    ":8888",
 		Handler: routers,

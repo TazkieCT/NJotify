@@ -1,8 +1,8 @@
 interface trackAlbum {
-    song_id : string;
-    song_artist : string;
-    song_name : string;
-    song_album : string;
-    song_file : string;
-    song_image : string;
+    track_id : string;
+    track_artist : string;
+    track_name : string;
+    track_album : string;
+    track_file : string;
+    track_image : string;
 }

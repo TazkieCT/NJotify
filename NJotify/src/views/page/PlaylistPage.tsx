@@ -1,7 +1,7 @@
-import { FaPlay } from "react-icons/fa6"
-import Footer from "../../components/layout/Footer"
-import style from "../../styles/page/TrackPage.module.css"
-import { RxDotsHorizontal } from "react-icons/rx"
+import { FaPlay } from "react-icons/fa6";
+import Footer from "../../components/layout/Footer";
+import style from "../../styles/page/TrackPage.module.css";
+import { RxDotsHorizontal } from "react-icons/rx";
 import { BsPlusCircle } from "react-icons/bs";
 import { LuList } from "react-icons/lu";
 import { LuClock3 } from "react-icons/lu";
@@ -9,12 +9,11 @@ import SongRowPlaylist from "../../components/widget/SongRowPlaylist";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-import SongRow from "../../components/widget/SongRow";
-
 
 const PlaylistPage = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
   const [playlist, setPlaylist] = useState<playlist>();
+  const [tracks, setTracks] = useState<trackPlaylist[]>([]);
 
   const fetchPlaylist = async () => {
     try {
@@ -26,8 +25,18 @@ const PlaylistPage = () => {
     }
   };
 
+  const fetchTrack = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-track-playlist/${playlistId}`);
+      setTracks(response.data.data);
+    } catch (error) {
+      console.error("Error fetching track!", error);
+    }
+  };
+
   useEffect(() => {
     fetchPlaylist();
+    fetchTrack();
   }, [playlistId]);
 
   return (
@@ -45,37 +54,36 @@ const PlaylistPage = () => {
           </div>
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>
-            <div className={`${style['pad-lu']}`}>
-                <div className={`${style['flex-between']}`}>
-                    <div className={`${style['flex']} ${style['gap-20']}`}>
-                        <span className={style['play-btn']}><FaPlay/></span>
-                        <span className={style.medium}><BsPlusCircle/></span>
-                        <span className={style.medium}><RxDotsHorizontal/></span>
-                    </div>
-                    <div className={style['menu-item']}>List <span><LuList/></span></div>
-                </div>
-            </div>
-            <div className={`${style['pad-lu']} ${style['flex-col']}`}>
-              <div className={style["song-row"]}>
-                <div className={style["song-number-playlist"]}>#</div>
-                <div className={style["song-name-playlist"]}>
-                  <div className={style.artist}>Title</div>
-                </div>
-                <div className={style["song-album-playlist"]}>Album</div>
-                <div className={style["song-date-playlist"]}>Date added</div>
-                <div className={style["song-duration-playlist"]}><LuClock3/></div>
+          <div className={`${style['pad-lu']}`}>
+            <div className={`${style['flex-between']}`}>
+              <div className={`${style['flex']} ${style['gap-20']}`}>
+                <span className={style['play-btn']}><FaPlay /></span>
+                <span className={style.medium}><BsPlusCircle /></span>
+                <span className={style.medium}><RxDotsHorizontal /></span>
               </div>
-              <hr className={`${style.hr} ${style['mb-2']}`}/>
-              <SongRowPlaylist/>
-              <SongRowPlaylist/>
-              <SongRowPlaylist/>
-              <SongRowPlaylist/>
+              <div className={style['menu-item']}>List <span><LuList /></span></div>
             </div>
+          </div>
+          <div className={`${style['pad-lu']} ${style['flex-col']}`}>
+            <div className={style["song-row"]}>
+              <div className={style["song-number-playlist"]}>#</div>
+              <div className={style["song-name-playlist"]}>
+                <div className={style.artist}>Title</div>
+              </div>
+              <div className={style["song-album-playlist"]}>Album</div>
+              <div className={style["song-date-playlist"]}>Date added</div>
+              <div className={style["song-duration-playlist"]}><LuClock3 /></div>
+            </div>
+            <hr className={`${style.hr} ${style['mb-2']}`} />
+            {tracks && tracks.map((track, index) => (
+              <SongRowPlaylist key={track.track_id} playlist_id={playlist?.playlist_id} track={track} index={index + 1} fetchTrack={fetchTrack} />
+            ))}
+          </div>
         </div>
-        <Footer/>
+        <Footer />
       </div>
     </div>
   )
 }
 
-export default PlaylistPage
+export default PlaylistPage;

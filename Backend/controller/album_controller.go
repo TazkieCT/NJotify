@@ -86,8 +86,9 @@ func (controller *AlbumController) GetAllAlbum(ctx *gin.Context) {
 }
 
 func (controller *AlbumController) GetAllAlbumByArtist(ctx *gin.Context) {
-	// GANTI JADI GET BY ARTIST BELUM
-	albumResponse := controller.albumService.GetAllAlbum()
+	idArtist := ctx.Param("artistId")
+	albumResponse := controller.albumService.GetAlbumByArtist(idArtist)
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",

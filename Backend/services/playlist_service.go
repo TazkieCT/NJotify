@@ -9,5 +9,7 @@ type PlaylistService interface {
 	CreatePlaylist(playlist request.CreatePlaylistRequest)
 	GetPlaylistByUser(id string) []response.PlaylistUser
 	GetPlaylistById(id string) response.PlaylistUser
-	AddTrackToPlaylist(trackPlaylist request.AddTrackToPlaylist)
+	AddTrackToPlaylist(trackPlaylist request.TrackToPlaylist)
+	RemoveTrackToPlaylist(trackPlaylist request.TrackToPlaylist)
+	GetPlaylistsByArtist(id string) []response.PlaylistUser
 }

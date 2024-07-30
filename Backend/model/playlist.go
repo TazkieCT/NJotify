@@ -9,4 +9,5 @@ type Playlist struct {
 	PlaylistImage string    `gorm:"type:text;default:public\\image\\Album_Default.png"`
 	PlaylistName  string    `gorm:"type:varchar(255);not null"`
 	PlaylistDesc  string    `gorm:"type:text;not null"`
+	PlaylistTrack []PlaylistTrack
 }

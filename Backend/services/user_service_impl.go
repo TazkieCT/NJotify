@@ -223,7 +223,7 @@ func (r *UserServiceImpl) GetAllVerifiedUser() []response.UserVerifiedResponse {
 }
 
 func (u *UserServiceImpl) SetArtist(id string) {
-	u.UserRepository.SetArtist(id)
+	u.UserRepository.AcceptVerify(id)
 }
 
 func (d *UserServiceImpl) RemoveArtist(id string) {

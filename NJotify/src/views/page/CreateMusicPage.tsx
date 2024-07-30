@@ -97,15 +97,15 @@ const CreateMusicPage = () => {
     return newErrors.length === 0;
   };
 
-  const toBase64 = (file: File | null) => new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    if (file) {
-        reader.readAsDataURL(file);
-    }
-    // @ts-ignore
-    reader.onload = () => resolve(reader.result.split(',')[1]);
-    reader.onerror = error => reject(error);
-  });
+  // const toBase64 = (file: File | null) => new Promise((resolve, reject) => {
+  //   const reader = new FileReader();
+  //   if (file) {
+  //       reader.readAsDataURL(file);
+  //   }
+  //   // @ts-ignore
+  //   reader.onload = () => resolve(reader.result.split(',')[1]);
+  //   reader.onerror = error => reject(error);
+  // });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

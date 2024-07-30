@@ -4,4 +4,5 @@ interface albumCard {
     album_name: string;
     album_type: string;
     album_image: string;
+    album_time: string;
 }

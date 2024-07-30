@@ -68,11 +68,12 @@ func (r *AlbumServiceImpl) GetAlbumByArtist(id string) []response.AlbumCard {
 	var albumCards []response.AlbumCard
 	for _, album := range albums {
 		albumCard := response.AlbumCard{
-			Id:     album.Id.String(),
-			Artist: album.Artist.User.Username,
-			Name:   album.AlbumName,
-			Type:   album.AlbumType,
-			Image:  album.AlbumImage,
+			Id:        album.Id.String(),
+			Artist:    album.Artist.User.Username,
+			Name:      album.AlbumName,
+			Type:      album.AlbumType,
+			Image:     album.AlbumImage,
+			CreatedAt: album.CreatedAt.String(),
 		}
 		albumCards = append(albumCards, albumCard)
 	}
@@ -86,11 +87,12 @@ func (r *AlbumServiceImpl) GetAllAlbum() []response.AlbumCard {
 	var albumCards []response.AlbumCard
 	for _, album := range albums {
 		albumCard := response.AlbumCard{
-			Id:     album.Id.String(),
-			Artist: album.Artist.User.Username,
-			Name:   album.AlbumName,
-			Type:   album.AlbumType,
-			Image:  album.AlbumImage,
+			Id:        album.Id.String(),
+			Artist:    album.Artist.User.Username,
+			Name:      album.AlbumName,
+			Type:      album.AlbumType,
+			Image:     album.AlbumImage,
+			CreatedAt: album.CreatedAt.String(),
 		}
 		albumCards = append(albumCards, albumCard)
 	}
@@ -102,11 +104,12 @@ func (r *AlbumServiceImpl) GetAlbumById(id string) response.AlbumCard {
 	album := r.AlbumRepository.GetAlbumById(id)
 
 	albumCard := response.AlbumCard{
-		Id:     album.Id.String(),
-		Artist: album.Artist.User.Username,
-		Name:   album.AlbumName,
-		Type:   album.AlbumType,
-		Image:  album.AlbumImage,
+		Id:        album.Id.String(),
+		Artist:    album.Artist.User.Username,
+		Name:      album.AlbumName,
+		Type:      album.AlbumType,
+		Image:     album.AlbumImage,
+		CreatedAt: album.CreatedAt.String(),
 	}
 
 	return albumCard

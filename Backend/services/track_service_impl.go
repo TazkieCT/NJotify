@@ -53,3 +53,57 @@ func (r *TrackServiceImpl) GetTrackByAlbum(album_id string) []response.TrackAlbu
 
 	return trackAlbums
 }
+
+func (r *TrackServiceImpl) GetTrackByPlaylist(playlist_id string) []response.TrackPlaylist {
+	tracks := r.TrackRepository.GetTrackByPlaylist(playlist_id)
+
+	var trackPlaylists []response.TrackPlaylist
+	for _, track := range tracks {
+		// fmt.Println("Artist : " + track.ArtistName)
+		// fmt.Println(track)
+		trackAlbum := response.TrackPlaylist{
+			Id:         track.IdTrack,
+			Artist:     track.ArtistName,
+			Name:       track.TrackName,
+			File:       track.FileTrack,
+			AlbumName:  track.AlbumName,
+			AlbumImage: track.AlbumImage,
+			AddedAt:    track.AddedAtPlaylistTrack,
+		}
+		trackPlaylists = append(trackPlaylists, trackAlbum)
+	}
+
+	return trackPlaylists
+}
+
+func (r *TrackServiceImpl) GetTrackByArtist(artist_id string) []response.TrackArtist {
+	tracks := r.TrackRepository.GetTrackByArtist(artist_id)
+
+	var trackArtists []response.TrackArtist
+	for _, track := range tracks {
+		// fmt.Println("Artist : " + track.TrackName)
+		// fmt.Println(track)
+		trackArtist := response.TrackArtist{
+			Id:         track.IdTrack,
+			Name:       track.TrackName,
+			File:       track.FileTrack,
+			AlbumImage: track.AlbumImage,
+		}
+		trackArtists = append(trackArtists, trackArtist)
+	}
+
+	return trackArtists
+}
+
+func (r *TrackServiceImpl) GetTrackById(id string) response.TrackArtist {
+	track := r.TrackRepository.GetTrackById(id)
+
+	trackArtist := response.TrackArtist{
+		Id:         track.Id.String(),
+		Name:       track.TrackName,
+		File:       track.TrackFile,
+		AlbumImage: track.Album.AlbumImage,
+	}
+
+	return trackArtist
+}

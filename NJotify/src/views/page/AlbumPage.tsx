@@ -74,7 +74,7 @@ const AlbumPage = () => {
               </div>
               <hr className={`${style.hr} ${style['mb-2']}`}/>
               {tracks && tracks.map((track, index) => (
-              <SongRowAlbum key={track.song_id} track={track} index={index + 1} />
+              <SongRowAlbum key={track.track_id} track={track} index={index + 1} />
               ))}
             </div>
             <div className={`${style['pad-lu']}`}>

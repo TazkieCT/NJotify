@@ -1,10 +1,23 @@
-import React, { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import style from "../../styles/widget/SongRow.module.css";
-import PopupClick from "./PopupClick";
+import PopupPlaylist from "./PopupPlaylist";
 
-const SongRowPlaylist: React.FC = () => {
+const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_id?: string, track: trackPlaylist, index: number, fetchTrack: () => void }) => {
   const [popUp, setPopUp] = useState<{ visible: boolean, x: number, y: number }>({ visible: false, x: 0, y: 0 });
   const songRowRef = useRef<HTMLDivElement>(null);
+
+  const formatDate = (dateString: string) => {
+    const options: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', day: 'numeric' };
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', options);
+  };
+
+  const [tracks, setTracks] = useState<trackPlaylist>()
+  useEffect(() => {
+    if (track) {
+      setTracks(track)
+    }
+  }, [track]);
 
   const handlePopUpMenu = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -34,27 +47,26 @@ const SongRowPlaylist: React.FC = () => {
 
   return (
     <>
-      <div className={style["song-row"]} onContextMenu={handlePopUpMenu} ref={songRowRef}>
-        <div className={style["song-number-playlist"]}>1</div>
+      <div className={style["song-row"]} ref={songRowRef} onContextMenu={handlePopUpMenu}>
+        <div className={style["song-number-playlist"]}>{index}</div>
         <div className={`${style["song-name-playlist"]} ${style["flex"]}`}>
           <div className={style["image-playlist"]}>
             <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS_OYDA4kKvYjecstExcHZ59U9odQMFVNO4XA&s"
-              alt=""
+              src={`http://localhost:8888/${tracks?.track_album_image}`}
             />
           </div>
           <div className="">
-            <div className={style.name}>APOLOGY</div>
-            <div className={style.artist}>XIO</div>
+            <div className={style.name}>{tracks?.track_name}</div>
+            <div className={style.artist}>{tracks?.track_artist}</div>
           </div>
         </div>
-        <div className={style["song-album-playlist"]}>as long as you're okay</div>
-        <div className={style["song-date-playlist"]}>Jul 25, 2024</div>
+        <div className={style["song-album-playlist"]}>{tracks?.track_album_name}</div>
+        <div className={style["song-date-playlist"]}>{tracks?.added_at ? formatDate(tracks.added_at) : ''}</div>
         <div className={style["song-duration-playlist"]}>1:47</div>
       </div>
-      {/* {popUp.visible && (
-        <PopupClick x={popUp.x} y={popUp.y} onClose={handleClosePopUpMenu} />
-      )} */}
+      {popUp.visible && playlist_id && (
+        <PopupPlaylist x={popUp.x} y={popUp.y} track_id={track.track_id} playlist_id={playlist_id} onClose={handleClosePopUpMenu} fetchTrack={fetchTrack} />
+      )}
     </>
   );
 };

@@ -52,7 +52,7 @@ func (r *UserRepositoryImpl) GetVerifyUser() []model.User {
 	return users
 }
 
-func (u *UserRepositoryImpl) SetArtist(id string) {
+func (u *UserRepositoryImpl) AcceptVerify(id string) {
 	var user model.User
 	result := u.Db.Model(&user).Where("id = ?", id).Update("roles", "artist")
 	helper.CheckPanic(result.Error)

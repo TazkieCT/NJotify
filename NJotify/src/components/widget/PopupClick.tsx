@@ -8,14 +8,14 @@ interface Playlist {
   playlist_name: string;
 }
 
-interface PopupClickProps {
+interface PopupClickAttributes {
   x: number;
   y: number;
-  song_id: string;
+  track_id: string;
   onClose: () => void;
 }
 
-const PopupClick: React.FC<PopupClickProps> = ({ x, y, song_id }) => {
+const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
   const offsetX = -330;
   const offsetY = -35;
   const { user } = useUserStore();
@@ -33,7 +33,7 @@ const PopupClick: React.FC<PopupClickProps> = ({ x, y, song_id }) => {
   const handleAdd = async (playlistId: string) => {
     const data = {
       playlist_id: playlistId,
-      track_id: song_id,
+      track_id: track_id,
     };
   
     try {
@@ -56,15 +56,17 @@ const PopupClick: React.FC<PopupClickProps> = ({ x, y, song_id }) => {
       <div className={style["context-menu-button"]}>
         Add to playlist
       </div>
-      <div className={style["dropdown-menu"]}>
-        <ul>
-          {playlists && playlists.map(playlist => (
-            <li key={playlist.playlist_id} onClick={() => handleAdd(playlist.playlist_id)}>
-              {playlist.playlist_name}
-            </li>
-          ))}
-        </ul>
-      </div>
+      {playlists && (
+        <div className={style["dropdown-menu"]}>
+          <ul>
+            {playlists.map(playlist => (
+              <li key={playlist.playlist_id} onClick={() => handleAdd(playlist.playlist_id)}>
+                {playlist.playlist_name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };

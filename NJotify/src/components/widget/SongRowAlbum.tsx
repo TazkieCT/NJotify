@@ -36,12 +36,12 @@ const SongRowAlbum = ({ track, index } : { track: trackAlbum, index: number }) =
     <div className={style["song-row"]} onContextMenu={handlePopUpMenu} ref={songRowRef}>
       <div className={style["song-number-album"]}>{index}</div>
       <div className={style["song-name-album"]}>
-        <div className={style.name}>{track.song_name}</div>
-        <div className={style.artist}>{track.song_artist}</div>
+        <div className={style.name}>{track.track_name}</div>
+        <div className={style.artist}>{track.track_artist}</div>
       </div>
       <div className={style["song-duration-album"]}>1:47</div>
       {popUp.visible && (
-        <PopupClick x={popUp.x} song_id={track.song_id} y={popUp.y} onClose={handleClosePopUpMenu} />
+        <PopupClick x={popUp.x} track_id={track.track_id} y={popUp.y} onClose={handleClosePopUpMenu} />
       )}
     </div>
   );

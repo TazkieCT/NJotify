@@ -322,3 +322,8 @@ input[type="checkbox"] {
 .gap-cb{
     gap: 1.5rem;
 }
+
+.already{
+    font-size: 3rem;
+    margin: 2rem 0;
+}

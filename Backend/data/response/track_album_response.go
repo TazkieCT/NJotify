@@ -1,10 +1,10 @@
 package response
 
 type TrackAlbum struct {
-	Id     string `json:"song_id"`
-	Artist string `json:"song_artist"`
-	Name   string `json:"song_name"`
-	Album  string `json:"song_album"`
-	File   string `json:"song_file"`
-	Image  string `json:"song_image"`
+	Id     string `json:"track_id"`
+	Artist string `json:"track_artist"`
+	Name   string `json:"track_name"`
+	Album  string `json:"track_album"`
+	File   string `json:"track_file"`
+	Image  string `json:"track_image"`
 }
