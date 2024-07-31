@@ -13,5 +13,6 @@ type User struct {
 	Dob       string    `gorm:"type:date;default:NULL"`
 	Country   string    `gorm:"type:varchar(255)"`
 	Roles     string    `gorm:"type:varchar(255);default:listener"`
+	Profile   string    `gorm:"type:varchar(255);default:NULL"`
 	Playlists []Playlist
 }

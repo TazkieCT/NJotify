@@ -114,3 +114,18 @@ func (r *AlbumServiceImpl) GetAlbumById(id string) response.AlbumCard {
 
 	return albumCard
 }
+
+func (r *AlbumServiceImpl) GetAlbumByTrack(id string) response.AlbumCard {
+	album := r.AlbumRepository.GetAlbumByTrack(id)
+
+	albumCard := response.AlbumCard{
+		Id:        album.Id.String(),
+		Artist:    album.Artist.User.Username,
+		Name:      album.AlbumName,
+		Type:      album.AlbumType,
+		Image:     album.AlbumImage,
+		CreatedAt: album.CreatedAt.String(),
+	}
+
+	return albumCard
+}

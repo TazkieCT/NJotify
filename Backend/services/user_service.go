@@ -6,10 +6,11 @@ import (
 )
 
 type UserService interface {
-	CreateUser(user request.CreateUserRequest)
-	ActivateUser(email string)
-	GetUser(email string, password string) response.UserResponse
+	CreateUser(user request.CreateUserRequest) string
+	ActivateUser(email string) string
+	GetUser(email string, password string) (response.UserResponse, string)
 	EditUser(user request.EditUserRequest)
+	EditProfile(user request.EditProfileRequest)
 	GetVerifiedUser(user request.GetVerifiedUser)
 	GetAllVerifiedUser() []response.UserVerifiedResponse
 	SetArtist(id string)

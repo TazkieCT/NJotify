@@ -95,15 +95,16 @@ func (r *TrackServiceImpl) GetTrackByArtist(artist_id string) []response.TrackAr
 	return trackArtists
 }
 
-func (r *TrackServiceImpl) GetTrackById(id string) response.TrackArtist {
+func (r *TrackServiceImpl) GetTrackById(id string) response.TrackById {
 	track := r.TrackRepository.GetTrackById(id)
 
-	trackArtist := response.TrackArtist{
+	trackById := response.TrackById{
 		Id:         track.Id.String(),
 		Name:       track.TrackName,
 		File:       track.TrackFile,
 		AlbumImage: track.Album.AlbumImage,
+		AlbumName:  track.Album.AlbumName,
 	}
 
-	return trackArtist
+	return trackById
 }

@@ -25,6 +25,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
+}
+
+.profile-avatar:hover .change-avatar {
+    display: flex;
+}
+
+.change-avatar {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    background-color: rgba(19, 19, 19, 0.74);
+}
+
+.change-avatar span {
+    color: white;
+    text-align: center;
+}
+
+.medium{
+    font-size: 2.5rem;
 }
 
 .profile-image {

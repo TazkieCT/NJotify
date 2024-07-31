@@ -63,3 +63,9 @@ func (d *UserRepositoryImpl) RemoveArtist(id string) {
 	result := d.Db.Where("user_id = ?", id).Delete(&artist)
 	helper.CheckPanic(result.Error)
 }
+
+func (u *UserRepositoryImpl) EditProfile(id string, image string) {
+	var user model.User
+	result := u.Db.Model(&user).Where("id = ?", id).Update("profile", image)
+	helper.CheckPanic(result.Error)
+}

@@ -34,11 +34,15 @@ func (r *ArtistServiceImpl) GetArtistByTrack(id string) response.ArtistByTrackRe
 	artist := r.ArtistRepository.GetArtistByTrack(id)
 
 	artistResponse := response.ArtistByTrackResponse{
-		Id:          artist.User.Id.String(),
+		Id:          artist.UserId.String(),
 		Name:        artist.User.Username,
 		BannerImage: artist.BannerImage,
 		About:       artist.About,
 	}
+
+	// fmt.Println(artistResponse.Name)
+	// fmt.Println(artistResponse.About)
+	// fmt.Println(artistResponse.BannerImage)
 
 	return artistResponse
 }

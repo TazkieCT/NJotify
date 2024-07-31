@@ -115,7 +115,7 @@ const LoginForm = () => {
             className={`${styles.link2} ${styles.pointer}`}
             onClick={(e) => {
               e.preventDefault();
-              navigate("/forget");
+              navigate("/forgot");
             }}
           >
             Forgot your password?

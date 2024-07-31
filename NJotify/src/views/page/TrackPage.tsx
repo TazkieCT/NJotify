@@ -14,41 +14,70 @@ const TrackPage = () => {
   const [artist, setArtist] = useState<artistByTrack>();
   const [tracks, setTracks] = useState<trackArtist[]>([]);
   const [mainTrack, setMainTrack] = useState<trackArtist>();
+  const [album, setAlbum] = useState<albumCard>();
 
-  useEffect(() => {
-    const fetchArtist = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8888/artist-track/${trackId}`);
-        setArtist(response.data.data);
-        // console.log(artist);
-      } catch (error) {
-        console.error("Error fetching artist!", error);
-      }
-    };
+  const fetchAlbum = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-album-track/${mainTrack?.track_id}`);
+      setAlbum(response.data.data);
+    } catch (error) {
+      console.error("Error fetching album!", error);
+    }
+  };
+
+  const fetchArtist = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/artist-track/${trackId}`);
+      setArtist(response.data.data);
+      // console.log(artist);
+    } catch (error) {
+      console.error("Error fetching artist!", error);
+    }
+  };
+  
+  const fetchMainTrack = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-track-id/${trackId}`);
+      setMainTrack(response.data.data);
+      console.log(response.data.data);
+      console.log(mainTrack);
+    } catch (error) {
+      console.error("Error fetching track!", error);
+    }
+  };
+  
+  const fetchTrack = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-track-artist/${artist?.artist_id}`);
+      setTracks(response.data.data);
+      // console.log(tracks);
+    } catch (error) {
+      console.error("Error fetching track!", error);
+    }
+  };
     
-    const fetchMainTrack = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8888/get-track-id/${trackId}`);
-        setMainTrack(response.data.data);
-      } catch (error) {
-        console.error("Error fetching track!", error);
-      }
-    };
-
-    const fetchTrack = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8888/get-track-artist/${artist?.artist_id}`);
-        setTracks(response.data.data);
-      } catch (error) {
-        console.error("Error fetching track!", error);
-      }
-    };
+  useEffect(() => {
 
     fetchArtist();
     fetchMainTrack();
+    fetchAlbum();
     fetchTrack();
+
   }, [trackId]);
-  useEffect
+  
+  const transformToTrackAlbum = (track: trackArtist): trackAlbum => ({
+    track_id: track.track_id,
+    track_artist: artist?.artist_name || "Unknown Artist",
+    track_name: track.track_name,
+    track_album: track.track_album,
+    track_file: track.track_file,
+    track_image: track.track_image,
+  });
+
+  const formatYear = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.getFullYear();
+  };
 
   return (
     <div className={style.container}>
@@ -60,7 +89,7 @@ const TrackPage = () => {
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Song</span>
             <span className={`${style.title} ${style['mb-2']}`}>{mainTrack?.track_name}</span>
-            <span className={style.small}>{artist?.artist_name} · always · 2020 · 2:52 · 57,419,073</span>
+            <span className={style.small}>{artist?.artist_name} · {mainTrack?.track_album} · {album?.album_time ? formatYear(album.album_time) : ''} · 2:52 · 57,419,073</span>
           </div>
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>
@@ -83,14 +112,14 @@ const TrackPage = () => {
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>
               <div className={style['player-info']}>
-                <img className={style['album-cover']} src="https://upload.wikimedia.org/wikipedia/id/thumb/c/c2/Radwimps_Your_Name_Album_Cover.jpg/220px-Radwimps_Your_Name_Album_Cover.jpg" alt="" />
+                <img className={style['album-cover']} src={`http://localhost:8888/${album?.album_image}`} alt="" />
                 <div className={style.col}>
-                  <span className={style['album-subtitle']}>From the single</span>
-                  <span className={style['album-title']}>ALBUM_NAME</span>
+                  <span className={style['album-subtitle']}>From the {album?.album_type}</span>
+                  <span className={style['album-title']}>{album?.album_name}</span>
                 </div>
               </div>
               <div className={`${style['mt-sl']}`}>
-                {/* <SongRowAlbum track={mainTrack} index={1}/> */}
+                {mainTrack && <SongRowAlbum track={transformToTrackAlbum(mainTrack)} index={1} />}
               </div>
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>

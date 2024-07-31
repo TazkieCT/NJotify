@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"fmt"
 	"net/http"
+	"time"
 
 	"github.com/TazkieCT/njotify/data/request"
 	"github.com/TazkieCT/njotify/data/response"
@@ -28,7 +28,19 @@ func (controller *UserController) CreateUser(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&createUserRequest)
 	helper.CheckPanic(err)
 
-	controller.userService.CreateUser(createUserRequest)
+	token := controller.userService.CreateUser(createUserRequest)
+
+	http.SetCookie(ctx.Writer, &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Expires:  time.Now().Add(1 * time.Hour),
+		Domain:   "localhost",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode,
+	})
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
@@ -38,31 +50,50 @@ func (controller *UserController) CreateUser(ctx *gin.Context) {
 }
 
 func (controller *UserController) ActivateUser(ctx *gin.Context) {
-	fmt.Println("Activate User...")
-
 	activateUserRequest := request.ActivateUserRequest{}
 	err := ctx.ShouldBindJSON(&activateUserRequest)
 	helper.CheckPanic(err)
 
-	controller.userService.ActivateUser(activateUserRequest.Email)
+	token := controller.userService.ActivateUser(activateUserRequest.Email)
+
+	http.SetCookie(ctx.Writer, &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Expires:  time.Now().Add(1 * time.Hour),
+		Domain:   "localhost",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode,
+	})
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   nil,
 	}
-
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
 func (controller *UserController) GetUser(ctx *gin.Context) {
-	// fmt.Println("Find user...")
 	createUserRequest := request.CreateUserRequest{}
 	if err := ctx.ShouldBindJSON(&createUserRequest); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
 
-	userResponse := controller.userService.GetUser(createUserRequest.Email, createUserRequest.Password)
+	userResponse, token := controller.userService.GetUser(createUserRequest.Email, createUserRequest.Password)
+
+	http.SetCookie(ctx.Writer, &http.Cookie{
+		Name:     "token",
+		Value:    token,
+		Expires:  time.Now().Add(1 * time.Hour),
+		Domain:   "localhost",
+		Path:     "/",
+		HttpOnly: true,
+		Secure:   false,
+		SameSite: http.SameSiteLaxMode,
+	})
 
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
@@ -78,7 +109,6 @@ func (controller *UserController) UpdateUser(ctx *gin.Context) {
 	err := ctx.ShouldBindJSON(&editUserRequest)
 	helper.CheckPanic(err)
 
-	controller.userService.EditUser(editUserRequest)
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
@@ -96,6 +126,23 @@ func (controller *UserController) GetVerified(ctx *gin.Context) {
 	}
 
 	controller.userService.GetVerifiedUser(getVerifiedUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) EditProfile(ctx *gin.Context) {
+	editProfileRequest := request.EditProfileRequest{}
+	if err := ctx.ShouldBindJSON(&editProfileRequest); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	controller.userService.EditProfile(editProfileRequest)
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",

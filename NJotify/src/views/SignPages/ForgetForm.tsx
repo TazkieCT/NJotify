@@ -29,7 +29,7 @@ const ForgetForm = () => {
             className={`${styles.link2} ${styles.pointer}`}
             onClick={(e) => {
               e.preventDefault();
-              navigate("/");
+              navigate("/login");
             }}
           >
             Cancel

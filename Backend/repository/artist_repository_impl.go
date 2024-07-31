@@ -23,7 +23,7 @@ func (r *ArtistRepositoryImpl) GetArtist(id string) model.Artist {
 
 func (r *ArtistRepositoryImpl) GetArtistByTrack(id string) model.Artist {
 	var track model.Track
-	result := r.Db.Preload("Album.Artist").First(&track, "id = ?", id)
+	result := r.Db.Preload("Album.Artist").Preload("Album.Artist.User").First(&track, "id = ?", id)
 	helper.CheckPanic(result.Error)
 	return track.Album.Artist
 }

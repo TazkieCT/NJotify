@@ -110,3 +110,16 @@ func (controller *AlbumController) GetAllAlbumById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, WebResponse)
 }
+
+func (controller *AlbumController) GetAlbumByTrack(ctx *gin.Context) {
+	idTrack := ctx.Param("trackId")
+
+	albumResponse := controller.albumService.GetAlbumByTrack(idTrack)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   albumResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}

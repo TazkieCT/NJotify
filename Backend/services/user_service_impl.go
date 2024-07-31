@@ -36,7 +36,7 @@ func NewUserServiceImpl(userRepository repository.UserRepository, validate *vali
 	}
 }
 
-func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
+func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) string {
 	err := c.Validate.Struct(user)
 	helper.CheckPanic(err)
 
@@ -62,9 +62,7 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
 	}
 	c.UserRepository.SignIn(userModel)
 
-	// Generate JWT token
-	token, err := generateJWT(user.Email)
-	helper.CheckPanic(err)
+	token := GenerateJWT(user.Email)
 
 	// Send email activation (masih belum bisa)
 	to := []string{user.Email}
@@ -74,15 +72,20 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) {
 
 	err_email := sendMail(to, cc, subject, message)
 	helper.CheckPanic(err_email)
+
+	return token
 }
 
-func (u *UserServiceImpl) ActivateUser(email string) {
+func (u *UserServiceImpl) ActivateUser(email string) string {
 	user := u.UserRepository.GetUser(email)
 	user.Roles = "listener"
 	u.UserRepository.Activate(user)
+
+	token := GenerateJWT(email)
+	return token
 }
 
-func (r *UserServiceImpl) GetUser(email string, password string) response.UserResponse {
+func (r *UserServiceImpl) GetUser(email string, password string) (response.UserResponse, string) {
 	email = strings.ToLower(email)
 	result := r.UserRepository.GetUser(email)
 	err := bcrypt.CompareHashAndPassword([]byte(result.Password), []byte(password))
@@ -98,15 +101,14 @@ func (r *UserServiceImpl) GetUser(email string, password string) response.UserRe
 		Role:     result.Roles,
 	}
 
-	return user
+	// Generate a new token
+	token := GenerateJWT(email)
+	return user, token
 }
 
 func (u *UserServiceImpl) EditUser(userReq request.EditUserRequest) {
-	// fmt.Println("AAAAAAAAAAA")
 	user := u.UserRepository.GetUser(userReq.Email)
-	// fmt.Println("BBBBBBBBBBBB")
 	u.UserRepository.EditUser(user, userReq)
-	// fmt.Println("CCCCCCCCCCCC")
 }
 
 func sendMail(to []string, cc []string, subject, message string) error {
@@ -127,18 +129,36 @@ func sendMail(to []string, cc []string, subject, message string) error {
 	return nil
 }
 
-func generateJWT(email string) (string, error) {
+func GenerateJWT(email string) string {
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
 		"email": email,
 		"exp":   time.Now().Add(time.Hour * time.Duration(constant.JWT_EXPIRATION_HOURS)).Unix(),
 	})
 
 	tokenString, err := token.SignedString([]byte(constant.JWT_SECRET_KEY))
+	helper.CheckPanic(err)
+
+	return tokenString
+}
+
+func ValidateJWT(tokenString string) (string, error) {
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return constant.JWT_SECRET_KEY, nil
+	})
+
 	if err != nil {
 		return "", err
 	}
 
-	return tokenString, nil
+	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
+		email := claims["email"].(string)
+		return email, nil
+	}
+
+	return "", fmt.Errorf("invalid token")
 }
 
 func (c *UserServiceImpl) GetVerifiedUser(user request.GetVerifiedUser) {
@@ -155,6 +175,12 @@ func (c *UserServiceImpl) GetVerifiedUser(user request.GetVerifiedUser) {
 	}
 
 	c.UserRepository.GetVerified(artist)
+}
+
+func (u *UserServiceImpl) EditProfile(user request.EditProfileRequest) {
+	imagePath, err := SavePicture("./public/image/", user.Image, user.UserId)
+	helper.CheckPanic(err)
+	u.UserRepository.EditProfile(user.UserId, imagePath)
 }
 
 func SavePicture(path string, data []byte, userId string) (string, error) {

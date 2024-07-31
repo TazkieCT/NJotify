@@ -10,4 +10,5 @@ type AlbumRepository interface {
 	GetAllAlbum() []model.Album
 	GetAlbumByArtist(id string) []model.Album
 	GetAlbumById(id string) model.Album
+	GetAlbumByTrack(id string) model.Album
 }

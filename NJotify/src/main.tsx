@@ -27,6 +27,7 @@ import ArtistPage from './views/page/ArtistPage';
 import ProfilePage from './views/page/ProfilePage';
 import TrackPage from './views/page/TrackPage';
 import CreateMusicPage from './views/page/CreateMusicPage';
+import ForgetForm from './views/signPages/ForgetForm';
 
 // const router = createBrowserRouter([
 //   {
@@ -65,6 +66,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Routes>
               <Route path="/login" element={<LoginForm/>}/>
               <Route path="/register" element={<RegisForm/>}/>
+              <Route path="/forgot" element={<ForgetForm/>}/>
               <Route path="/reset" element={<ResetPasswordForm/>}/>
               <Route element={<HomeLayout/>}>
                   <Route path="/" element={<HomePage/>}/>

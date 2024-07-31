@@ -12,4 +12,5 @@ type AlbumService interface {
 	GetAllAlbum() []response.AlbumCard
 	GetAlbumById(id string) response.AlbumCard
 	GetAlbumByArtist(id string) []response.AlbumCard
+	GetAlbumByTrack(id string) response.AlbumCard
 }

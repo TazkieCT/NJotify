@@ -58,6 +58,7 @@ const GetVerified = () => {
     try {
       let base64File = '';
       if (file) {
+        // @ts-ignore
         base64File = await toBase64(file);
       }
 

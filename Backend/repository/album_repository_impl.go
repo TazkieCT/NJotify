@@ -44,3 +44,10 @@ func (r *AlbumRepositoryImpl) GetAlbumById(id string) model.Album {
 	helper.CheckPanic(result.Error)
 	return album
 }
+
+func (r *AlbumRepositoryImpl) GetAlbumByTrack(id string) model.Album {
+	var track model.Track
+	result := r.Db.Preload("Album").Where("id = ?", id).First(&track)
+	helper.CheckPanic(result.Error)
+	return track.Album
+}

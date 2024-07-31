@@ -14,4 +14,5 @@ type UserRepository interface {
 	GetVerifyUser() []model.User
 	AcceptVerify(id string)
 	RemoveArtist(id string)
+	EditProfile(id string, image string)
 }
