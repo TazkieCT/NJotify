@@ -2,17 +2,19 @@ import { useEffect, useState, useRef } from "react";
 import style from "../../styles/layoutPage/HeaderBar.module.css";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import usePageStore from "../../state/PageState";
-import CustomSearchBar from "../widget/CustomeSearchBar";
+import CustomSearchBar from "../widget/CustomSearchBar";
 import { PiArrowSquareOut } from "react-icons/pi";
 import useSettingStore from "../../state/SettingState";
 import { useNavigate } from "react-router-dom";
+import useUserStore from "../../state/AccountState";
 
 const HeaderBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const page = usePageStore((state) => state.page);
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
-  const changeSetting = useSettingStore((state) => state.changeSetting)
+  const changeSetting = useSettingStore((state) => state.changeSetting);
+  const { user } = useUserStore();
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -75,7 +77,7 @@ const HeaderBar = () => {
       </div>
       <div className={style['profile-container']} ref={menuRef}>
         <div className={style['profile-button']} onClick={toggleMenu}>
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ3Vd_kqZn53ok20t0tVuAukGAHOzVLWvNgKw&s" className={style['profile-icon']} alt="Profile Icon" />
+          <img src={`http://localhost:8888/${user.Profile}`} className={style['profile-icon']} alt="Profile Icon" />
         </div>
         {isMenuOpen && (
           <div className={style['profile-menu']}>

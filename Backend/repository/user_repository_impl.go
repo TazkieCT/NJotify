@@ -20,9 +20,15 @@ func (c *UserRepositoryImpl) SignIn(user model.User) {
 	helper.CheckPanic(result.Error)
 }
 
-func (u *UserRepositoryImpl) Activate(user model.User) {
-	user.Roles = "listener"
-	result := u.Db.Save(&user)
+func (u *UserRepositoryImpl) Activate(email string) {
+	var user model.User
+	result := u.Db.Model(&user).Where("email = ?", email).Update("roles", "listener")
+	helper.CheckPanic(result.Error)
+}
+
+func (u *UserRepositoryImpl) ChangePass(email string, password string) {
+	var user model.User
+	result := u.Db.Model(&user).Where("email = ?", email).Update("password", password)
 	helper.CheckPanic(result.Error)
 }
 

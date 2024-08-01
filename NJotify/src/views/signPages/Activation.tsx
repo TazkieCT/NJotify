@@ -1,0 +1,56 @@
+import SignNav from "../../components/layout/SignNav";
+import SignFooter from "../../components/layout/SignFooter";
+import styles from "../../styles/signPage/Sign.module.css";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+const Activation = () => {
+  const navigate = useNavigate();
+  const { tokenId } = useParams<{ tokenId: string }>();
+  const [ status, setStatus ] = useState("Loading...");
+
+  useEffect(() => {
+
+    const activate = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8888/activate/${tokenId}`);
+        if(response){
+            setStatus("Active")
+            localStorage.removeItem("activate-token");
+            navigate("/login");
+        }
+      } catch (error) {
+        console.error("Error fetching album!", error);
+      }
+    };
+
+    activate();
+  }, [tokenId]);
+
+  return (
+    <>
+      <div className={styles.container}>
+        <SignNav />
+        <div className={styles.card}>
+          <h1 className={styles["title"]}>Your Account</h1>
+          <div className={styles["form"]}>
+              <h1>{status}</h1>
+          </div>
+          <a
+            className={`${styles.link2} ${styles.pointer}`}
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/login");
+            }}
+          >
+            Back to Login
+          </a>
+        </div>
+        <SignFooter />
+      </div>
+    </>
+  );
+};
+
+export default Activation;

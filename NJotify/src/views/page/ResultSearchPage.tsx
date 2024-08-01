@@ -1,8 +1,11 @@
 import AlbumCard from "../../components/widget/AlbumCard"
 import ArtistCard from "../../components/widget/ArtistCard"
 import TopSearch from "../../components/widget/TopSearch"
+import useSearchStore from "../../state/SearchState"
 import style from "../../styles/page/SearchPage.module.css"
 const ResultSearchPage = () => {
+  const { search } = useSearchStore();
+
   return (
     <div className={style.container}>
       <div className={style.content}>
@@ -14,7 +17,7 @@ const ResultSearchPage = () => {
                     <img src="https://images.genius.com/a58e5ee2431e0a3cc0838d0820501a23.1000x1000x1.jpg" className={style['top-image']} alt="" />
                 </div>
                 <div className={`highlight-text`}>
-                    <span className={style['highlight-title']}>Nama Yang Kueja</span>
+                    <span className={style['highlight-title']}>{search}</span>
                     <span className={style['highlight-subtitle']}>Artist · <span className={style['name-subtitle']}>Sang Artis</span></span>
                 </div>
             </div>

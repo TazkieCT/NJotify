@@ -1,6 +1,7 @@
 package controller
 
 import (
+	"fmt"
 	"net/http"
 	"time"
 
@@ -22,56 +23,106 @@ func NewUserController(service services.UserService) *UserController {
 }
 
 func (controller *UserController) CreateUser(ctx *gin.Context) {
-	// fmt.Println("Creating New User...")
-
 	createUserRequest := request.CreateUserRequest{}
 	err := ctx.ShouldBindJSON(&createUserRequest)
-	helper.CheckPanic(err)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
 
 	token := controller.userService.CreateUser(createUserRequest)
 
-	http.SetCookie(ctx.Writer, &http.Cookie{
-		Name:     "token",
-		Value:    token,
-		Expires:  time.Now().Add(1 * time.Hour),
-		Domain:   "localhost",
-		Path:     "/",
-		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
-	})
+	ctx.SetCookie(
+		"activation_token",
+		token,
+		86400,
+		"/",
+		"localhost",
+		false,
+		false,
+	)
 
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
-		Data:   nil,
+		Data:   token,
 	}
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
 func (controller *UserController) ActivateUser(ctx *gin.Context) {
-	activateUserRequest := request.ActivateUserRequest{}
-	err := ctx.ShouldBindJSON(&activateUserRequest)
-	helper.CheckPanic(err)
+	token := ctx.Param("token")
 
-	token := controller.userService.ActivateUser(activateUserRequest.Email)
+	email, err := helper.ValidateJWT(token)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token", "error": err.Error()})
+		return
+	}
 
-	http.SetCookie(ctx.Writer, &http.Cookie{
-		Name:     "token",
-		Value:    token,
-		Expires:  time.Now().Add(1 * time.Hour),
-		Domain:   "localhost",
-		Path:     "/",
-		HttpOnly: true,
-		Secure:   false,
-		SameSite: http.SameSiteLaxMode,
-	})
+	// fmt.Printf("User email: %s\n", email)
+
+	controller.userService.ActivateUser(email)
 
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   nil,
 	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) Forgot(ctx *gin.Context) {
+	email := ctx.Param("email")
+
+	fmt.Printf("User email: %s\n", email)
+
+	token := controller.userService.Forgot(email)
+
+	ctx.SetCookie(
+		"reset_token",
+		token,
+		86400,
+		"/",
+		"localhost",
+		false,
+		false,
+	)
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   token,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) Reset(ctx *gin.Context) {
+	var resetPass request.ResetPassword
+	err := ctx.ShouldBindJSON(&resetPass)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+	// fmt.Println("AAAAAAAAAAA")
+	// fmt.Println(resetPass.ResetToken)
+	email, err := helper.ValidateJWT(resetPass.ResetToken)
+	if err != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token", "error": err.Error()})
+		return
+	}
+	// fmt.Println("BBBBBBBBBBBBB")
+
+	controller.userService.ResetPassword(email, resetPass.Password)
+	// fmt.Println("ssssssssssss")
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
@@ -87,7 +138,7 @@ func (controller *UserController) GetUser(ctx *gin.Context) {
 	http.SetCookie(ctx.Writer, &http.Cookie{
 		Name:     "token",
 		Value:    token,
-		Expires:  time.Now().Add(1 * time.Hour),
+		Expires:  time.Now().Add(24 * time.Hour),
 		Domain:   "localhost",
 		Path:     "/",
 		HttpOnly: true,
@@ -165,7 +216,6 @@ func (controller *UserController) GetAllVerifiedUser(ctx *gin.Context) {
 
 func (controller *UserController) SetArtist(ctx *gin.Context) {
 	idUser := ctx.Param("userId")
-	// fmt.Println(idUser)
 
 	controller.userService.SetArtist(idUser)
 	WebResponse := response.WebResponse{
@@ -179,7 +229,6 @@ func (controller *UserController) SetArtist(ctx *gin.Context) {
 
 func (controller *UserController) RemoveArtist(ctx *gin.Context) {
 	idUser := ctx.Param("userId")
-	// fmt.Println(idUser)
 
 	controller.userService.RemoveArtist(idUser)
 	WebResponse := response.WebResponse{

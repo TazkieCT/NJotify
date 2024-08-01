@@ -7,7 +7,8 @@ import (
 
 type UserService interface {
 	CreateUser(user request.CreateUserRequest) string
-	ActivateUser(email string) string
+	ActivateUser(email string)
+	ChangePass(email string, password string)
 	GetUser(email string, password string) (response.UserResponse, string)
 	EditUser(user request.EditUserRequest)
 	EditProfile(user request.EditProfileRequest)
@@ -15,4 +16,6 @@ type UserService interface {
 	GetAllVerifiedUser() []response.UserVerifiedResponse
 	SetArtist(id string)
 	RemoveArtist(id string)
+	Forgot(email string) string
+	ResetPassword(email string, pass string)
 }

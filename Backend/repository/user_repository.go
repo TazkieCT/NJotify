@@ -7,7 +7,8 @@ import (
 
 type UserRepository interface {
 	SignIn(user model.User)
-	Activate(user model.User)
+	Activate(email string)
+	ChangePass(email string, password string)
 	GetUser(email string) model.User
 	EditUser(user model.User, edit request.EditUserRequest)
 	GetVerified(user model.Artist)

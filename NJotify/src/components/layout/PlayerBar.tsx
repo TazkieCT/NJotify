@@ -17,14 +17,15 @@ import { useNavigate } from 'react-router-dom';
 
 const PlayerBar = () => {
   const navigate = useNavigate();
-  const { isOpen, changeContent, openRightTab, closeRightTab } = useRightTabStore();
+  const { content, isOpen, changeContent, openRightTab, closeRightTab } = useRightTabStore();
+  const {  } = useRightTabStore();
 
-  const handleClickRightBar = (content: string) => {
+  const handleClickRightBar = (contents: string) => {
+    changeContent(contents);
     if (!isOpen) {
-      changeContent(content);
       openRightTab();
-    } 
-    if (isOpen) {
+    }
+    if (isOpen && contents == content) {
       closeRightTab()
     }
   };

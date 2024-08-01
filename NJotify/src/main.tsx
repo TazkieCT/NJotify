@@ -28,6 +28,8 @@ import ProfilePage from './views/page/ProfilePage';
 import TrackPage from './views/page/TrackPage';
 import CreateMusicPage from './views/page/CreateMusicPage';
 import ForgetForm from './views/signPages/ForgetForm';
+import Activation from './views/signPages/Activation';
+import ResultSearchPage from './views/page/ResultSearchPage';
 
 // const router = createBrowserRouter([
 //   {
@@ -67,13 +69,15 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
               <Route path="/login" element={<LoginForm/>}/>
               <Route path="/register" element={<RegisForm/>}/>
               <Route path="/forgot" element={<ForgetForm/>}/>
-              <Route path="/reset" element={<ResetPasswordForm/>}/>
+              <Route path="/activate/:tokenId" element={<Activation/>}/>
+              <Route path="/reset/:tokenId" element={<ResetPasswordForm/>}/>
               <Route element={<HomeLayout/>}>
                   <Route path="/" element={<HomePage/>}/>
                   <Route path="/home" element={<HomePage/>} />
                   <Route path="/showmore" element={<ShowMorePage/>}/>
                   <Route path="/artist" element={<ArtistPage/>} />
                   <Route path="/search" element={<SearchPage/>}/>
+                  <Route path="/result" element={<ResultSearchPage/>}/>
                   <Route path="/profile" element={<ProfilePage/>}/>
                   <Route path="/track/:trackId" element={<TrackPage/>}/>
                   <Route path="/album/:albumId" element={<AlbumPage/>}/>

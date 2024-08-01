@@ -8,6 +8,7 @@ interface User {
   Dob: string;
   Country: string;
   Role: string;
+  Profile: string;
 }
 
 interface UserStore {
@@ -24,6 +25,7 @@ const useUserStore = create<UserStore>((set) => ({
     Dob: '',
     Country: '',
     Role: '',
+    Profile: '',
   },
   setUser: (user) => set({ user : user }),
 }));

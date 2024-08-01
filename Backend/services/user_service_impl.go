@@ -6,19 +6,16 @@ import (
 	"image"
 	"image/jpeg"
 	"image/png"
-	"net/smtp"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
 
-	"github.com/TazkieCT/njotify/constant"
 	"github.com/TazkieCT/njotify/data/request"
 	"github.com/TazkieCT/njotify/data/response"
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
 	"github.com/TazkieCT/njotify/repository"
-	"github.com/dgrijalva/jwt-go"
 	"github.com/go-playground/validator/v10"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
@@ -58,31 +55,29 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) string {
 		Username: username,
 		Email:    user.Email,
 		Password: string(hashedPassword),
-		Roles:    "listener",
+		Roles:    "inactive",
 	}
 	c.UserRepository.SignIn(userModel)
 
-	token := GenerateJWT(user.Email)
+	token := helper.GenerateJWT(user.Email)
 
-	// Send email activation (masih belum bisa)
 	to := []string{user.Email}
 	cc := []string{"tazkiect25@gmail.com"}
 	subject := "Account Activation - NJotify"
-	message := fmt.Sprintf("Hello,\n\nYour account has been created. Here is your activation token: %s\n\nThank you!", token)
+	message := fmt.Sprintf("Hello,\n\nYour account has been created. Here is your activation link: \nhttp://localhost:5173/activate/%s\n\nThank you!", token)
 
-	err_email := sendMail(to, cc, subject, message)
+	err_email := helper.SendMail(to, cc, subject, message)
 	helper.CheckPanic(err_email)
 
 	return token
 }
 
-func (u *UserServiceImpl) ActivateUser(email string) string {
-	user := u.UserRepository.GetUser(email)
-	user.Roles = "listener"
-	u.UserRepository.Activate(user)
+func (u *UserServiceImpl) ActivateUser(email string) {
+	u.UserRepository.Activate(email)
+}
 
-	token := GenerateJWT(email)
-	return token
+func (u *UserServiceImpl) ChangePass(email string, password string) {
+	u.UserRepository.ChangePass(email, password)
 }
 
 func (r *UserServiceImpl) GetUser(email string, password string) (response.UserResponse, string) {
@@ -99,66 +94,17 @@ func (r *UserServiceImpl) GetUser(email string, password string) (response.UserR
 		Dob:      result.Dob,
 		Country:  result.Country,
 		Role:     result.Roles,
+		Image:    result.Profile,
 	}
 
 	// Generate a new token
-	token := GenerateJWT(email)
+	token := helper.GenerateJWT(email)
 	return user, token
 }
 
 func (u *UserServiceImpl) EditUser(userReq request.EditUserRequest) {
 	user := u.UserRepository.GetUser(userReq.Email)
 	u.UserRepository.EditUser(user, userReq)
-}
-
-func sendMail(to []string, cc []string, subject, message string) error {
-	body := "From: " + constant.CONFIG_SENDER_NAME + "\n" +
-		"To: " + strings.Join(to, ",") + "\n" +
-		"Cc: " + strings.Join(cc, ",") + "\n" +
-		"Subject: " + subject + "\n\n" +
-		message
-
-	auth := smtp.PlainAuth("", constant.CONFIG_AUTH_EMAIL, constant.CONFIG_AUTH_PASSWORD, constant.CONFIG_SMTP_HOST)
-	smtpAddr := fmt.Sprintf("%s:%d", constant.CONFIG_SMTP_HOST, constant.CONFIG_SMTP_PORT)
-
-	err := smtp.SendMail(smtpAddr, auth, constant.CONFIG_AUTH_EMAIL, append(to, cc...), []byte(body))
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func GenerateJWT(email string) string {
-	token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
-		"email": email,
-		"exp":   time.Now().Add(time.Hour * time.Duration(constant.JWT_EXPIRATION_HOURS)).Unix(),
-	})
-
-	tokenString, err := token.SignedString([]byte(constant.JWT_SECRET_KEY))
-	helper.CheckPanic(err)
-
-	return tokenString
-}
-
-func ValidateJWT(tokenString string) (string, error) {
-	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
-		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
-			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
-		}
-		return constant.JWT_SECRET_KEY, nil
-	})
-
-	if err != nil {
-		return "", err
-	}
-
-	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
-		email := claims["email"].(string)
-		return email, nil
-	}
-
-	return "", fmt.Errorf("invalid token")
 }
 
 func (c *UserServiceImpl) GetVerifiedUser(user request.GetVerifiedUser) {
@@ -254,4 +200,25 @@ func (u *UserServiceImpl) SetArtist(id string) {
 
 func (d *UserServiceImpl) RemoveArtist(id string) {
 	d.UserRepository.RemoveArtist(id)
+}
+
+func (c *UserServiceImpl) Forgot(email string) string {
+	token := helper.GenerateJWT(email)
+
+	to := []string{email}
+	cc := []string{"tazkiect25@gmail.com"}
+	subject := "Password Reset - NJotify"
+	message := fmt.Sprintf("Hello,\n\nReset your password here:\nhttp://localhost:5173/reset/%s\n\nThank you!", token)
+
+	err_email := helper.SendMail(to, cc, subject, message)
+	helper.CheckPanic(err_email)
+
+	return token
+}
+
+func (u *UserServiceImpl) ResetPassword(email string, pass string) {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
+	helper.CheckPanic(err)
+
+	u.UserRepository.ChangePass(email, string(hashedPassword))
 }

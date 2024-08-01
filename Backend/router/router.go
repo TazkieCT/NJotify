@@ -26,7 +26,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 
 	// UNTUK USER
 	router.POST("/signup", userController.CreateUser)
-	router.POST("/activate", userController.ActivateUser)
+	router.GET("/activate/:token", userController.ActivateUser)
 	router.POST("/login", userController.GetUser)
 	router.POST("/edit", userController.UpdateUser)
 	router.POST("/edit-profile", userController.EditProfile)
@@ -34,6 +34,8 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/admin", userController.GetAllVerifiedUser)
 	router.GET("/set-artist/:userId", userController.SetArtist)
 	router.GET("/remove-artist/:userId", userController.RemoveArtist)
+	router.GET("/forgot/:email", userController.Forgot)
+	router.POST("/reset", userController.Reset)
 
 	// UNTUK ALBUM
 	router.POST("/create-music", albumController.CreateAlbum)
@@ -55,6 +57,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/get-playlist-artist/:artistId", playlistController.GetPlaylistsByArtist)
 	router.POST("/add-track-playlist", playlistController.AddTrackPlaylist)
 	router.POST("/remove-track-playlist", playlistController.DeleteTrackPlaylist)
+	router.GET("/delete/:playlistId", playlistController.DeletePlaylist)
 
 	// UNTUK ARTIST
 	router.GET("/artist/:artistId", artistController.GetArtistById)

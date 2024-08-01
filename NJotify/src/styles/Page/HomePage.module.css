@@ -25,6 +25,10 @@
     flex-wrap: wrap;
 }
 
+.wrap{
+    flex-wrap: wrap;
+}
+
 .page-button {
     padding: 5px;
     background-color: #1c1c1c;

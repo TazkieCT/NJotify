@@ -1,10 +1,47 @@
+import { useState } from "react";
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
 import styles from "../../styles/signPage/Sign.module.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import Cookies from 'js-cookie';
 
 const ForgetForm = () => {
+  const [email, setEmail] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
+
+  const validateEmail = (email : string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.target.value);
+  };
+
+  const regis = () => {
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    setError("");
+
+    axios.get(`http://localhost:8888/forgot/${email}`)
+      .then((response) => {
+        const token = response.data.data;
+        Cookies.set('reset-token', token, { expires: 1, path: '/' });
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("There was an error registering!", error);
+      });
+  };
+
+  const handleCancelClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    navigate("/login");
+  };
 
   return (
     <>
@@ -21,16 +58,16 @@ const ForgetForm = () => {
                 className={styles["input-text"]}
                 type="text"
                 placeholder="Email"
+                value={email}
+                onChange={handleInputChange}
               />
+              {error && <p className={styles.error}>{error}</p>}
             </div>
           </div>
-          <button className={styles["button-1"]}>Search</button>
+          <button className={styles["button-1"]} onClick={regis}>Search</button>
           <a
             className={`${styles.link2} ${styles.pointer}`}
-            onClick={(e) => {
-              e.preventDefault();
-              navigate("/login");
-            }}
+            onClick={handleCancelClick}
           >
             Cancel
           </a>

@@ -5,6 +5,7 @@ import styles from "../../styles/signPage/Sign.module.css";
 import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from 'js-cookie';
 
 const RegisForm = () => {
   const [email, setEmail] = useState("");
@@ -57,7 +58,11 @@ const RegisForm = () => {
     axios
       .post("http://localhost:8888/signup", data)
       .then((response) => {
-        console.log(response.data);
+        // console.log(response.data.data);
+
+        const token = response.data.data;
+        Cookies.set('activate-token', token, { expires: 1, path: '/' });
+
         navigate("/login");
       })
       .catch((error) => {
@@ -89,10 +94,7 @@ const RegisForm = () => {
               <input className={styles["input-text"]} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
             </div>
             <div className={styles["group-form"]}>
-              <label
-                className={styles["label-form"]}
-                htmlFor="confirm-password"
-              >
+              <label className={styles["label-form"]} htmlFor="confirm-password">
                 Confirm Password
               </label>
               <input className={styles["input-text"]} type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>

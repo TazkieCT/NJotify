@@ -120,3 +120,7 @@ func (r *PlaylistServiceImpl) GetPlaylistsByArtist(id string) []response.Playlis
 
 	return playlistUsers
 }
+
+func (d *PlaylistServiceImpl) DeletePlaylist(id string) {
+	d.PlaylistRepository.DeletePlaylist(id)
+}

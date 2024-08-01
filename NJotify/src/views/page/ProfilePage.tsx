@@ -20,7 +20,9 @@ const toBase64 = (file: File): Promise<string> =>
 
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserStore();
-  const [profileImage, setProfileImage] = useState("https://guitar.com/wp-content/uploads/2019/10/keshi-hero-image-credit-press@1400x1050.jpg");
+  const [profileImage, setProfileImage] = useState<string>(() => {
+    return `http://localhost:8888/${user.Profile}` || "https://guitar.com/wp-content/uploads/2019/10/keshi-hero-image-credit-press@1400x1050.jpg";
+  });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {

@@ -59,3 +59,9 @@ func (r *PlaylistRepositoryImpl) GetPlaylistsByArtist(artistId string) []model.P
 
 	return playlists
 }
+
+func (d *PlaylistRepositoryImpl) DeletePlaylist(id string) {
+	var playlist model.Playlist
+	result := d.Db.Delete(&playlist, "id = ?", id)
+	helper.CheckPanic(result.Error)
+}

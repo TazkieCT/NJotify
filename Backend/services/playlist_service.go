@@ -12,4 +12,5 @@ type PlaylistService interface {
 	AddTrackToPlaylist(trackPlaylist request.TrackToPlaylist)
 	RemoveTrackToPlaylist(trackPlaylist request.TrackToPlaylist)
 	GetPlaylistsByArtist(id string) []response.PlaylistUser
+	DeletePlaylist(id string)
 }

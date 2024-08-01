@@ -57,6 +57,7 @@ const LoginForm = () => {
         Dob: userData.dob,
         Country: userData.country,
         Role: userData.role,
+        Profile: userData.profile,
       });
 
       if(userData.role === "admin") {

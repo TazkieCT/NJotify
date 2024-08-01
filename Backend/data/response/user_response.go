@@ -12,4 +12,5 @@ type UserResponse struct {
 	Dob      string    `json:"dob,omitEmpty"`
 	Country  string    `json:"country,omitEmpty"`
 	Role     string    `json:"role"`
+	Image    string    `json:"profile"`
 }

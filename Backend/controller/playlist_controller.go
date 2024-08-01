@@ -100,3 +100,15 @@ func (controller *PlaylistController) GetPlaylistsByArtist(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, WebResponse)
 }
+
+func (controller *PlaylistController) DeletePlaylist(ctx *gin.Context) {
+	idPlaylist := ctx.Param("playlistId")
+
+	controller.playlistService.DeletePlaylist(idPlaylist)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+	ctx.JSON(http.StatusOK, WebResponse)
+}
