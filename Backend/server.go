@@ -3,6 +3,7 @@ package main
 import (
 	"net/http"
 
+	"github.com/TazkieCT/njotify/cache"
 	"github.com/TazkieCT/njotify/controller"
 	"github.com/TazkieCT/njotify/database"
 	"github.com/TazkieCT/njotify/helper"
@@ -15,29 +16,34 @@ import (
 
 func main() {
 	db := database.ConnectionDatabase()
+	redis := cache.ConnectRedis()
+
 	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{})
 
 	validator := validator.New()
 
-	userRepository := repository.NewUserRepositoryImpl(db)
-	albumRepository := repository.NewAlbumRepositoryImpl(db)
-	trackRepository := repository.NewTrackRepositoryImpl(db)
-	playlistRepository := repository.NewPlaylistRepositoryImpl(db)
-	artistRepository := repository.NewArtistRepositoryImpl(db)
+	userRepository := repository.NewUserRepositoryImpl(db, redis)
+	albumRepository := repository.NewAlbumRepositoryImpl(db, redis)
+	trackRepository := repository.NewTrackRepositoryImpl(db, redis)
+	playlistRepository := repository.NewPlaylistRepositoryImpl(db, redis)
+	artistRepository := repository.NewArtistRepositoryImpl(db, redis)
+	searchRepository := repository.NewSearchRepositoryImpl(db, redis)
 
 	userService := services.NewUserServiceImpl(userRepository, validator)
 	albumService := services.NewAlbumServiceImpl(albumRepository, validator)
 	trackService := services.NewTrackServiceImpl(trackRepository, validator)
 	playlistService := services.NewPlaylistServiceImpl(playlistRepository, validator)
 	artistService := services.NewArtistServiceImpl(artistRepository, validator)
+	searchService := services.NewSearchServiceImpl(searchRepository, validator, artistRepository, albumRepository, trackRepository, playlistRepository)
 
 	userController := controller.NewUserController(userService)
 	albumController := controller.NewAlbumController(albumService)
 	trackController := controller.NewTrackController(trackService)
 	playlistController := controller.NewPlaylistController(playlistService)
 	artistController := controller.NewArtistController(artistService)
+	searchController := controller.NewSearchController(searchService)
 
-	routers := router.NewRouter(userController, albumController, trackController, playlistController, artistController)
+	routers := router.NewRouter(userController, albumController, trackController, playlistController, artistController, searchController)
 	server := &http.Server{
 		Addr:    ":8888",
 		Handler: routers,

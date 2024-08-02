@@ -155,6 +155,24 @@ func (controller *UserController) GetUser(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
+func (controller *UserController) FetchUser(ctx *gin.Context) {
+	fetchUserRequest := request.ActivateUserRequest{}
+	if err := ctx.ShouldBindJSON(&fetchUserRequest); err != nil {
+		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+		return
+	}
+
+	userResponse := controller.userService.FetchUser(fetchUserRequest.Email)
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   userResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
 func (controller *UserController) UpdateUser(ctx *gin.Context) {
 	editUserRequest := request.EditUserRequest{}
 	err := ctx.ShouldBindJSON(&editUserRequest)
@@ -231,6 +249,18 @@ func (controller *UserController) RemoveArtist(ctx *gin.Context) {
 	idUser := ctx.Param("userId")
 
 	controller.userService.RemoveArtist(idUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) Logout(ctx *gin.Context) {
+	controller.userService.Logout()
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",

@@ -1,5 +1,5 @@
 interface userVerify {
-  Id: string;
+  id: string;
   username: string;
   role: string;
 }

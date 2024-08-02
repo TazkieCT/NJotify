@@ -102,6 +102,24 @@ func (r *UserServiceImpl) GetUser(email string, password string) (response.UserR
 	return user, token
 }
 
+func (r *UserServiceImpl) FetchUser(email string) response.UserResponse {
+	email = strings.ToLower(email)
+	result := r.UserRepository.GetUser(email)
+
+	user := response.UserResponse{
+		Id:       result.Id,
+		Username: result.Username,
+		Email:    result.Email,
+		Gender:   result.Gender,
+		Dob:      result.Dob,
+		Country:  result.Country,
+		Role:     result.Roles,
+		Image:    result.Profile,
+	}
+
+	return user
+}
+
 func (u *UserServiceImpl) EditUser(userReq request.EditUserRequest) {
 	user := u.UserRepository.GetUser(userReq.Email)
 	u.UserRepository.EditUser(user, userReq)
@@ -221,4 +239,8 @@ func (u *UserServiceImpl) ResetPassword(email string, pass string) {
 	helper.CheckPanic(err)
 
 	u.UserRepository.ChangePass(email, string(hashedPassword))
+}
+
+func (d *UserServiceImpl) Logout() {
+	d.UserRepository.Logout()
 }

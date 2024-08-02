@@ -86,16 +86,16 @@ func DamerauLevenshtein(s1, s2 string) int {
 				cost = 1
 			}
 
-			dist[i][j] = min(
+			dist[i][j] = Min(
 				dist[i-1][j]+1,
-				min(
+				Min(
 					dist[i][j-1]+1,
 					dist[i-1][j-1]+cost,
 				),
 			)
 
 			if i > 1 && j > 1 && s1[i-1] == s2[j-2] && s1[i-2] == s2[j-1] {
-				dist[i][j] = min(dist[i][j], dist[i-2][j-2]+cost)
+				dist[i][j] = Min(dist[i][j], dist[i-2][j-2]+cost)
 			}
 		}
 	}
@@ -103,7 +103,7 @@ func DamerauLevenshtein(s1, s2 string) int {
 	return dist[lenS1][lenS2]
 }
 
-func min(a, b int) int {
+func Min(a, b int) int {
 	if a < b {
 		return a
 	}

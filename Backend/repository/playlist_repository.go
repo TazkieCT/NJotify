@@ -13,4 +13,5 @@ type PlaylistRepository interface {
 	DeletePlaylistTrack(trackPlaylist request.TrackToPlaylist)
 	GetPlaylistsByArtist(artistId string) []model.Playlist
 	DeletePlaylist(id string)
+	GetAllPlaylist() []model.Playlist
 }

@@ -13,10 +13,11 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
     if(user){
       setUsers(user)
     }
+    // console.log(user.id)
   })
 
   const accept = () => {
-    axios.get(`http://localhost:8888/set-artist/${user.Id}`)
+    axios.get(`http://localhost:8888/set-artist/${user.id}`)
     .then(response => {
       console.log(response);
       window.location.reload();
@@ -27,7 +28,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
   }
 
   const decline = () => {
-    axios.get(`http://localhost:8888/remove-artist/${user.Id}`)
+    axios.get(`http://localhost:8888/remove-artist/${user.id}`)
     .then(response => {
       console.log(response);
       window.location.reload();

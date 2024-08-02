@@ -5,6 +5,7 @@ import useUserStore from "../../state/AccountState";
 import style from "../../styles/page/ProfilePage.module.css";
 import axios from 'axios';
 import { HiOutlinePencil } from 'react-icons/hi2';
+import PlaylistCardProfile from '../../components/widget/PlaylistCardProfile';
 
 const toBase64 = (file: File): Promise<string> => 
   new Promise((resolve, reject) => {
@@ -21,16 +22,28 @@ const toBase64 = (file: File): Promise<string> =>
 const ProfilePage: React.FC = () => {
   const { user, setUser } = useUserStore();
   const [profileImage, setProfileImage] = useState<string>(() => {
-    return `http://localhost:8888/${user.Profile}` || "https://guitar.com/wp-content/uploads/2019/10/keshi-hero-image-credit-press@1400x1050.jpg";
+    return `http://localhost:8888/${user.Profile}`;
   });
   const fileInputRef = useRef<HTMLInputElement | null>(null);
+  const [playlists, setPlaylists] = useState<playlist[]>([]);
+
+  const fetchPlaylist = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
+      setPlaylists(response.data.data);
+      // console.log(playlists);
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
     }
-  }, [setUser]);
+    fetchPlaylist();
+  }, [setUser, user.Id]);
 
   const handleAvatarClick = () => {
     if (fileInputRef.current) {
@@ -49,8 +62,12 @@ const ProfilePage: React.FC = () => {
           user_id: user.Id,
           image: base64File,
         };
+
+        const email = {
+          email: user.Email,
+        };
   
-        console.log(data);
+        // console.log(data);
     
         const response = await axios.post("http://localhost:8888/edit-profile", data, {
           headers: {
@@ -60,11 +77,25 @@ const ProfilePage: React.FC = () => {
 
         if (response.status === 200) {
           setProfileImage(`data:image/jpeg;base64,${base64File}`);
+          const responses = await axios.post("http://localhost:8888/fetch-user", email)
+          const userData = responses.data.data;
+          // console.log(userData);
+          setUser({
+            Id: userData.Id,
+            Email: userData.Email,
+            Username: userData.username,
+            Gender: userData.gender,
+            Dob: userData.dob,
+            Country: userData.country,
+            Role: userData.role,
+            Profile: userData.profile,
+          });
+          
         } else {
           console.error("Failed to update profile image");
         }
 
-        console.log(response.data);
+        // console.log(response.data);
       } catch (error) {
         console.error("Error uploading profile image:", error);
       }
@@ -99,6 +130,9 @@ const ProfilePage: React.FC = () => {
             <span className={style.subtitle}>Public Playlist</span>
           </div>
           <div className={style.flex}>
+            {playlists && playlists.map(playlists => (
+              <PlaylistCardProfile key={playlists.playlist_id} username={user.Username} playlist={playlists}/>
+            ))}
             {/* <AlbumCard/>
             <AlbumCard/>
             <AlbumCard/>

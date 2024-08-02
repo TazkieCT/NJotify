@@ -7,6 +7,7 @@ import { PiArrowSquareOut } from "react-icons/pi";
 import useSettingStore from "../../state/SettingState";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../state/AccountState";
+import axios from "axios";
 
 const HeaderBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -43,16 +44,6 @@ const HeaderBar = () => {
     setIsMenuOpen(false);
   };
 
-  const logout = () => {
-    const savedUser = localStorage.getItem("user");
-
-    if (savedUser) {
-        localStorage.removeItem("user");
-    }
-    navigate("login");
-    setIsMenuOpen(false);
-  };
-
   const handleManageAccountClick = () => {
     changeSetting('menu');
     window.open('/settings', '_blank');
@@ -65,6 +56,21 @@ const HeaderBar = () => {
   const nextPage = () => {
     navigate(1);
   }
+
+  const logout = async () => {
+    try {
+      const response = await axios.post(`http://localhost:8888/logout`);
+      const savedUser = localStorage.getItem("user");
+
+      if (savedUser) {
+          localStorage.removeItem("user");
+      }
+      navigate("login");
+      setIsMenuOpen(false);
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
 
   return (
     <div className={`${style.header} ${style['flex-between']}`}>

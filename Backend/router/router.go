@@ -8,7 +8,7 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func NewRouter(userController *controller.UserController, albumController *controller.AlbumController, trackController *controller.TrackController, playlistController *controller.PlaylistController, artistController *controller.ArtistController) *gin.Engine {
+func NewRouter(userController *controller.UserController, albumController *controller.AlbumController, trackController *controller.TrackController, playlistController *controller.PlaylistController, artistController *controller.ArtistController, searchController *controller.SearchController) *gin.Engine {
 	router := gin.Default()
 
 	corsMiddleware := cors.New(cors.Config{
@@ -28,6 +28,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.POST("/signup", userController.CreateUser)
 	router.GET("/activate/:token", userController.ActivateUser)
 	router.POST("/login", userController.GetUser)
+	router.POST("/fetch-user", userController.FetchUser)
 	router.POST("/edit", userController.UpdateUser)
 	router.POST("/edit-profile", userController.EditProfile)
 	router.POST("/verify", userController.GetVerified)
@@ -36,6 +37,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/remove-artist/:userId", userController.RemoveArtist)
 	router.GET("/forgot/:email", userController.Forgot)
 	router.POST("/reset", userController.Reset)
+	router.POST("/logout", userController.Logout)
 
 	// UNTUK ALBUM
 	router.POST("/create-music", albumController.CreateAlbum)
@@ -62,6 +64,9 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	// UNTUK ARTIST
 	router.GET("/artist/:artistId", artistController.GetArtistById)
 	router.GET("/artist-track/:trackId", artistController.GetArtistByTrack)
+
+	// UNTUK SEARCH
+	router.GET("/search/:search", searchController.Searching)
 
 	return router
 }

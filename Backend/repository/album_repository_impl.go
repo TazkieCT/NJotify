@@ -3,15 +3,17 @@ package repository
 import (
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
+	"github.com/go-redis/redis"
 	"gorm.io/gorm"
 )
 
 type AlbumRepositoryImpl struct {
-	Db *gorm.DB
+	Db    *gorm.DB
+	Redis *redis.Client
 }
 
-func NewAlbumRepositoryImpl(db *gorm.DB) AlbumRepository {
-	return &AlbumRepositoryImpl{Db: db}
+func NewAlbumRepositoryImpl(db *gorm.DB, redis *redis.Client) AlbumRepository {
+	return &AlbumRepositoryImpl{Db: db, Redis: redis}
 }
 
 func (c *AlbumRepositoryImpl) CreateAlbum(album model.Album) {

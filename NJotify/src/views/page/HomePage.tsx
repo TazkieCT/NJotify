@@ -54,13 +54,11 @@ const HomePage = () => {
           clearTimeout(delayTimeout);
         }
 
-        // Show skeletons before fetching more data
         setIsShowingSkeleton(true);
 
-        // Set a delay before fetching more data
         const newTimeout = setTimeout(() => {
           setPage(prevPage => prevPage + 1);
-        }, 500); // 500ms delay
+        }, 500);
 
         setDelayTimeout(newTimeout);
       }

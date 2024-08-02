@@ -10,4 +10,5 @@ type TrackRepository interface {
 	GetTrackByPlaylist(id string) []model.GetPlaylistTrack
 	GetTrackByArtist(id string) []model.GetArtistTrack
 	GetTrackById(id string) model.Track
+	GetAllTracks() []model.Track
 }

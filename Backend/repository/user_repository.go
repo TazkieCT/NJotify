@@ -16,4 +16,5 @@ type UserRepository interface {
 	AcceptVerify(id string)
 	RemoveArtist(id string)
 	EditProfile(id string, image string)
+	Logout()
 }

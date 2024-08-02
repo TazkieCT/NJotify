@@ -3,15 +3,17 @@ package repository
 import (
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
+	"github.com/go-redis/redis"
 	"gorm.io/gorm"
 )
 
 type TrackRepositoryImpl struct {
-	Db *gorm.DB
+	Db    *gorm.DB
+	Redis *redis.Client
 }
 
-func NewTrackRepositoryImpl(db *gorm.DB) TrackRepository {
-	return &TrackRepositoryImpl{Db: db}
+func NewTrackRepositoryImpl(db *gorm.DB, redis *redis.Client) TrackRepository {
+	return &TrackRepositoryImpl{Db: db, Redis: redis}
 }
 func (c *TrackRepositoryImpl) CreateMusic(music model.Track) {
 	result := c.Db.Create(&music)
@@ -65,4 +67,14 @@ func (r *TrackRepositoryImpl) GetTrackById(id string) model.Track {
 	result := r.Db.Preload("Album").First(&track, "id = ?", id)
 	helper.CheckPanic(result.Error)
 	return track
+}
+
+func (r *TrackRepositoryImpl) GetAllTracks() []model.Track {
+	var tracks []model.Track
+	result := r.Db.Preload("Album").
+		Preload("Album.Artist").
+		Preload("Album.Artist.User").
+		Find(&tracks)
+	helper.CheckPanic(result.Error)
+	return tracks
 }

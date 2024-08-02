@@ -10,6 +10,7 @@ type UserService interface {
 	ActivateUser(email string)
 	ChangePass(email string, password string)
 	GetUser(email string, password string) (response.UserResponse, string)
+	FetchUser(email string) response.UserResponse
 	EditUser(user request.EditUserRequest)
 	EditProfile(user request.EditProfileRequest)
 	GetVerifiedUser(user request.GetVerifiedUser)
@@ -18,4 +19,5 @@ type UserService interface {
 	RemoveArtist(id string)
 	Forgot(email string) string
 	ResetPassword(email string, pass string)
+	Logout()
 }

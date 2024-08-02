@@ -20,7 +20,7 @@ const AdminPage: React.FC = () => {
     axios.get('http://localhost:8888/admin')
       .then(response => {
         setUsers(response.data.data);
-        // console.log(response.data.data)
+        console.log(response.data.data)
       })
       .catch(error => {
         console.error("There was an error fetching the users!", error);
@@ -54,7 +54,7 @@ const AdminPage: React.FC = () => {
             <span className={`${style['bold']}`}>Verify Artist</span>
           </div>
           {users && users.map(users => (
-            <VerifyUser key={users.Id} user={users} />
+            <VerifyUser key={users.id} user={users} />
           ))}
         </div>
       </div>
