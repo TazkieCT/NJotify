@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import style from "../../styles/widget/TopSearch.module.css"
 
 const TopSearch = ({ track } : {track:trackResult}) => {
+  const navigate = useNavigate();
+
   return (
-    <div className={`${style["flex-between"]} ${style["select"]}`}>
+    <div className={`${style["flex-between"]} ${style["select"]}`} onClick={() => {navigate(`/track/${track.track_id}`)}}>
         <div className={style["song-info"]}>
             <img className={`${style["image-song"]}`} src={`http://localhost:8888/${track.track_image}`} alt=""/>
             <div className={style.col}>

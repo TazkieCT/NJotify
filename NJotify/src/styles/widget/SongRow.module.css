@@ -16,6 +16,28 @@
     text-align: center;
 }
 
+.play{
+    display: none;
+}
+
+.song-number:hover .index{
+    display: none;
+}
+
+.song-number:hover .play{
+    display: block;
+    color: white;
+}
+
+.song-number-album:hover .index{
+    display: none;
+}
+
+.song-number-album:hover .play{
+    display: block;
+    color: white;
+}
+
 .song-image {
     flex: 0 0 3rem;
     text-align: center;
@@ -26,6 +48,11 @@
 .song-name {
     flex: 7;
     padding: 0 1rem;
+}
+
+.song-name:hover, .name:hover {
+    color: white;
+    text-decoration: underline;
 }
 
 .song-popularity {

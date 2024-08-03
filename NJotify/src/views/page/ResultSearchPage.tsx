@@ -62,16 +62,18 @@ const ResultSearchPage = () => {
         setResult(data);
 
         let top: TopResult = null;
-        if (data.track && data.track.length > 0) {
+        
+        if (data.track && data.type === "track" && data.track.length > 0) {
           top = { type: 'track', ...data.track[0] };
-        } else if (data.user && data.user.length > 0) {
+        } else if (data.user && data.type === "artist" && data.user.length > 0) {
           top = { type: 'user', ...data.user[0] };
-        } else if (data.album && data.album.length > 0) {
+        } else if (data.album && data.type === "album" && data.album.length > 0) {
           top = { type: 'album', ...data.album[0] };
-        } else if (data.playlist && data.playlist.length > 0) {
+        } else if (data.playlist && data.type === "playlist" && data.playlist.length > 0) {
           top = { type: 'playlist', ...data.playlist[0] };
         }
         setTopResult(top);
+        console.log( response.data.data)
       } catch (error) {
         console.error('Error fetching data:', error);
         setResult({

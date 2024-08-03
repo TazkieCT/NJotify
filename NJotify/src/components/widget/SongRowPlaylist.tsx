@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import style from "../../styles/widget/SongRow.module.css";
 import PopupPlaylist from "./PopupPlaylist";
+import { FaPlay } from "react-icons/fa";
 
 const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_id?: string, track: trackPlaylist, index: number, fetchTrack: () => void }) => {
   const [popUp, setPopUp] = useState<{ visible: boolean, x: number, y: number }>({ visible: false, x: 0, y: 0 });
@@ -48,7 +49,10 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
   return (
     <>
       <div className={style["song-row"]} ref={songRowRef} onContextMenu={handlePopUpMenu}>
-        <div className={style["song-number-playlist"]}>{index}</div>
+        <div className={style["song-number-playlist"]}>
+          <span className={style['index']}>{index}</span>
+          <span className={style['play']}><FaPlay/></span>
+        </div>
         <div className={`${style["song-name-playlist"]} ${style["flex"]}`}>
           <div className={style["image-playlist"]}>
             <img

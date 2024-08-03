@@ -17,8 +17,9 @@ const TrackPage = () => {
   const [album, setAlbum] = useState<albumCard>();
 
   const fetchAlbum = async () => {
+    // console.log(trackId);
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${mainTrack?.track_id}`);
+      const response = await axios.get(`http://localhost:8888/get-album-track/${trackId}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -39,8 +40,8 @@ const TrackPage = () => {
     try {
       const response = await axios.get(`http://localhost:8888/get-track-id/${trackId}`);
       setMainTrack(response.data.data);
-      console.log(response.data.data);
-      console.log(mainTrack);
+      // console.log(response.data.data);
+      // console.log(mainTrack);
     } catch (error) {
       console.error("Error fetching track!", error);
     }
@@ -55,15 +56,24 @@ const TrackPage = () => {
       console.error("Error fetching track!", error);
     }
   };
-    
+  
   useEffect(() => {
 
     fetchArtist();
+
+  }, [trackId]);
+
+  useEffect(() => {
+
+    // fetchArtist();
     fetchMainTrack();
     fetchAlbum();
     fetchTrack();
 
-  }, [trackId]);
+    // console.log(album?.album_image);
+
+  }, [artist]);
+
   
   const transformToTrackAlbum = (track: trackArtist): trackAlbum => ({
     track_id: track.track_id,
@@ -84,7 +94,7 @@ const TrackPage = () => {
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src="https://i.scdn.co/image/ab67616d0000b273823f0f032dd2337fabdca8e0" className={style['profile-image']} alt="" />
+            <img src={`http://localhost:8888/${album?.album_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Song</span>
