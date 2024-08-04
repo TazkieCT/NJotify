@@ -48,7 +48,7 @@ func (c *AlbumServiceImpl) CreateAlbum(album request.CreateAlbumRequest) uuid.UU
 	return albumId
 }
 
-func (c *AlbumServiceImpl) CreateMusic(album_id uuid.UUID, name string, filePath string) {
+func (c *AlbumServiceImpl) CreateMusic(album_id uuid.UUID, name string, filePath string, duration int) {
 	musicId, err := uuid.NewRandom()
 	helper.CheckPanic(err)
 
@@ -57,6 +57,7 @@ func (c *AlbumServiceImpl) CreateMusic(album_id uuid.UUID, name string, filePath
 		AlbumId:   album_id,
 		TrackName: name,
 		TrackFile: filePath,
+		Duration:  duration,
 	}
 
 	c.AlbumRepository.CreateMusic(musicModel)
@@ -128,4 +129,23 @@ func (r *AlbumServiceImpl) GetAlbumByTrack(id string) response.AlbumCard {
 	}
 
 	return albumCard
+}
+
+func (r *AlbumServiceImpl) GetAnotherAlbum(id string) []response.AlbumCard {
+	albums := r.AlbumRepository.GetAnotherAlbum(id)
+
+	var albumCards []response.AlbumCard
+	for _, album := range albums {
+		albumCard := response.AlbumCard{
+			Id:        album.Id.String(),
+			Artist:    album.Artist.User.Username,
+			Name:      album.AlbumName,
+			Type:      album.AlbumType,
+			Image:     album.AlbumImage,
+			CreatedAt: album.CreatedAt.String(),
+		}
+		albumCards = append(albumCards, albumCard)
+	}
+
+	return albumCards
 }

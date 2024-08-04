@@ -3,13 +3,11 @@ import style from "../../styles/widget/SongRow.module.css";
 import PopupClick from "./PopupClick";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
-import { usePlayerStore } from "../../state/PlayerState";
 
 const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
   const navigate = useNavigate();
   const [contextMenu, setContextMenu] = useState({ visible: false, x: 0, y: 0 });
   const songRowRef = useRef<HTMLDivElement>(null);
-  const { setCurrentTrack } = usePlayerStore();
 
   const handleContextMenu = (event: React.MouseEvent<HTMLDivElement>) => {
     event.preventDefault();
@@ -45,17 +43,10 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
     navigate(`/track/${track.track_id}`)
   };
 
-  const togglePlay = () => {
-    if (track) {
-      const trackToPlay: Track = {
-        track_id: track.track_id,
-        track_artist: "",
-        track_name: track.track_name,
-        track_file: track.track_file,
-        track_image: track.track_image,
-      };
-      setCurrentTrack(trackToPlay);
-    }
+  const formatDuration = (duration: number) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
   return (
@@ -63,7 +54,8 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
       <div className={style["song-row"]} onContextMenu={handleContextMenu} ref={songRowRef}>
         <div className={style["song-number"]}>
           <span className={style['index']}>{index}</span>
-          <span className={style['play']} onClick={togglePlay}><FaPlay/></span>
+          {/* onClick={togglePlay} */}
+          <span className={style['play']}><FaPlay/></span>
         </div>
         <div className={style["song-image"]}>
           <img
@@ -72,8 +64,8 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
           />
         </div>
         <div className={style["song-name"]} onClick={trackPage}>{track.track_name}</div>
-        <div className={style["song-popularity"]}>345.167</div>
-        <div className={style["song-duration"]}>1:47</div>
+        <div className={style["song-popularity"]}>{track.track_count}</div>
+        <div className={style["song-duration"]}>{formatDuration(track.track_duration)}</div>
       </div>
       {contextMenu.visible && (
         <PopupClick x={contextMenu.x} y={contextMenu.y} track_id={track?.track_id} onClose={handleCloseContextMenu} />

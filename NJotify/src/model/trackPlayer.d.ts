@@ -4,4 +4,6 @@ interface Track {
     track_image: string;
     track_file: string;
     track_artist: string;
+    track_duration : integer;
+    track_count : integer;
 }

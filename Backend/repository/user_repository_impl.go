@@ -78,16 +78,52 @@ func (u *UserRepositoryImpl) EditUser(user model.User, reqUser request.EditUserR
 }
 
 func (c *UserRepositoryImpl) GetVerified(artist model.Artist) {
+	cacheKey := fmt.Sprintf("artist:%s", artist.UserId)
+
+	artistJson, err := json.Marshal(artist)
+	if err != nil {
+		helper.CheckPanic(err)
+	}
+
 	result := c.Db.Create(&artist)
 	helper.CheckPanic(result.Error)
+
+	err = c.Redis.Set(cacheKey, artistJson, time.Hour).Err()
+	helper.CheckPanic(err)
+
+	fmt.Println("Artist saved to database and cache")
 }
 
 func (r *UserRepositoryImpl) GetVerifyUser() []model.User {
 	var users []model.User
-	result := r.Db.Joins("JOIN artists ON artists.user_id = users.id").
-		Where("users.roles = ?", "listener").
-		Find(&users)
-	helper.CheckPanic(result.Error)
+	cacheKey := "verified_users"
+
+	val, err := r.Redis.Get(cacheKey).Result()
+	if err == redis.Nil {
+		result := r.Db.Joins("JOIN artists ON artists.user_id = users.id").
+			Where("users.roles = ?", "listener").
+			Find(&users)
+		helper.CheckPanic(result.Error)
+
+		usersJson, err := json.Marshal(users)
+		if err != nil {
+			helper.CheckPanic(err)
+		}
+
+		err = r.Redis.Set(cacheKey, usersJson, time.Hour).Err()
+		helper.CheckPanic(err)
+
+		fmt.Println("Users retrieved from database and saved to cache")
+	} else if err != nil {
+		helper.CheckPanic(err)
+	} else {
+		err = json.Unmarshal([]byte(val), &users)
+		if err != nil {
+			helper.CheckPanic(err)
+		}
+		fmt.Println("Users retrieved from cache")
+	}
+
 	return users
 }
 
@@ -95,12 +131,22 @@ func (u *UserRepositoryImpl) AcceptVerify(id string) {
 	var user model.User
 	result := u.Db.Model(&user).Where("id = ?", id).Update("roles", "artist")
 	helper.CheckPanic(result.Error)
+
+	err := u.Redis.Del("verified_users").Err()
+	if err != nil {
+		helper.CheckPanic(err)
+	}
 }
 
 func (d *UserRepositoryImpl) RemoveArtist(id string) {
 	var artist model.Artist
 	result := d.Db.Where("user_id = ?", id).Delete(&artist)
 	helper.CheckPanic(result.Error)
+
+	err := d.Redis.Del(fmt.Sprintf("artist:%s", id)).Err()
+	if err != nil {
+		helper.CheckPanic(err)
+	}
 }
 
 func (u *UserRepositoryImpl) EditProfile(id string, image string) {
@@ -115,7 +161,7 @@ func (u *UserRepositoryImpl) EditProfile(id string, image string) {
 }
 
 func (d *UserRepositoryImpl) Logout() {
-	err := d.Redis.Del("email").Err()
+	err := d.Redis.FlushAll().Err()
 	if err != nil {
 		helper.CheckPanic(err)
 	}

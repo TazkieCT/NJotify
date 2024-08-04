@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import style from "../../styles/widget/PopupClick.module.css";
 import useUserStore from "../../state/AccountState";
 import axios from "axios";
+import { usePlayerStore } from "../../state/PlayerState";
 
 interface Playlist {
   playlist_id: string;
@@ -20,11 +21,34 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
   const offsetY = -35;
   const { user } = useUserStore();
   const [playlists, setPlaylists] = useState<Playlist[]>([]);
+  const { setQueue, setCurrentTrack } = usePlayerStore();
 
   const fetchPlaylist = async () => {
     try {
       const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
       setPlaylists(response.data.data);
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+  
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/add-queue/${track_id}`);
+      fetchQueue();
     } catch (error) {
       console.error("Error fetching playlist!", error);
     }
@@ -53,6 +77,9 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
       className={style["context-menu"]}
       style={{ top: y + offsetY, left: x + offsetX }}
     >
+      <div className={style["context-menu-queue"]} onClick={addQueue}>
+        Add to queue
+      </div>
       <div className={style["context-menu-button"]}>
         Add to playlist
       </div>

@@ -53,6 +53,13 @@
     justify-content: end;
 }
 
+.no-track{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem;
+}
+
 .title{
     font-size: 3.5rem;
     font-weight: 900;
@@ -151,6 +158,10 @@
 .flex-col{
     display: flex;
     flex-direction: column;
+}
+
+.flex-ril{
+    display: flex;
 }
 
 .gap-2{

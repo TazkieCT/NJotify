@@ -53,3 +53,22 @@ func (r *AlbumRepositoryImpl) GetAlbumByTrack(id string) model.Album {
 	helper.CheckPanic(result.Error)
 	return track.Album
 }
+
+func (r *AlbumRepositoryImpl) GetAnotherAlbum(id string) []model.Album {
+	var albums []model.Album
+
+	var artistUserID string
+	subQuery := r.Db.Model(&model.Album{}).Select("artists.user_id").
+		Joins("JOIN artists ON artists.user_id = albums.artist_id").
+		Where("albums.id = ?", id).
+		Scan(&artistUserID)
+	helper.CheckPanic(subQuery.Error)
+
+	result := r.Db.Preload("Artist").Preload("Tracks").
+		Where("albums.id != ? AND albums.artist_id IN (?)", id,
+			r.Db.Table("artists").Select("artists.user_id").Where("artists.user_id = ?", artistUserID)).
+		Find(&albums)
+	helper.CheckPanic(result.Error)
+
+	return albums
+}

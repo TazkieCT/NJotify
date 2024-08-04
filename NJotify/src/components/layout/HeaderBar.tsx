@@ -8,6 +8,7 @@ import useSettingStore from "../../state/SettingState";
 import { useNavigate } from "react-router-dom";
 import useUserStore from "../../state/AccountState";
 import axios from "axios";
+import useCookie from "../../state/CookieState";
 
 const HeaderBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -16,6 +17,7 @@ const HeaderBar = () => {
   const menuRef = useRef<HTMLDivElement>(null);
   const changeSetting = useSettingStore((state) => state.changeSetting);
   const { user } = useUserStore();
+  const { cookie } = useCookie();
 
   const toggleMenu = () => {
     setIsMenuOpen((prev) => !prev);
@@ -59,7 +61,11 @@ const HeaderBar = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.post(`http://localhost:8888/logout`);
+      const response = await axios.post(`http://localhost:8888/logout`, {
+        headers: {
+          Authorization: `${cookie}`
+        }
+      });
       const savedUser = localStorage.getItem("user");
 
       if (savedUser) {

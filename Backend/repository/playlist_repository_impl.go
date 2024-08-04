@@ -74,6 +74,7 @@ func (c *PlaylistRepositoryImpl) AddTrackToPlaylist(playlistTrack model.Playlist
 	helper.CheckPanic(result.Error)
 
 	c.Redis.Del("playlist:" + playlistTrack.PlaylistId.String())
+
 	var playlist model.Playlist
 	c.Db.Where("id = ?", playlistTrack.PlaylistId).First(&playlist)
 	c.Redis.Del("user_playlists:" + playlist.UserId.String())
@@ -120,11 +121,18 @@ func (r *PlaylistRepositoryImpl) GetPlaylistsByArtist(artistId string) []model.P
 }
 
 func (d *PlaylistRepositoryImpl) DeletePlaylist(id string) {
+	result := d.Db.Where("playlist_id = ?", id).Delete(&model.PlaylistTrack{})
+	helper.CheckPanic(result.Error)
+
 	var playlist model.Playlist
-	result := d.Db.Delete(&playlist, "id = ?", id)
+	result = d.Db.Where("id = ?", id).First(&playlist)
+	helper.CheckPanic(result.Error)
+
+	result = d.Db.Delete(&playlist)
 	helper.CheckPanic(result.Error)
 
 	d.Redis.Del("playlist:" + id)
+	d.Redis.Del("user_playlists:" + playlist.UserId.String())
 }
 
 func (r *PlaylistRepositoryImpl) GetAllPlaylist() []model.Playlist {

@@ -8,6 +8,7 @@ import SongRowAlbum from "../../components/widget/SongRowAlbum";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { usePlayerStore } from "../../state/PlayerState";
 
 const TrackPage = () => {
   const { trackId } = useParams<{ trackId: string }>();
@@ -51,7 +52,7 @@ const TrackPage = () => {
     try {
       const response = await axios.get(`http://localhost:8888/get-track-artist/${artist?.artist_id}`);
       setTracks(response.data.data);
-      // console.log(tracks);
+      // console.log(response.data.data);
     } catch (error) {
       console.error("Error fetching track!", error);
     }
@@ -70,10 +71,38 @@ const TrackPage = () => {
     fetchAlbum();
     fetchTrack();
 
-    // console.log(album?.album_image);
+    // console.log(tracks);
 
   }, [artist]);
 
+  
+  const { setQueue, clearQueue, setCurrentTrack } = usePlayerStore();
+
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addTracksToQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/reset-queue`);
+      clearQueue();
+
+      await axios.get(`http://localhost:8888/add-queue/${mainTrack?.track_id}`);
+
+      fetchQueue();
+    } catch (error) {
+      console.error("Error managing queue!", error);
+    }
+  };
   
   const transformToTrackAlbum = (track: trackArtist): trackAlbum => ({
     track_id: track.track_id,
@@ -82,6 +111,8 @@ const TrackPage = () => {
     track_album: track.track_album,
     track_file: track.track_file,
     track_image: track.track_image,
+    track_duration: track.track_duration,
+    track_count: track.track_count
   });
 
   const formatYear = (dateString: string) => {
@@ -104,7 +135,7 @@ const TrackPage = () => {
         </div>
         <div className={`${style.section} ${style['gap-2']} ${style['flex-col']}`}>
             <div className={`${style.flex} ${style['gap-20']} ${style['pad-lu']}`}>
-              <span className={style['play-btn']}><FaPlay/></span>
+              <span className={style['play-btn']} onClick={addTracksToQueue}><FaPlay/></span>
               <span className={style.medium}><BsPlusCircle/></span>
               <span className={style.medium}><RxDotsHorizontal/></span>
             </div>
@@ -113,7 +144,7 @@ const TrackPage = () => {
               <span className={style.name}>{artist?.artist_name}</span>
               <div className="">
                 {tracks && tracks.map((track, index) => (
-                  <SongRow key={track.track_id} track={track} index={index + 1}/>
+                  <SongRow track={track} index={index + 1}/>
                 ))}
               </div>
               <div>

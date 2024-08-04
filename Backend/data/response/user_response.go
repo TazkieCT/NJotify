@@ -13,4 +13,5 @@ type UserResponse struct {
 	Country  string    `json:"country,omitEmpty"`
 	Role     string    `json:"role"`
 	Image    string    `json:"profile"`
+	Token    string    `json:"token"`
 }

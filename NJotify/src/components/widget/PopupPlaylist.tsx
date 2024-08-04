@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import style from "../../styles/widget/PopupClick.module.css";
 import axios from "axios";
+import { usePlayerStore } from "../../state/PlayerState";
 
 interface PopupClickAttributes {
   x: number;
@@ -14,6 +15,7 @@ interface PopupClickAttributes {
 const PopupPlaylist: React.FC<PopupClickAttributes> = ({ x, y, track_id, playlist_id, onClose, fetchTrack }) => {
   const offsetX = -330;
   const offsetY = -35;
+  const { setQueue, setCurrentTrack } = usePlayerStore();
 
   const handleRemove = async (playlistId: string) => {
     const data = {
@@ -22,12 +24,34 @@ const PopupPlaylist: React.FC<PopupClickAttributes> = ({ x, y, track_id, playlis
     };
 
     try {
-      const response = await axios.post("http://localhost:8888/remove-track-playlist", data);
+      await axios.post("http://localhost:8888/remove-track-playlist", data);
       // console.log(response);
       fetchTrack();
       onClose();
     } catch (error) {
       console.error("Response error:", error);
+    }
+  };
+
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/add-queue/${track_id}`);
+      fetchQueue();
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
     }
   };
 
@@ -37,9 +61,14 @@ const PopupPlaylist: React.FC<PopupClickAttributes> = ({ x, y, track_id, playlis
       style={{ top: y + offsetY, left: x + offsetX }}
     >
       {playlist_id && (
-        <div className={style["context-menu-button"]} onClick={() => handleRemove(playlist_id)}>
-          Remove from playlist
-        </div>
+        <>
+          <div className={style["context-menu-button"]} onClick={() => handleRemove(playlist_id)}>
+            Remove from playlist
+          </div>
+          <div className={style["context-menu-queue"]} onClick={addQueue}>
+            Add to queue
+          </div>
+        </>
       )}
       <div className={style["context-menu-button"]}>
         Save to your Liked Songs

@@ -4,4 +4,6 @@ interface trackArtist {
     track_album : string;
     track_file : string;
     track_image : string;
+    track_duration : integer;
+    track_count : integer;
 }

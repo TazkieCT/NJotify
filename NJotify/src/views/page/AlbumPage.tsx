@@ -1,20 +1,21 @@
-import { FaPlay } from "react-icons/fa6"
-import Footer from "../../components/layout/Footer"
-import style from "../../styles/page/TrackPage.module.css"
-import { RxDotsHorizontal } from "react-icons/rx"
+import { FaPlay } from "react-icons/fa6";
+import Footer from "../../components/layout/Footer";
+import style from "../../styles/page/TrackPage.module.css";
+import { RxDotsHorizontal } from "react-icons/rx";
 import { BsPlusCircle } from "react-icons/bs";
 import SongRowAlbum from "../../components/widget/SongRowAlbum";
-import AlbumCard from "../../components/widget/AlbumCard";
 import { LuList } from "react-icons/lu";
 import { LuClock3 } from "react-icons/lu";
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
-
+import DiscographyCard from "../../components/widget/DiscographyCard";
+import { usePlayerStore } from "../../state/PlayerState";
 
 const AlbumPage = () => {
   const { albumId } = useParams<{ albumId: string }>();
   const [albums, setAlbums] = useState<albumCard>();
+  const [others, setOthers] = useState<albumCard[]>([]);
   const [tracks, setTracks] = useState<trackAlbum[]>([]);
 
   useEffect(() => {
@@ -36,9 +37,49 @@ const AlbumPage = () => {
       }
     };
 
+    const fetchOtherAlbum = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8888/get-album-other/${albumId}`);
+        setOthers(response.data.data);
+      } catch (error) {
+        console.error("Error fetching album!", error);
+      }
+    };
+
+    fetchOtherAlbum();
     fetchAlbum();
     fetchTrack();
   }, [albumId]);
+
+  const { setQueue, clearQueue, setCurrentTrack } = usePlayerStore();
+
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addTracksToQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/reset-queue`);
+      clearQueue();
+
+      for (const track of tracks) {
+        await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+      }
+
+      fetchQueue();
+    } catch (error) {
+      console.error("Error managing queue!", error);
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -57,7 +98,7 @@ const AlbumPage = () => {
             <div className={`${style['pad-lu']}`}>
                 <div className={`${style['flex-between']}`}>
                     <div className={`${style['flex']} ${style['gap-20']}`}>
-                        <span className={style['play-btn']}><FaPlay/></span>
+                        <span className={style['play-btn']} onClick={addTracksToQueue}><FaPlay/></span>
                         <span className={style.medium}><BsPlusCircle/></span>
                         <span className={style.medium}><RxDotsHorizontal/></span>
                     </div>
@@ -88,21 +129,20 @@ const AlbumPage = () => {
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>
                 <div className={`${style['flex-between']}`}>
-                    <span className={style.name}>More by Keshi</span>
+                    <span className={style.name}>More by {albums?.album_artist}</span>
                     <span className={`${style['gray']} ${style['see-more']}`}>See discography</span>
                 </div>
-              <div className={`${style.flex} `}>
-                {/* <AlbumCard/>
-                <AlbumCard/>
-                <AlbumCard/>
-                <AlbumCard/> */}
+              <div className={`${style['flex-ril']} `}>
+                {others && others.map(other => (
+                  <DiscographyCard key={other.album_id} album={other} />
+                ))}
               </div>
             </div>
         </div>
         <Footer/>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default AlbumPage
+export default AlbumPage;

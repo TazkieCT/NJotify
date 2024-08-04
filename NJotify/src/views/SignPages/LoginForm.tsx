@@ -12,13 +12,14 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { setUser } = useUserStore();
+  const { user, setUser } = useUserStore();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));
-      navigate("/home");
+      if(user.Id == '')
+      navigate("/login");
     }
   }, [setUser, navigate]);
 
@@ -46,9 +47,12 @@ const LoginForm = () => {
     };
   
     try {
-      const response = await axios.post("http://localhost:8888/login", data);
+      const response = await axios.post("http://localhost:8888/login", data, {
+        withCredentials: true,
+      });
+  
       const userData = response.data.data;
-      console.log(userData);
+  
       setUser({
         Id: userData.Id,
         Email: userData.Email,
@@ -59,17 +63,14 @@ const LoginForm = () => {
         Role: userData.role,
         Profile: userData.profile,
       });
-
-      if(userData.role === "admin") {
+  
+      if (userData.role === "admin") {
         navigate("/admin");
-      }else{
+      } else {
         navigate("/home");
       }
     } catch (error) {
-      if (error) {
         setErrorMessage("Username or password incorrect");
-        // console.error("Response error:", error);
-      }
     }
   };
   

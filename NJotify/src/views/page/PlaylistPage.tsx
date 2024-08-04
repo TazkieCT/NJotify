@@ -6,20 +6,29 @@ import { BsPlusCircle } from "react-icons/bs";
 import { LuList } from "react-icons/lu";
 import { LuClock3 } from "react-icons/lu";
 import SongRowPlaylist from "../../components/widget/SongRowPlaylist";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ModalDelete from "../../components/widget/ModalDelete";
+import useCookie from "../../state/CookieState";
+import { usePlayerStore } from "../../state/PlayerState";
 
 const PlaylistPage = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
   const [playlist, setPlaylist] = useState<playlist>();
   const [tracks, setTracks] = useState<trackPlaylist[]>([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const navigate = useNavigate();
+  const { cookie } = useCookie();
 
   const fetchPlaylist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-playlist-id/${playlistId}`);
+      const response = await axios.get(`http://localhost:8888/get-playlist-id/${playlistId}`, {
+        headers: {
+          Authorization: `${cookie}`
+        }
+      });
       setPlaylist(response.data.data);
-      // console.log(playlists);
     } catch (error) {
       console.error("Error fetching playlist!", error);
     }
@@ -27,17 +36,68 @@ const PlaylistPage = () => {
 
   const fetchTrack = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-track-playlist/${playlistId}`);
+      const response = await axios.get(`http://localhost:8888/get-track-playlist/${playlistId}`, {
+        headers: {
+          Authorization: `${cookie}`
+        }
+      });
       setTracks(response.data.data);
+      // console.log(response.data.data)
     } catch (error) {
       console.error("Error fetching track!", error);
     }
   };
 
+  const handleDelete = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/delete-playlist/${playlistId}`, {
+        headers: {
+          Authorization: `${cookie}`
+        }
+      });
+      console.log(response)
+      navigate("/home")
+    } catch (error) {
+      if (error) {
+        console.error("Response error:", error);
+      }
+    }
+  };
+
   useEffect(() => {
     fetchPlaylist();
-    fetchTrack();
+    fetchTrack();    
   }, [playlistId]);
+
+  const { setQueue, clearQueue, setCurrentTrack } = usePlayerStore();
+
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addTracksToQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/reset-queue`);
+      clearQueue();
+
+      for (const track of tracks) {
+        await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+      }
+
+      fetchQueue();
+    } catch (error) {
+      console.error("Error managing queue!", error);
+    }
+  };
 
   return (
     <div className={style.container}>
@@ -57,9 +117,9 @@ const PlaylistPage = () => {
           <div className={`${style['pad-lu']}`}>
             <div className={`${style['flex-between']}`}>
               <div className={`${style['flex']} ${style['gap-20']}`}>
-                <span className={style['play-btn']}><FaPlay /></span>
+                <span className={style['play-btn']} onClick={addTracksToQueue}><FaPlay/></span>
                 <span className={style.medium}><BsPlusCircle /></span>
-                <span className={style.medium}><RxDotsHorizontal /></span>
+                <span className={style.medium} onClick={() => setIsModalOpen(true)}><RxDotsHorizontal /></span>
               </div>
               <div className={style['menu-item']}>List <span><LuList /></span></div>
             </div>
@@ -78,10 +138,18 @@ const PlaylistPage = () => {
             {tracks && tracks.map((track, index) => (
               <SongRowPlaylist key={track.track_id} playlist_id={playlist?.playlist_id} track={track} index={index + 1} fetchTrack={fetchTrack} />
             ))}
+            {!tracks && (
+              <div className={style['no-track']}>No tracks in this playlist</div>
+            )}
           </div>
         </div>
         <Footer />
       </div>
+      <ModalDelete
+        isOpen={isModalOpen}
+        onRequestClose={() => setIsModalOpen(false)}
+        onSave={handleDelete}
+      />
     </div>
   )
 }

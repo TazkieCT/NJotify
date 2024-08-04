@@ -6,6 +6,8 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState, useCallback, useRef } from "react";
 import useUserStore from "../../state/AccountState";
 import axios from "axios";
+import Cookies from 'js-cookie';
+import useCookie from "../../state/CookieState";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -18,10 +20,31 @@ const HomePage = () => {
   const [isShowingSkeleton, setIsShowingSkeleton] = useState<boolean>(false);
   const [delayTimeout, setDelayTimeout] = useState<NodeJS.Timeout | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const { cookie, setCookie } = useCookie();
+
+  const getCookie = () => {
+    const token = Cookies.get('token');
+      if (token) {
+        setCookie(token);
+      } else {
+        console.error("Token not found in cookies.");
+      }
+  };
+
+  useEffect(() => {
+    getCookie();
+  }, []);
 
   const fetchAlbums = useCallback(async (page: number) => {
     setIsFetching(true);
     try {
+      // const payload = { token: token };
+      // const response = await axios.get(`http://localhost:8888/get-all-album?page=${page}`, {
+      //   headers: {
+      //     Authorization: `${cookie}`,
+      //     withCredentials: true
+      //   }
+      // });
       const response = await axios.get(`http://localhost:8888/get-all-album?page=${page}`);
       const newAlbums = response.data.data;
       setAlbums(prev => [...prev, ...newAlbums]);
@@ -122,7 +145,7 @@ const HomePage = () => {
           <div className={`${style.flex} ${style.wrap}`}>
             {albums.length === 0 && loading
               ? Array.from({ length: 6 }).map((_, index) => <AlbumCardSkeleton key={index} />)
-              : albums.map(album => <AlbumCard key={album.album_id} album={album} />)
+              : albums.map(album => <AlbumCard album={album} />)
             }
             {isShowingSkeleton && Array.from({ length: 6 }).map((_, index) => (
               <AlbumCardSkeleton key={`skeleton-${index}`} />

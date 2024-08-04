@@ -142,19 +142,19 @@ const ProfilePage: React.FC = () => {
             <span className={style.subtitle}>Following</span>
           </div>
           <div className={style.flex}>
-            <ArtistCard/>
+            {/* <ArtistCard/> */}
           </div>
           <div className={style["flex-between"]}>
             <span className={style.subtitle}>Followers</span>
           </div>
           <div className={style.flex}>
-            <ArtistCard/>
+            {/* <ArtistCard/> */}
           </div>
           <div className={style["flex-between"]}>
             <span className={style.subtitle}>Mutual Following</span>
           </div>
           <div className={style.flex}>
-            <ArtistCard/>
+            {/* <ArtistCard/> */}
           </div>
         </div>
       </div>

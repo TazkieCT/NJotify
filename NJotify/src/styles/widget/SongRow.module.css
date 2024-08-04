@@ -8,7 +8,6 @@
 
 .song-row:hover{
     background-color: #1c1c1c;
-    cursor: pointer;
 }
 
 .song-number {
@@ -18,23 +17,27 @@
 
 .play{
     display: none;
+    cursor: pointer;
 }
 
-.song-number:hover .index{
+.song-row:hover .index{
     display: none;
 }
 
-.song-number:hover .play{
+.song-row:hover .play{
     display: block;
-    color: white;
+    color: #a6a6a6;
 }
 
-.song-number-album:hover .index{
+.song-row:hover .index{
     display: none;
 }
 
-.song-number-album:hover .play{
+.song-row:hover .play{
     display: block;
+}
+
+.song-row:hover .play:hover{
     color: white;
 }
 
@@ -48,6 +51,7 @@
 .song-name {
     flex: 7;
     padding: 0 1rem;
+    cursor: pointer;
 }
 
 .song-name:hover, .name:hover {
@@ -90,6 +94,7 @@
 }
 
 .name{
+    cursor: pointer;
     color: white;
 }
 

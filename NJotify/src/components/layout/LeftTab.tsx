@@ -13,6 +13,7 @@ import useUserStore from "../../state/AccountState";
 import { useEffect, useState } from "react";
 import Modal from "../widget/Modal";
 import axios from "axios";
+import usePlaylistStore from "../../state/UserPlaylistState";
 
 const LeftTab = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -20,7 +21,7 @@ const LeftTab = () => {
   const changePage = usePageStore((state) => state.changePage)
   const navigate = useNavigate();
   const { user } = useUserStore();
-  const [playlists, setPlaylists] = useState<playlist[]>([]);
+  const {playlists, setPlaylists} = usePlaylistStore();
 
   const fetchPlaylist = async () => {
     try {

@@ -6,6 +6,8 @@ type GetPlaylistTrack struct {
 	TrackName            string
 	AlbumName            string
 	AlbumImage           string
-	FileTrack            string
+	TrackFile            string
 	AddedAtPlaylistTrack string
+	Duration             int
+	ListenCount          int
 }

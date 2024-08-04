@@ -127,7 +127,7 @@ func (controller *UserController) Reset(ctx *gin.Context) {
 }
 
 func (controller *UserController) GetUser(ctx *gin.Context) {
-	createUserRequest := request.CreateUserRequest{}
+	var createUserRequest request.CreateUserRequest
 	if err := ctx.ShouldBindJSON(&createUserRequest); err != nil {
 		ctx.AbortWithStatusJSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
@@ -135,24 +135,26 @@ func (controller *UserController) GetUser(ctx *gin.Context) {
 
 	userResponse, token := controller.userService.GetUser(createUserRequest.Email, createUserRequest.Password)
 
+	userResponse.Token = token
+
 	http.SetCookie(ctx.Writer, &http.Cookie{
 		Name:     "token",
 		Value:    token,
 		Expires:  time.Now().Add(24 * time.Hour),
 		Domain:   "localhost",
 		Path:     "/",
-		HttpOnly: true,
+		HttpOnly: false,
 		Secure:   false,
 		SameSite: http.SameSiteLaxMode,
 	})
 
-	WebResponse := response.WebResponse{
+	webResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   userResponse,
 	}
 
-	ctx.JSON(http.StatusOK, WebResponse)
+	ctx.JSON(http.StatusOK, webResponse)
 }
 
 func (controller *UserController) FetchUser(ctx *gin.Context) {

@@ -1,6 +1,8 @@
 package services
 
 import (
+	"fmt"
+
 	"github.com/TazkieCT/njotify/data/response"
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
@@ -41,12 +43,14 @@ func (r *TrackServiceImpl) GetTrackByAlbum(album_id string) []response.TrackAlbu
 	var trackAlbums []response.TrackAlbum
 	for _, track := range tracks {
 		trackAlbum := response.TrackAlbum{
-			Id:     track.Id.String(),
-			Artist: track.Album.Artist.User.Username,
-			Name:   track.TrackName,
-			File:   track.TrackFile,
-			Album:  track.Album.AlbumName,
-			Image:  track.Album.AlbumImage,
+			Id:          track.Id.String(),
+			Artist:      track.Album.Artist.User.Username,
+			Name:        track.TrackName,
+			File:        track.TrackFile,
+			Album:       track.Album.AlbumName,
+			Image:       track.Album.AlbumImage,
+			Duration:    track.Duration,
+			ListenCount: track.ListenCount,
 		}
 		trackAlbums = append(trackAlbums, trackAlbum)
 	}
@@ -62,13 +66,15 @@ func (r *TrackServiceImpl) GetTrackByPlaylist(playlist_id string) []response.Tra
 		// fmt.Println("Artist : " + track.ArtistName)
 		// fmt.Println(track)
 		trackAlbum := response.TrackPlaylist{
-			Id:         track.IdTrack,
-			Artist:     track.ArtistName,
-			Name:       track.TrackName,
-			File:       track.FileTrack,
-			AlbumName:  track.AlbumName,
-			AlbumImage: track.AlbumImage,
-			AddedAt:    track.AddedAtPlaylistTrack,
+			Id:          track.IdTrack,
+			Artist:      track.ArtistName,
+			Name:        track.TrackName,
+			File:        track.TrackFile,
+			AlbumName:   track.AlbumName,
+			AlbumImage:  track.AlbumImage,
+			AddedAt:     track.AddedAtPlaylistTrack,
+			Duration:    track.Duration,
+			ListenCount: track.ListenCount,
 		}
 		trackPlaylists = append(trackPlaylists, trackAlbum)
 	}
@@ -81,13 +87,15 @@ func (r *TrackServiceImpl) GetTrackByArtist(artist_id string) []response.TrackAr
 
 	var trackArtists []response.TrackArtist
 	for _, track := range tracks {
-		// fmt.Println("Artist : " + track.TrackName)
+		fmt.Println("File : " + track.TrackFile)
 		// fmt.Println(track)
 		trackArtist := response.TrackArtist{
-			Id:         track.IdTrack,
-			Name:       track.TrackName,
-			File:       track.FileTrack,
-			AlbumImage: track.AlbumImage,
+			Id:          track.IdTrack,
+			Name:        track.TrackName,
+			File:        track.TrackFile,
+			AlbumImage:  track.AlbumImage,
+			Duration:    track.Duration,
+			ListenCount: track.ListenCount,
 		}
 		trackArtists = append(trackArtists, trackArtist)
 	}
@@ -99,12 +107,49 @@ func (r *TrackServiceImpl) GetTrackById(id string) response.TrackById {
 	track := r.TrackRepository.GetTrackById(id)
 
 	trackById := response.TrackById{
-		Id:         track.Id.String(),
-		Name:       track.TrackName,
-		File:       track.TrackFile,
-		AlbumImage: track.Album.AlbumImage,
-		AlbumName:  track.Album.AlbumName,
+		Id:          track.Id.String(),
+		Name:        track.TrackName,
+		File:        track.TrackFile,
+		AlbumImage:  track.Album.AlbumImage,
+		AlbumId:     track.Album.Id.String(),
+		AlbumName:   track.Album.AlbumName,
+		Duration:    track.Duration,
+		ListenCount: track.ListenCount,
 	}
 
 	return trackById
+}
+
+func (r *TrackServiceImpl) AddTrackToQueue(id string) {
+	track := r.TrackRepository.GetTrackById(id)
+	r.TrackRepository.AddTrackToQueue("track_queue", track)
+}
+
+func (r *TrackServiceImpl) RemoveTrackFromQueue(trackId string) {
+	r.TrackRepository.RemoveTrackFromQueue("track_queue", trackId)
+}
+
+func (r *TrackServiceImpl) GetQueue() []response.TrackResponse {
+	queue := r.TrackRepository.GetQueue("track_queue")
+
+	var tracks []response.TrackResponse
+	for _, track := range queue {
+		// fmt.Println("File : " + track.TrackFile)
+		// fmt.Println(track)
+		trackArtist := response.TrackResponse{
+			Id:          track.Id.String(),
+			Name:        track.TrackName,
+			File:        track.TrackFile,
+			AlbumId:     track.AlbumId.String(),
+			Duration:    track.Duration,
+			ListenCount: track.ListenCount,
+		}
+		tracks = append(tracks, trackArtist)
+	}
+
+	return tracks
+}
+
+func (d *TrackServiceImpl) ResetQueue() {
+	d.TrackRepository.ResetQueue("track_queue")
 }

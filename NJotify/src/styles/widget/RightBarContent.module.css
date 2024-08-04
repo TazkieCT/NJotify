@@ -13,6 +13,19 @@
     gap: 20px;
 }
 
+.remove-button {
+  color: #a6a6a6;
+  border: none;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  border-radius: 0.25rem;
+  margin-left: auto;
+}
+
+.remove-button:hover {
+    color: white;
+}
+
 .header-button {
     display: flex;
     transition: color 0.2s ease-in-out;
@@ -34,6 +47,22 @@
     justify-content: center;
     justify-content: space-between;
     padding: 10px 20px 5px;
+}
+
+.flex-between-r {
+    display: flex;
+    justify-content: space-between;
+}
+
+.delete-queue{
+    color: #a6a6a6;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-right: 5px;
+}
+
+.delete-queue:hover{
+    color: white;
 }
 
 .medium:hover {
@@ -69,13 +98,17 @@
     background-color: #181818;
 }
 
-.artist{
+.artist, .next-queue{
     display: flex;
     flex-direction: column;
     margin: 0px 20px;
     position: relative;
     background-color: rgb(36, 36, 36);
     border-radius: 0.5rem;
+}
+
+.next-queue{
+    gap: 1rem;
 }
 
 .about-artist {
@@ -120,7 +153,36 @@
     font-size: 0.9rem;
 }
 
-.white{
+.link{
+    cursor: pointer;
+}
+
+.white, .link:hover{
+    color: white;
+}
+
+.no-next-track{
+    margin: 1rem 0;
+}
+
+.next-track{
+    display: flex;
+    gap: 1rem;
+}
+
+.next-track-image{
+    border-radius: 0.3rem;
+    width: 3rem;
+}
+
+.next-track-info{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.2rem;
+}
+
+.next-track-name{
     color: white;
 }
 

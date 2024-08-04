@@ -69,3 +69,56 @@ func (controller *TrackController) GetAllTrackById(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, WebResponse)
 }
+
+func (controller *TrackController) AddTrackToQueue(ctx *gin.Context) {
+	idTrack := ctx.Param("trackId")
+
+	controller.trackService.AddTrackToQueue(idTrack)
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *TrackController) RemoveTrackFromQueue(ctx *gin.Context) {
+	idTrack := ctx.Param("trackId")
+
+	controller.trackService.RemoveTrackFromQueue(idTrack)
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+
+func (controller *TrackController) ResetQueue(ctx *gin.Context) {
+	controller.trackService.ResetQueue()
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *TrackController) GetQueue(ctx *gin.Context) {
+	trackResponse := controller.trackService.GetQueue()
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   trackResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}

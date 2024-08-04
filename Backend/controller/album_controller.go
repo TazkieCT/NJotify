@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"path/filepath"
 	"time"
 
@@ -11,6 +12,7 @@ import (
 	"github.com/TazkieCT/njotify/data/response"
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/services"
+	"github.com/faiface/beep/mp3"
 	"github.com/gin-gonic/gin"
 )
 
@@ -25,12 +27,10 @@ func NewAlbumController(service services.AlbumService) *AlbumController {
 }
 
 func (controller *AlbumController) CreateAlbum(ctx *gin.Context) {
-	// fmt.Println("Creating New User...")
 	createAlbumRequest := request.CreateAlbumRequest{}
 	createAlbumRequest.Artist = ctx.PostForm("artist")
 	createAlbumRequest.Name = ctx.PostForm("title")
 	createAlbumRequest.Type = ctx.PostForm("collectionType")
-	// createAlbumRequest.Image = []byte(ctx.PostForm("image"))
 
 	file, err := ctx.FormFile("image")
 	helper.CheckPanic(err)
@@ -59,7 +59,19 @@ func (controller *AlbumController) CreateAlbum(ctx *gin.Context) {
 				return
 			}
 			fmt.Printf("Track %d: %s - %s\n", i+1, name, filePath)
-			controller.albumService.CreateMusic(album_id, name, filePath)
+
+			// Open the saved file to read its duration
+			trackFileHandle, err := os.Open(filePath)
+			helper.CheckPanic(err)
+			defer trackFileHandle.Close()
+
+			streamer, format, err := mp3.Decode(trackFileHandle)
+			helper.CheckPanic(err)
+			defer streamer.Close()
+
+			duration := int(float64(streamer.Len()) / float64(format.SampleRate.N(time.Second)))
+
+			controller.albumService.CreateMusic(album_id, name, filePath, duration)
 		}
 	}
 
@@ -115,6 +127,19 @@ func (controller *AlbumController) GetAlbumByTrack(ctx *gin.Context) {
 	idTrack := ctx.Param("trackId")
 
 	albumResponse := controller.albumService.GetAlbumByTrack(idTrack)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   albumResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *AlbumController) GetAnotherAlbum(ctx *gin.Context) {
+	idAlbum := ctx.Param("albumId")
+	albumResponse := controller.albumService.GetAnotherAlbum(idAlbum)
+
 	WebResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",

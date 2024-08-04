@@ -46,12 +46,19 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
     };
   }, []);
 
+  const formatDuration = (duration: number) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+
   return (
     <>
       <div className={style["song-row"]} ref={songRowRef} onContextMenu={handlePopUpMenu}>
         <div className={style["song-number-playlist"]}>
           <span className={style['index']}>{index}</span>
-          <span className={style['play']}><FaPlay/></span>
+          {/* onClick={togglePlay} */}
+          <span className={style['play']} ><FaPlay/></span>
         </div>
         <div className={`${style["song-name-playlist"]} ${style["flex"]}`}>
           <div className={style["image-playlist"]}>
@@ -66,7 +73,7 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
         </div>
         <div className={style["song-album-playlist"]}>{tracks?.track_album_name}</div>
         <div className={style["song-date-playlist"]}>{tracks?.added_at ? formatDate(tracks.added_at) : ''}</div>
-        <div className={style["song-duration-playlist"]}>1:47</div>
+        <div className={style["song-duration-playlist"]}>{formatDuration(track.track_duration)}</div>
       </div>
       {popUp.visible && playlist_id && (
         <PopupPlaylist x={popUp.x} y={popUp.y} track_id={track.track_id} playlist_id={playlist_id} onClose={handleClosePopUpMenu} fetchTrack={fetchTrack} />

@@ -6,4 +6,6 @@ interface trackPlaylist {
     track_album_image : string;
     track_file : string;
     added_at : string;
+    track_duration : integer;
+    track_count : integer;
 }
