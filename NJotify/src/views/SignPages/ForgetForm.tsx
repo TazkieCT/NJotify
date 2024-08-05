@@ -25,7 +25,7 @@ const ForgetForm = () => {
     }
   }, [navigate, setUser]);
 
-  const validateEmail = (email : string) => {
+  const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     return re.test(String(email).toLowerCase());
   };
@@ -49,6 +49,7 @@ const ForgetForm = () => {
       })
       .catch((error) => {
         console.error("There was an error registering!", error);
+        setError("Error Please try again.");
       });
   };
 
@@ -79,10 +80,7 @@ const ForgetForm = () => {
             </div>
           </div>
           <button className={styles["button-1"]} onClick={regis}>Search</button>
-          <a
-            className={`${styles.link2} ${styles.pointer}`}
-            onClick={handleCancelClick}
-          >
+          <a className={`${styles.link2} ${styles.pointer}`} onClick={handleCancelClick}>
             Cancel
           </a>
         </div>

@@ -8,13 +8,24 @@ import axios from "axios";
 const VerifyUser = ({ user } : {user:userVerify}) => {
   
   const[users, setUsers] =  useState<userVerify>()
+  const[userInfo, setUserInfo] =  useState<userCardVerify>()
 
   useEffect(() => {
     if(user){
       setUsers(user)
+      // fetchArtistProfile()
     }
     // console.log(user.id)
   })
+
+  const fetchArtistProfile = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-user/${users?.id}`);
+      setUserInfo(response.data.data);
+    } catch (error) {
+      console.error("Error fetching artist!", error);
+    }
+  };
 
   const accept = () => {
     axios.get(`http://localhost:8888/set-artist/${user.id}`)
@@ -44,7 +55,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
         <div className={style["avatar"]}>
           <img
             className={style["photo"]}
-            src="https://img-cdn.pixlr.com/image-generator/history/65bb506dcb310754719cf81f/ede935de-1138-4f66-8ed7-44bd16efc709/medium.webp"
+            src={`http://localhost:8888/${userInfo?.profile}`}
             alt="User Avatar"
           />
         </div>

@@ -44,7 +44,7 @@ const RegisForm = () => {
       return false;
     }
     if (!email.endsWith("@gmail.com")) {
-      setErrorMessage("Email must ends with @gmail.com");
+      setErrorMessage("Email must end with @gmail.com");
       return false;
     }
     if (password !== confirmPassword) {
@@ -72,15 +72,13 @@ const RegisForm = () => {
     axios
       .post("http://localhost:8888/signup", data)
       .then((response) => {
-        // console.log(response.data.data);
-
         const token = response.data.data;
         Cookies.set('activate-token', token, { expires: 1, path: '/' });
-
         navigate("/login");
       })
       .catch((error) => {
         console.error("There was an error registering!", error);
+        setErrorMessage("Email already used.");
       });
   };
 
@@ -91,50 +89,58 @@ const RegisForm = () => {
         <div className={styles.card}>
           <h1 className={styles["title"]}>Sign Up to start listening</h1>
           <button className={styles["button-2"]}>
-            <img src={google} width={"15px"} alt="" />
+            <img src={google} width={"15px"} alt="Google" />
             <span>Continue with Google</span>
           </button>
           <div className={styles["form"]}>
             <div className={styles["group-form"]}>
-              <label className={styles["label-form"]} htmlFor="email">
-                Email
-              </label>
-              <input className={styles["input-text"]} type="text" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)}/>
+              <label className={styles["label-form"]} htmlFor="email">Email</label>
+              <input
+                className={styles["input-text"]}
+                type="text"
+                placeholder="Email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
             </div>
             <div className={styles["group-form"]}>
-              <label className={styles["label-form"]} htmlFor="password">
-                Password
-              </label>
-              <input className={styles["input-text"]} type="password" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)}/>
+              <label className={styles["label-form"]} htmlFor="password">Password</label>
+              <input
+                className={styles["input-text"]}
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
             </div>
             <div className={styles["group-form"]}>
-              <label className={styles["label-form"]} htmlFor="confirm-password">
-                Confirm Password
-              </label>
-              <input className={styles["input-text"]} type="password" placeholder="Confirm Password" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)}/>
+              <label className={styles["label-form"]} htmlFor="confirm-password">Confirm Password</label>
+              <input
+                className={styles["input-text"]}
+                type="password"
+                placeholder="Confirm Password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
             </div>
             <div className={styles["group-form"]}>
-              <label className={styles["label-form"]}>
-                Your password must contain at least:
-              </label>
+              <label className={styles["label-form"]}>Your password must contain at least:</label>
               <label className={styles["label-require"]}>
-                <input type="radio" className={styles["radio"]} id="letter" checked={isOneLetter} disabled/>
+                <input type="radio" className={styles["radio"]} id="letter" checked={isOneLetter} disabled />
                 1 letter
               </label>
               <label className={styles["label-require"]}>
-                <input type="radio" className={styles["radio"]} id="number-special" checked={isSpecial} disabled/>
+                <input type="radio" className={styles["radio"]} id="number-special" checked={isSpecial} disabled />
                 1 number or special character (example: # ? ! &)
               </label>
               <label className={styles["label-require"]}>
-                <input type="radio" className={styles["radio"]} id="ten-characters" checked={isTenChar} readOnly disabled/>
+                <input type="radio" className={styles["radio"]} id="ten-characters" checked={isTenChar} readOnly disabled />
                 8 characters
               </label>
             </div>
           </div>
           {errorMessage && <span className={styles["error-message"]}>{errorMessage}</span>}
-          <button className={styles["button-1"]} onClick={regis}>
-            Sign Up
-          </button>
+          <button className={styles["button-1"]} onClick={regis}>Sign Up</button>
           <hr className={styles["hr-full"]} />
           <span className={`${styles["link2"]}`}>
             Already have an account?{" "}

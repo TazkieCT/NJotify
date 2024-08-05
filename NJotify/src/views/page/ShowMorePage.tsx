@@ -13,9 +13,9 @@ const ShowMorePage = () => {
 
   const handleMissingId = () => {
     if (!id) {
-      return <p>No ID provided</p>;
+      // return <p>No ID provided</p>;
     }
-    return <p>ID: {id}</p>;
+    // return <p>ID: {id}</p>;
   };
 
   useEffect(() => {

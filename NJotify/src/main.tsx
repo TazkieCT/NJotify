@@ -50,12 +50,12 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
           <Route path="/playlist/:playlistId" element={<PrivateRoute element={<PlaylistPage />} requiredRoles={['listener', 'artist']} />} />
           <Route path="/post" element={<PrivateRoute element={<YourPostPage />} requiredRoles={['artist']} />} />
           <Route path="/create" element={<PrivateRoute element={<CreateMusicPage />} requiredRoles={['artist']} />} />
-          <Route path="/admin" element={<PrivateRoute element={<AdminPage />} requiredRoles={['admin']} />} />
         </Route>
         <Route path="/settings" element={<AccountSettingPage />} />
         <Route path="/notification-settings" element={<PrivateRoute element={<Notification />} requiredRoles={['listener', 'artist']} />} />
         <Route path="/verify-profile" element={<PrivateRoute element={<GetVerified />} requiredRoles={['listener', 'artist']} />} />
         <Route path="/edit-profile" element={<PrivateRoute element={<EditProfile />} requiredRoles={['listener', 'artist']} />} />
+        <Route path="/admin" element={<AdminPage />}/>
       </Routes>
     </Router>
   </React.StrictMode>

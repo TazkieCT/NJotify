@@ -5,6 +5,7 @@ import style from "../../styles/accountPage/AdminPage.module.css";
 import logo from '../../assets/NJOTIFY.png';
 import VerifyUser from "./VerifyUser";
 import { useNavigate } from "react-router-dom";
+import useUserStore from '../../state/AccountState';
 
 // interface verifyUser {
 //   Id: string;
@@ -15,6 +16,19 @@ import { useNavigate } from "react-router-dom";
 const AdminPage: React.FC = () => {
   const [users, setUsers] = useState<userVerify[]>([]);
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+
+      if (parsedUser.Id !== "") {
+        navigate('/home');
+      }
+    }
+  }, [navigate, setUser]);
 
   useEffect(() => {
     axios.get('http://localhost:8888/admin')
