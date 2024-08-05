@@ -25,6 +25,7 @@ import CreateMusicPage from './views/page/CreateMusicPage';
 import PrivateRoute from './PrivateRoute';
 import YourPostPage from './views/page/YourPostPage';
 import HomeLayout from './views/HomeLayout';
+import ArtistPredictor from './views/page/LyricPredict';
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -33,6 +34,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisForm />} />
         <Route path="/forgot" element={<ForgetForm />} />
+        <Route path="/predict" element={<ArtistPredictor />} />
         <Route path="/activate/:tokenId" element={<Activation />} />
         <Route path="/reset/:tokenId" element={<ResetPasswordForm />} />
         <Route element={<HomeLayout />}>

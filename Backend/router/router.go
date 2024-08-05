@@ -47,6 +47,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/forgot/:email", userController.Forgot)
 	router.POST("/reset", userController.Reset)
 	router.POST("/logout", userController.Logout)
+	router.POST("/get-user/:userId", userController.Logout)
 
 	// UNTUK ALBUM
 	router.POST("/create-music", albumController.CreateAlbum)

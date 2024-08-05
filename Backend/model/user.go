@@ -15,4 +15,6 @@ type User struct {
 	Roles     string    `gorm:"type:varchar(255);default:listener"`
 	Profile   string    `gorm:"type:varchar(255);default:public\\image\\Profile_Default.png"`
 	Playlists []Playlist
+	Followers []UserFollow `gorm:"foreignKey:FollowerId"`
+	Following []UserFollow `gorm:"foreignKey:FollowingId"`
 }

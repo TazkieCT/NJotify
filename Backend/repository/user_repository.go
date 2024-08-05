@@ -10,6 +10,7 @@ type UserRepository interface {
 	Activate(email string)
 	ChangePass(email string, password string)
 	GetUser(email string) model.User
+	GetProfile(id string) model.User
 	EditUser(user model.User, edit request.EditUserRequest)
 	GetVerified(user model.Artist)
 	GetVerifyUser() []model.User

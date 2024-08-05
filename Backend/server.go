@@ -18,7 +18,7 @@ func main() {
 	db := database.ConnectionDatabase()
 	redis := cache.ConnectRedis()
 
-	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{})
+	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{}, &model.UserSetting{}, &model.UserFollow{})
 
 	validator := validator.New()
 

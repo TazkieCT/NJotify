@@ -166,3 +166,7 @@ func (d *UserRepositoryImpl) Logout() {
 		helper.CheckPanic(err)
 	}
 }
+
+func (c *UserRepositoryImpl) GetProfile(id string) model.User {
+	panic("unimplemented")
+}

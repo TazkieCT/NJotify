@@ -31,6 +31,15 @@ const SongDetail = () => {
     }
   };
 
+  const fetchArtistProfile = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-user/${artist?.artist_id}`);
+      setArtist(response.data.data);
+    } catch (error) {
+      console.error("Error fetching artist!", error);
+    }
+  };
+
   useEffect(() => {
     fetchArtist();
   }, [currentTrack?.track_id]);
@@ -38,6 +47,10 @@ const SongDetail = () => {
   useEffect(() => {
     fetchAlbum();
   }, [currentTrack?.track_id]);
+
+  useEffect(() => {
+    fetchArtistProfile();
+  }, [artist?.artist_id]);
 
   // Find the index of the current track in the queue
   const currentTrackIndex = queue.findIndex(track => track.track_id === currentTrack?.track_id);
