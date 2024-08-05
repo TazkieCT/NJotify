@@ -8,7 +8,7 @@ import (
 type UserService interface {
 	CreateUser(user request.CreateUserRequest) string
 	ActivateUser(email string)
-	ChangePass(email string, password string)
+	ChangePass(email string, newPassword string) error
 	GetUser(email string, password string) (response.UserResponse, string)
 	FetchUser(email string) response.UserResponse
 	EditUser(user request.EditUserRequest)
@@ -18,7 +18,7 @@ type UserService interface {
 	SetArtist(id string)
 	RemoveArtist(id string)
 	Forgot(email string) string
-	ResetPassword(email string, pass string)
+	ResetPassword(email string, newPassword string) error
 	Logout()
 	GetUserByArtist(idUser string) response.UserResponse
 	UpdateUserSetting(userId string, music int, podcast int, follow int)

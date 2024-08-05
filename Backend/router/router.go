@@ -68,6 +68,7 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/remove-queue/:trackId", trackController.RemoveTrackFromQueue)
 	router.GET("/reset-queue", trackController.ResetQueue)
 	router.GET("/get-queue", trackController.GetQueue)
+	router.GET("/listen/:trackId", trackController.ListenCount)
 
 	// UNTUK PLAYLIST
 	router.POST("/create-playlist", playlistController.CreatePlaylist)

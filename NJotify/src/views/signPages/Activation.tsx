@@ -4,11 +4,25 @@ import styles from "../../styles/signPage/Sign.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import useUserStore from "../../state/AccountState";
 
 const Activation = () => {
-  const navigate = useNavigate();
   const { tokenId } = useParams<{ tokenId: string }>();
   const [ status, setStatus ] = useState("Loading...");
+  const navigate = useNavigate();
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+
+      if (parsedUser.Id !== "") {
+        navigate('/home');
+      }
+    }
+  }, [navigate, setUser]);
 
   useEffect(() => {
 

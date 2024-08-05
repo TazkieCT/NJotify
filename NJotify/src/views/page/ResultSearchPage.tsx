@@ -146,7 +146,7 @@ const ResultSearchPage = () => {
                     <span className={style.header}>Top Results</span>
                     <div className={style['highlight-song']}>
                       <div className={style['highlight-image']}>
-                        {/* <img src={`http://localhost:8888/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" /> */}
+                        <img src={`http://localhost:8888/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" />
                       </div>
                       <div className={`highlight-text`}>
                         <span className={style['highlight-title']}>

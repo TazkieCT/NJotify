@@ -2,6 +2,7 @@ package repository
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
@@ -41,10 +42,24 @@ func (u *UserRepositoryImpl) Activate(email string) {
 	helper.CheckPanic(result.Error)
 }
 
-func (u *UserRepositoryImpl) ChangePass(email string, password string) {
+func (u *UserRepositoryImpl) ChangePass(email string, newPassword string) error {
 	var user model.User
-	result := u.Db.Model(&user).Where("email = ?", email).Update("password", password)
-	helper.CheckPanic(result.Error)
+
+	result := u.Db.Model(&user).Where("email = ?", email).Select("password").First(&user)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	if user.Password == newPassword {
+		return errors.New("new password cannot be the same as the old password")
+	}
+
+	result = u.Db.Model(&user).Where("email = ?", email).Update("password", newPassword)
+	if result.Error != nil {
+		return result.Error
+	}
+
+	return nil
 }
 
 // inactive

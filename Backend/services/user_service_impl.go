@@ -76,8 +76,12 @@ func (u *UserServiceImpl) ActivateUser(email string) {
 	u.UserRepository.Activate(email)
 }
 
-func (u *UserServiceImpl) ChangePass(email string, password string) {
-	u.UserRepository.ChangePass(email, password)
+func (u *UserServiceImpl) ChangePass(email string, newPassword string) error {
+	err := u.UserRepository.ChangePass(email, newPassword)
+	if err != nil {
+		return fmt.Errorf("failed to change password: %w", err)
+	}
+	return nil
 }
 
 func (r *UserServiceImpl) GetUser(email string, password string) (response.UserResponse, string) {
@@ -251,11 +255,18 @@ func (c *UserServiceImpl) Forgot(email string) string {
 	return token
 }
 
-func (u *UserServiceImpl) ResetPassword(email string, pass string) {
-	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(pass), bcrypt.DefaultCost)
-	helper.CheckPanic(err)
+func (u *UserServiceImpl) ResetPassword(email string, newPassword string) error {
+	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+	if err != nil {
+		return fmt.Errorf("failed to hash password: %w", err)
+	}
 
-	u.UserRepository.ChangePass(email, string(hashedPassword))
+	err = u.UserRepository.ChangePass(email, string(hashedPassword))
+	if err != nil {
+		return fmt.Errorf("failed to change password: %w", err)
+	}
+
+	return nil
 }
 
 func (d *UserServiceImpl) Logout() {

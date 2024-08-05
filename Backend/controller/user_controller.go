@@ -100,8 +100,8 @@ func (controller *UserController) Forgot(ctx *gin.Context) {
 
 func (controller *UserController) Reset(ctx *gin.Context) {
 	var resetPass request.ResetPassword
-	err := ctx.ShouldBindJSON(&resetPass)
-	if err != nil {
+
+	if err := ctx.ShouldBindJSON(&resetPass); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
 		return
 	}
@@ -112,18 +112,19 @@ func (controller *UserController) Reset(ctx *gin.Context) {
 		ctx.JSON(http.StatusUnauthorized, gin.H{"message": "Invalid token", "error": err.Error()})
 		return
 	}
-	// fmt.Println("BBBBBBBBBBBBB")
 
-	controller.userService.ResetPassword(email, resetPass.Password)
-	// fmt.Println("ssssssssssss")
+	if err := controller.userService.ResetPassword(email, resetPass.Password); err != nil {
+		ctx.JSON(http.StatusInternalServerError, gin.H{"message": "Failed to reset password", "error": err.Error()})
+		return
+	}
 
-	WebResponse := response.WebResponse{
+	webResponse := response.WebResponse{
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   nil,
 	}
 
-	ctx.JSON(http.StatusOK, WebResponse)
+	ctx.JSON(http.StatusOK, webResponse)
 }
 
 func (controller *UserController) GetUser(ctx *gin.Context) {

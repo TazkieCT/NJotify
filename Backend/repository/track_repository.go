@@ -15,4 +15,5 @@ type TrackRepository interface {
 	RemoveTrackFromQueue(queueKey string, trackId string)
 	GetQueue(queueKey string) []model.Track
 	ResetQueue(queueKey string)
+	ListenCount(songId string)
 }

@@ -98,7 +98,6 @@ func (controller *TrackController) RemoveTrackFromQueue(ctx *gin.Context) {
 	ctx.JSON(http.StatusOK, WebResponse)
 }
 
-
 func (controller *TrackController) ResetQueue(ctx *gin.Context) {
 	controller.trackService.ResetQueue()
 
@@ -118,6 +117,19 @@ func (controller *TrackController) GetQueue(ctx *gin.Context) {
 		Code:   http.StatusOK,
 		Status: "Ok",
 		Data:   trackResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *TrackController) ListenCount(ctx *gin.Context) {
+	idTrack := ctx.Param("trackId")
+	controller.trackService.ListenCount(idTrack)
+
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
 	}
 
 	ctx.JSON(http.StatusOK, WebResponse)

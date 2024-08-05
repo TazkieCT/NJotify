@@ -6,6 +6,7 @@ import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
+import useUserStore from "../../state/AccountState";
 
 const RegisForm = () => {
   const [email, setEmail] = useState("");
@@ -16,6 +17,19 @@ const RegisForm = () => {
   const [isSpecial, setIsSpecial] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useUserStore();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
+
+      if (parsedUser.Id !== "") {
+        navigate('/home');
+      }
+    }
+  }, [navigate, setUser]);
 
   useEffect(() => {
     setIsTenChar(password.length >= 8);

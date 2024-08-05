@@ -12,17 +12,20 @@ const LoginForm = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  const { user, setUser } = useUserStore();
+  const { setUser } = useUserStore();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
-      setUser(JSON.parse(savedUser));
-      if(user.Id == '')
-      navigate("/login");
-    }
-  }, [setUser, navigate]);
+      const parsedUser = JSON.parse(savedUser);
+      setUser(parsedUser);
 
+      if (parsedUser.Id !== "") {
+        navigate('/home');
+      }
+    }
+  }, [navigate, setUser]);
+  
   const validateForm = () => {
     if (!email || !password) {
       setErrorMessage("All fields are required.");

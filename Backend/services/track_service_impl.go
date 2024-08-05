@@ -153,3 +153,7 @@ func (r *TrackServiceImpl) GetQueue() []response.TrackResponse {
 func (d *TrackServiceImpl) ResetQueue() {
 	d.TrackRepository.ResetQueue("track_queue")
 }
+
+func (u *TrackServiceImpl) ListenCount(songId string) {
+	u.TrackRepository.ListenCount(songId)
+}

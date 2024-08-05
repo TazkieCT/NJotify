@@ -15,4 +15,5 @@ type TrackService interface {
 	RemoveTrackFromQueue(trackId string)
 	GetQueue() []response.TrackResponse
 	ResetQueue()
+	ListenCount(songId string)
 }

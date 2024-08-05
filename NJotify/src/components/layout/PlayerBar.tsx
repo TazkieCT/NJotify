@@ -125,20 +125,24 @@ const PlayerBar = () => {
       }
     };
 
-    audioRef.current?.addEventListener('timeupdate', updateProgress);
-    audioRef.current?.addEventListener('ended', () => {
+    const handleEnded = async () => {
+      try {
+        await axios.get(`http://localhost:8888/listen/${currentTrack?.track_id}`);
+      } catch (error) {
+        console.error("Error updating listen count!", error);
+      }
       skipToNextTrack();
-      setAdPlaying(false); // Reset ad status when the track ends
-    });
+      setAdPlaying(false);
+    };
+
+    audioRef.current?.addEventListener('timeupdate', updateProgress);
+    audioRef.current?.addEventListener('ended', handleEnded);
     
     return () => {
       audioRef.current?.removeEventListener('timeupdate', updateProgress);
-      audioRef.current?.removeEventListener('ended', () => {
-        skipToNextTrack();
-        setAdPlaying(false);
-      });
+      audioRef.current?.removeEventListener('ended', handleEnded);
     };
-  }, []);
+  }, [currentTrack, skipToNextTrack, setAdPlaying]);
 
   return (
     <div className={`${style['container']} ${style['flex']}`}>

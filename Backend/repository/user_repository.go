@@ -9,7 +9,7 @@ import (
 type UserRepository interface {
 	SignIn(user model.User)
 	Activate(email string)
-	ChangePass(email string, password string)
+	ChangePass(email string, newPassword string) error
 	GetUser(email string) model.User
 	GetProfile(id string) model.User
 	EditUser(user model.User, edit request.EditUserRequest)

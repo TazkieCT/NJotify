@@ -1,5 +1,5 @@
-import React from 'react';
-import { Navigate, useLocation } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useUserStore from '../src/state/AccountState';
 
 interface PrivateRouteProps {
@@ -8,12 +8,20 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, requiredRoles }) => {
-  const { user } = useUserStore();
+  const { user, setUser } = useUserStore();
   const location = useLocation();
+  // const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedUser = localStorage.getItem("user");
+    if (savedUser) {
+      setUser(JSON.parse(savedUser));
+    }
+  }, []);
 
   const hasAccess = requiredRoles?.includes(user?.Role);
 
-  if (!user) {
+  if (!user || user.Id === "") {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
 

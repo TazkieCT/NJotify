@@ -202,3 +202,17 @@ func (r *TrackRepositoryImpl) ResetQueue(queueKey string) {
 	err := r.Redis.Del(queueKey).Err()
 	helper.CheckPanic(err)
 }
+
+func (r *TrackRepositoryImpl) ListenCount(songId string) {
+	var track model.Track
+
+	result := r.Db.First(&track, "id = ?", songId)
+	helper.CheckPanic(result.Error)
+
+	track.ListenCount++
+
+	updateResult := r.Db.Save(&track)
+	if updateResult.Error != nil {
+		helper.CheckPanic(updateResult.Error)
+	}
+}
