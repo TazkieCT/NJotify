@@ -3,6 +3,7 @@ package repository
 import (
 	"github.com/TazkieCT/njotify/data/request"
 	"github.com/TazkieCT/njotify/model"
+	"github.com/google/uuid"
 )
 
 type UserRepository interface {
@@ -18,4 +19,7 @@ type UserRepository interface {
 	RemoveArtist(id string)
 	EditProfile(id string, image string)
 	Logout()
+	GetUserByArtist(idUser string) model.User
+	UpdateUserSetting(userId uuid.UUID, music int, podcast int, follow int) error
+	GetUserSetting(userId string) model.UserSetting
 }

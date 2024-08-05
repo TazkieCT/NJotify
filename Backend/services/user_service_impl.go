@@ -102,6 +102,23 @@ func (r *UserServiceImpl) GetUser(email string, password string) (response.UserR
 	return user, token
 }
 
+func (r *UserServiceImpl) GetUserByArtist(idUser string) response.UserResponse {
+	result := r.UserRepository.GetUserByArtist(idUser)
+
+	user := response.UserResponse{
+		Id:       result.Id,
+		Username: result.Username,
+		Email:    result.Email,
+		Gender:   result.Gender,
+		Dob:      result.Dob,
+		Country:  result.Country,
+		Role:     result.Roles,
+		Image:    result.Profile,
+	}
+
+	return user
+}
+
 func (r *UserServiceImpl) FetchUser(email string) response.UserResponse {
 	email = strings.ToLower(email)
 	result := r.UserRepository.GetUser(email)
@@ -243,4 +260,21 @@ func (u *UserServiceImpl) ResetPassword(email string, pass string) {
 
 func (d *UserServiceImpl) Logout() {
 	d.UserRepository.Logout()
+}
+
+func (u *UserServiceImpl) UpdateUserSetting(userId string, music int, podcast int, follow int) {
+	parsedUUID, err := uuid.Parse(userId)
+	helper.CheckPanic(err)
+	u.UserRepository.UpdateUserSetting(parsedUUID, music, podcast, follow)
+}
+
+func (r *UserServiceImpl) GetUserSetting(idUser string) response.EditSettingResponse {
+	setting := r.UserRepository.GetUserSetting(idUser)
+	settingResponse := response.EditSettingResponse{
+		MusicArtist: setting.MusicArtist,
+		Podcast:     setting.Podcast,
+		Follow:      setting.Follow,
+	}
+
+	return settingResponse
 }

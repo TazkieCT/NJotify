@@ -14,6 +14,7 @@ const TrackPage = () => {
   const { trackId } = useParams<{ trackId: string }>();
   const [artist, setArtist] = useState<artistByTrack>();
   const [tracks, setTracks] = useState<trackArtist[]>([]);
+  const [trackAlbums, setTrackAlbums] = useState<trackArtist[]>([]);
   const [mainTrack, setMainTrack] = useState<trackArtist>();
   const [album, setAlbum] = useState<albumCard>();
 
@@ -22,6 +23,16 @@ const TrackPage = () => {
     try {
       const response = await axios.get(`http://localhost:8888/get-album-track/${trackId}`);
       setAlbum(response.data.data);
+    } catch (error) {
+      console.error("Error fetching album!", error);
+    }
+  };
+
+  const fetchTrackAlbum = async () => {
+    // console.log(trackId);
+    try {
+      const response = await axios.get(`http://localhost:8888/get-track-album/${album?.album_id}`);
+      setTrackAlbums(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
     }
@@ -70,7 +81,7 @@ const TrackPage = () => {
     fetchMainTrack();
     fetchAlbum();
     fetchTrack();
-
+    fetchTrackAlbum();
     // console.log(tracks);
 
   }, [artist]);
@@ -143,9 +154,12 @@ const TrackPage = () => {
               <span className={`${style['small']} ${style['gray']}`}>Popular Tracks by</span>
               <span className={style.name}>{artist?.artist_name}</span>
               <div className="">
-                {tracks && tracks.map((track, index) => (
-                  <SongRow track={track} index={index + 1}/>
-                ))}
+              {tracks && tracks
+              .sort((a, b) => b.track_count - a.track_count)
+              .slice(0, 5)
+              .map((track, index) => (
+                <SongRow key={index} track={track} index={index + 1} />
+              ))}
               </div>
               <div>
                 <span className={`${style['gray']} ${style['see-more']}`}>See more</span>
@@ -160,7 +174,10 @@ const TrackPage = () => {
                 </div>
               </div>
               <div className={`${style['mt-sl']}`}>
-                {mainTrack && <SongRowAlbum track={transformToTrackAlbum(mainTrack)} index={1} />}
+                {trackAlbums && trackAlbums.map((track, index) => (
+                  <SongRowAlbum track={transformToTrackAlbum(track)}  index={index + 1}/>
+                ))}
+                {/* {mainTrack && <SongRowAlbum track={transformToTrackAlbum(mainTrack)} index={1} />} */}
               </div>
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>

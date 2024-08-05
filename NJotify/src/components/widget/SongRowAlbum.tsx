@@ -3,6 +3,8 @@ import style from "../../styles/widget/SongRow.module.css"
 import PopupClick from "./PopupClick";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
+import axios from "axios";
+import { usePlayerStore } from "../../state/PlayerState";
 
 const SongRowAlbum = ({ track, index } : { track: trackAlbum, index: number }) => {
   const [popUp, setPopUp] = useState<{ visible: boolean, x: number, y: number }>({ visible: false, x: 0, y: 0 });
@@ -41,11 +43,39 @@ const SongRowAlbum = ({ track, index } : { track: trackAlbum, index: number }) =
     return `${minutes}:${seconds.toString().padStart(2, '0')}`;
   };
 
+  const { setQueue, clearQueue, setCurrentTrack } = usePlayerStore();
+
+  const fetchQueue = async () => {
+    try {
+      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const fetchedQueue = response.data.data;
+      setQueue(fetchedQueue);
+      if (fetchedQueue.length > 0) {
+        setCurrentTrack(fetchedQueue[0]);
+      }
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
+  };
+
+  const addTracksToQueue = async () => {
+    try {
+      await axios.get(`http://localhost:8888/reset-queue`);
+      clearQueue();
+
+      await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+
+      fetchQueue();
+    } catch (error) {
+      console.error("Error managing queue!", error);
+    }
+  };
+
   return (
     <div className={style["song-row"]} onContextMenu={handlePopUpMenu} ref={songRowRef}>
       <div className={style["song-number-album"]}>
         <span className={style['index']}>{index}</span>
-        <span className={style['play']}><FaPlay/></span>
+        <span className={style['play']} onClick={addTracksToQueue}><FaPlay/></span>
       </div>
       <div className={style["song-name-album"]}>
         <div className={style.name} onClick={() => {navigate(`/track/${track.track_id}`)}}>{track.track_name}</div>

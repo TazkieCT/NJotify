@@ -4,6 +4,12 @@ import style from "../../styles/widget/TopSearch.module.css"
 const TopSearch = ({ track } : {track:trackResult}) => {
   const navigate = useNavigate();
 
+  const formatDuration = (duration: number) => {
+    const minutes = Math.floor(duration / 60);
+    const seconds = duration % 60;
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+  };
+  
   return (
     <div className={`${style["flex-between"]} ${style["select"]}`} onClick={() => {navigate(`/track/${track.track_id}`)}}>
         <div className={style["song-info"]}>
@@ -14,7 +20,7 @@ const TopSearch = ({ track } : {track:trackResult}) => {
             </div>
         </div>
         <span>
-            4:56
+          {formatDuration(track.track_duration)}
         </span>
     </div>
   );

@@ -9,6 +9,7 @@ import (
 	"github.com/TazkieCT/njotify/helper"
 	"github.com/TazkieCT/njotify/model"
 	"github.com/go-redis/redis"
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -24,6 +25,14 @@ func NewUserRepositoryImpl(db *gorm.DB, redis *redis.Client) UserRepository {
 func (c *UserRepositoryImpl) SignIn(user model.User) {
 	result := c.Db.Create(&user)
 	helper.CheckPanic(result.Error)
+
+	userSetting := model.UserSetting{
+		UserId:      user.Id,
+		MusicArtist: 0,
+		Follow:      0,
+	}
+	result = c.Db.Create(&userSetting)
+	helper.CheckPanic(result.Error)
 }
 
 func (u *UserRepositoryImpl) Activate(email string) {
@@ -38,13 +47,16 @@ func (u *UserRepositoryImpl) ChangePass(email string, password string) {
 	helper.CheckPanic(result.Error)
 }
 
+// inactive
 func (r *UserRepositoryImpl) GetUser(email string) model.User {
 	var user model.User
 
 	val, err := r.Redis.Get("email").Result()
 	if err == redis.Nil {
-		result := r.Db.First(&user, "email = ?", email)
-		helper.CheckPanic(result.Error)
+		result := r.Db.Where("email = ? AND roles != ?", email, "inactive").First(&user)
+		if result.Error != nil {
+			helper.CheckPanic(result.Error)
+		}
 
 		userJson, err := json.Marshal(user)
 		if err != nil {
@@ -63,6 +75,15 @@ func (r *UserRepositoryImpl) GetUser(email string) model.User {
 		}
 		fmt.Println("User retrieved from cache")
 	}
+
+	return user
+}
+
+func (r *UserRepositoryImpl) GetUserByArtist(idUser string) model.User {
+	var user model.User
+
+	result := r.Db.First(&user, "id = ?", idUser)
+	helper.CheckPanic(result.Error)
 
 	return user
 }
@@ -169,4 +190,70 @@ func (d *UserRepositoryImpl) Logout() {
 
 func (c *UserRepositoryImpl) GetProfile(id string) model.User {
 	panic("unimplemented")
+}
+
+func (c *UserRepositoryImpl) UpdateUserSetting(userId uuid.UUID, music int, podcast int, follow int) error {
+	var userSetting model.UserSetting
+
+	result := c.Db.First(&userSetting, "user_id = ?", userId)
+	if result.Error != nil {
+		if result.Error == gorm.ErrRecordNotFound {
+			userSetting = model.UserSetting{
+				UserId:      userId,
+				MusicArtist: music,
+				Podcast:     podcast,
+				Follow:      follow,
+			}
+			result = c.Db.Create(&userSetting)
+			if result.Error != nil {
+				return result.Error
+			}
+		} else {
+			return result.Error
+		}
+	} else {
+		userSetting.MusicArtist = music
+		userSetting.Podcast = podcast
+		userSetting.Follow = follow
+		result = c.Db.Save(&userSetting)
+		if result.Error != nil {
+			return result.Error
+		}
+	}
+
+	cacheKey := fmt.Sprintf("user_setting_%s", userId.String())
+	jsonData, err := json.Marshal(userSetting)
+	if err != nil {
+		return err
+	}
+	err = c.Redis.Set(cacheKey, jsonData, time.Hour).Err()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *UserRepositoryImpl) GetUserSetting(userId string) model.UserSetting {
+	cacheKey := fmt.Sprintf("user_setting_%s", userId)
+
+	cachedData, err := r.Redis.Get(cacheKey).Result()
+	if err == nil {
+		var userSetting model.UserSetting
+		err = json.Unmarshal([]byte(cachedData), &userSetting)
+		if err == nil {
+			return userSetting
+		}
+	}
+
+	var userSetting model.UserSetting
+	result := r.Db.Where("user_id = ?", userId).First(&userSetting)
+	helper.CheckPanic(result.Error)
+
+	jsonData, err := json.Marshal(userSetting)
+	if err == nil {
+		r.Redis.Set(cacheKey, jsonData, time.Hour).Err()
+	}
+
+	return userSetting
 }

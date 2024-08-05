@@ -271,3 +271,44 @@ func (controller *UserController) Logout(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, WebResponse)
 }
+
+func (controller *UserController) GetUserByArtist(ctx *gin.Context) {
+	idUser := ctx.Param("userId")
+
+	userResponse := controller.userService.GetUserByArtist(idUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   userResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) UpdateSetting(ctx *gin.Context) {
+	editSettingRequest := request.EditSettingRequest{}
+	err := ctx.ShouldBindJSON(&editSettingRequest)
+	helper.CheckPanic(err)
+
+	controller.userService.UpdateUserSetting(editSettingRequest.UserId, editSettingRequest.MusicArtist, editSettingRequest.Podcast, editSettingRequest.Follow)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   nil,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}
+
+func (controller *UserController) GetUserSetting(ctx *gin.Context) {
+	idUser := ctx.Param("userId")
+
+	userResponse := controller.userService.GetUserSetting(idUser)
+	WebResponse := response.WebResponse{
+		Code:   http.StatusOK,
+		Status: "Ok",
+		Data:   userResponse,
+	}
+
+	ctx.JSON(http.StatusOK, WebResponse)
+}

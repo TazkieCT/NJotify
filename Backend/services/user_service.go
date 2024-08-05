@@ -20,4 +20,7 @@ type UserService interface {
 	Forgot(email string) string
 	ResetPassword(email string, pass string)
 	Logout()
+	GetUserByArtist(idUser string) response.UserResponse
+	UpdateUserSetting(userId string, music int, podcast int, follow int)
+	GetUserSetting(idUser string) response.EditSettingResponse
 }

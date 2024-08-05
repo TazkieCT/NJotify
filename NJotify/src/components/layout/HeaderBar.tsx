@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import useUserStore from "../../state/AccountState";
 import axios from "axios";
 import useCookie from "../../state/CookieState";
+import { IoSparklesOutline } from "react-icons/io5";
 
 const HeaderBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -59,6 +60,10 @@ const HeaderBar = () => {
     navigate(1);
   }
 
+  const predictPage = () => {
+    navigate("/predict");
+  }
+
   const logout = async () => {
     try {
       const response = await axios.post(`http://localhost:8888/logout`, {
@@ -86,6 +91,7 @@ const HeaderBar = () => {
         {(page === "search" || page === "result") && (
           <CustomSearchBar/>
         )}
+        <span className={style['page-button']} onClick={predictPage}><IoSparklesOutline /></span>
       </div>
       <div className={style['profile-container']} ref={menuRef}>
         <div className={style['profile-button']} onClick={toggleMenu}>
@@ -93,7 +99,7 @@ const HeaderBar = () => {
         </div>
         {isMenuOpen && (
           <div className={style['profile-menu']}>
-            <div className={style['menu-item']} onClick={() => {handleClickRightBar("profile")}}>Profile</div>
+            <div className={style['menu-item']} onClick={() => {handleClickRightBar(`profile/${user.Id}`)}}>Profile</div>
             <div className={style['menu-item']} onClick={handleManageAccountClick}>Manage Account <span className={style['box-icon']}><PiArrowSquareOut/></span></div>
             <hr className={style.hr}/>
             <div className={style['menu-item']} onClick={() => {logout()}}>Logout</div>

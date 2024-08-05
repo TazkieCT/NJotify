@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState} from 'react';
 import AlbumCard from "../../components/widget/AlbumCard";
 import ArtistCard from "../../components/widget/ArtistCard";
 import useUserStore from "../../state/AccountState";
@@ -6,6 +6,7 @@ import style from "../../styles/page/ProfilePage.module.css";
 import axios from 'axios';
 import { HiOutlinePencil } from 'react-icons/hi2';
 import PlaylistCardProfile from '../../components/widget/PlaylistCardProfile';
+import { useParams } from 'react-router-dom';
 
 const toBase64 = (file: File): Promise<string> => 
   new Promise((resolve, reject) => {
@@ -18,24 +19,25 @@ const toBase64 = (file: File): Promise<string> =>
     };
     reader.onerror = error => reject(error);
   });
+  
+  const ProfilePage: React.FC = () => {
+    const { userId } = useParams<{ userId: string }>();
+    const { user, setUser } = useUserStore();
+    const [profileImage, setProfileImage] = useState<string>(() => {
+      return `http://localhost:8888/${user.Profile}`;
+    });
+    const fileInputRef = useRef<HTMLInputElement | null>(null);
+    const [playlists, setPlaylists] = useState<playlist[]>([]);
 
-const ProfilePage: React.FC = () => {
-  const { user, setUser } = useUserStore();
-  const [profileImage, setProfileImage] = useState<string>(() => {
-    return `http://localhost:8888/${user.Profile}`;
-  });
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const [playlists, setPlaylists] = useState<playlist[]>([]);
-
-  const fetchPlaylist = async () => {
-    try {
-      const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
-      setPlaylists(response.data.data);
-      // console.log(playlists);
-    } catch (error) {
-      console.error("Error fetching playlist!", error);
-    }
-  };
+    const fetchPlaylist = async () => {
+      try {
+        const response = await axios.get(`http://localhost:8888/get-playlist-user/${userId}`);
+        setPlaylists(response.data.data);
+        // console.log(playlists);
+      } catch (error) {
+        console.error("Error fetching playlist!", error);
+      }
+    };
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -43,7 +45,7 @@ const ProfilePage: React.FC = () => {
       setUser(JSON.parse(savedUser));
     }
     fetchPlaylist();
-  }, [setUser, user.Id]);
+  }, [setUser, userId]);
 
   const handleAvatarClick = () => {
     if (fileInputRef.current) {

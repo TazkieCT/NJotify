@@ -146,7 +146,7 @@ const ResultSearchPage = () => {
                     <span className={style.header}>Top Results</span>
                     <div className={style['highlight-song']}>
                       <div className={style['highlight-image']}>
-                        <img src={`http://localhost:8888/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" />
+                        {/* <img src={`http://localhost:8888/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" /> */}
                       </div>
                       <div className={`highlight-text`}>
                         <span className={style['highlight-title']}>
@@ -170,7 +170,14 @@ const ResultSearchPage = () => {
                 <div className={style['songs-result']}>
                   <span className={style.header}>Songs</span>
                   <div className={style['top-songs']}>
-                    {result.track?.map((track, index) => (
+                    {artistTracks.length > 0 && (
+                      <>
+                        {artistTracks.slice(0, 5).map((track, index) => (
+                          <TopSearch key={index} track={track} />
+                        ))}
+                      </>
+                    )}
+                    {artistTracks.length == 0 && result.track?.map((track, index) => (
                       <TopSearch key={index} track={track} />
                     ))}
                   </div>
@@ -193,16 +200,6 @@ const ResultSearchPage = () => {
                 <div className={style.flex}>
                   {result.album.map((album, index) => (
                     <AlbumCard key={index} album={album} />
-                  ))}
-                </div>
-              </div>
-            )}
-            {artistTracks.length > 0 && (
-              <div className={style['artist-tracks']}>
-                <span className={style.header}>Tracks by Artist</span>
-                <div className={style['top-songs']}>
-                  {artistTracks.map((track, index) => (
-                    <TopSearch key={index} track={track} />
                   ))}
                 </div>
               </div>

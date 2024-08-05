@@ -170,20 +170,30 @@
     gap: 1rem;
 }
 
-.next-track-image{
+.next-track-image {
     border-radius: 0.3rem;
     width: 3rem;
+    height: 3rem;
+    aspect-ratio: 1 / 1;
+    object-fit: cover;
 }
 
-.next-track-info{
+.next-track-info {
     display: flex;
     flex-direction: column;
     justify-content: center;
     gap: 0.2rem;
+    width: 100%; /* Ensure it takes up the full width available */
+    max-width: 200px; /* Adjust the max-width as needed */
+    overflow: hidden; /* Hide overflow content */
 }
 
-.next-track-name{
+.next-track-name {
     color: white;
+    white-space: nowrap; /* Prevents text from wrapping to a new line */
+    overflow: hidden; /* Hide the overflow text */
+    text-overflow: ellipsis; /* Add ellipses at the end */
+    width: 100%; /* Ensure the text takes the full width of its container */
 }
 
 .between{
