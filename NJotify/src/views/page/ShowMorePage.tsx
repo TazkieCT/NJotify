@@ -36,7 +36,7 @@ const ShowMorePage = () => {
       <div className={style.content}>
         <div className={style.header}>
             <span className={style.title}>Music</span>
-            {handleMissingId()}
+            {/* {handleMissingId()} */}
         </div>
         <div className={style.section}>
           <div className={style["flex-between"]}>
