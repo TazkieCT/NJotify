@@ -1,6 +1,8 @@
 package main
 
 import (
+	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/TazkieCT/njotify/cache"
@@ -18,7 +20,20 @@ func main() {
 	db := database.ConnectionDatabase()
 	redis := cache.ConnectRedis()
 
-	db.AutoMigrate(&model.User{}, &model.Artist{}, &model.Album{}, &model.Track{}, &model.Playlist{}, &model.PlaylistTrack{}, &model.UserSetting{}, &model.UserFollow{})
+	errs := db.AutoMigrate(
+		&model.User{},
+		&model.Artist{},
+		&model.Album{},
+		&model.Track{},
+		&model.Playlist{},
+		&model.PlaylistTrack{},
+		&model.UserSetting{},
+		&model.UserFollow{},
+	)
+	if errs != nil {
+		log.Fatal("AutoMigrate failed:", errs)
+	}
+	fmt.Println("Migration complete")
 
 	validator := validator.New()
 
