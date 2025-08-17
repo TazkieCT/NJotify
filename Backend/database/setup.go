@@ -24,5 +24,13 @@ func ConnectionDatabase() *gorm.DB {
 	database, err := gorm.Open(postgres.Open(sqlInfo), &gorm.Config{})
 	helper.CheckPanic(err)
 
+	sqlDB, err := database.DB()
+	helper.CheckPanic(err)
+
+	err = sqlDB.Ping()
+	helper.CheckPanic(err)
+
+	fmt.Println("✅ Successfully connected to PostgreSQL!")
+
 	return database
 }

@@ -69,6 +69,9 @@ func NewRouter(userController *controller.UserController, albumController *contr
 	router.GET("/reset-queue", trackController.ResetQueue)
 	router.GET("/get-queue", trackController.GetQueue)
 	router.GET("/listen/:trackId", trackController.ListenCount)
+	router.GET("/health", func(c *gin.Context) {
+		c.JSON(200, gin.H{"status": "ok"})
+	})
 
 	// UNTUK PLAYLIST
 	router.POST("/create-playlist", playlistController.CreatePlaylist)

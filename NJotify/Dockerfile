@@ -3,7 +3,7 @@ FROM node:20
 WORKDIR /app
 
 COPY package*.json ./
-RUN npm i -g vite
+# RUN npm i -g vite
 RUN npm install
 
 COPY . .
