@@ -60,7 +60,7 @@ func main() {
 
 	routers := router.NewRouter(userController, albumController, trackController, playlistController, artistController, searchController)
 	server := &http.Server{
-		Addr:    ":8888",
+		Addr:    ":8080",
 		Handler: routers,
 	}
 
