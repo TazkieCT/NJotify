@@ -10,6 +10,7 @@ import useUserStore from "../../state/AccountState";
 import axios from "axios";
 import useCookie from "../../state/CookieState";
 import { IoSparklesOutline } from "react-icons/io5";
+import { API_URL } from "../../config/api";
 
 const HeaderBar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -66,7 +67,7 @@ const HeaderBar = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.post(`http://localhost:8888/logout`, {
+      const response = await axios.post(`${API_URL}/logout`, {
         headers: {
           Authorization: `${cookie}`
         }
@@ -95,7 +96,7 @@ const HeaderBar = () => {
       </div>
       <div className={style['profile-container']} ref={menuRef}>
         <div className={style['profile-button']} onClick={toggleMenu}>
-          <img src={`http://localhost:8888/${user.Profile}`} className={style['profile-icon']} alt="Profile Icon" />
+          <img src={`${API_URL}/${user.Profile}`} className={style['profile-icon']} alt="Profile Icon" />
         </div>
         {isMenuOpen && (
           <div className={style['profile-menu']}>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import useUserStore from '../../state/AccountState';
+import { API_URL } from '../../config/api';
 
 const ResetPasswordForm = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -62,7 +63,7 @@ const ResetPasswordForm = () => {
     console.log(data);
 
     axios
-      .post("http://localhost:8888/reset", data)
+      .post(`${API_URL}/reset`, data)
       .then((response) => {
         // console.log(response.data.data);
         localStorage.removeItem("reset-token");

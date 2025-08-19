@@ -6,6 +6,7 @@ import { PiMusicNotesSimpleFill } from "react-icons/pi";
 import { FaMinus } from "react-icons/fa6";
 import { FaPlus } from "react-icons/fa6";
 import useUserStore from '../../state/AccountState';
+import { API_URL } from '../../config/api';
 
 interface TrackFile {
   id: number;
@@ -139,7 +140,7 @@ const CreateMusicPage = () => {
         console.log(`${key}:`, value);
       }
     
-      const response = await axios.post('http://localhost:8888/create-music', formData)
+      const response = await axios.post(`${API_URL}/create-music`, formData)
       
       console.log('Music created successfully:', response.data);
     } catch (error) {

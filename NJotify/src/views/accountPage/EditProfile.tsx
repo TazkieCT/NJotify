@@ -4,6 +4,7 @@ import useSettingStore from "../../state/SettingState";
 import useUserStore from "../../state/AccountState";
 import { SetStateAction, useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../../config/api";
 
 
 const formatDate = (dateString: string): string => {
@@ -83,7 +84,7 @@ const EditProfile = () => {
     console.log(data);
 
     try {
-      await axios.post("http://localhost:8888/edit", data);
+      await axios.post(`${API_URL}/edit`, data);
     } catch (error) {
       setErrorMessage("Error, please try again.");
     }

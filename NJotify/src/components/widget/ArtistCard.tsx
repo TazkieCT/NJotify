@@ -1,3 +1,4 @@
+import { API_URL } from "../../config/api";
 import style from "../../styles/widget/AlbumCard.module.css";
 
 const ArtistCard = ({ user } : {user:userCard}) => {
@@ -5,7 +6,7 @@ const ArtistCard = ({ user } : {user:userCard}) => {
     <div className={style.card}>
       <div className={style["card-image-artist"]}>
         <img
-          src={`http://localhost:8888/${user.profile_image}`}
+          src={`${API_URL}/${user.profile_image}`}
           alt=""
         />
       </div>

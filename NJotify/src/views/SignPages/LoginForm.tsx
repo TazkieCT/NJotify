@@ -6,6 +6,7 @@ import google from "../../assets/icons8-google.svg";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useUserStore from "../../state/AccountState";
+import { API_URL } from "../../config/api";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -50,7 +51,7 @@ const LoginForm = () => {
     };
   
     try {
-      const response = await axios.post("http://localhost:8888/login", data, {
+      const response = await axios.post(`${API_URL}/login`, data, {
         withCredentials: true,
       });
   

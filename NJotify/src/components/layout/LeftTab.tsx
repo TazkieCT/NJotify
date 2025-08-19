@@ -14,6 +14,7 @@ import { useEffect, useState } from "react";
 import Modal from "../widget/Modal";
 import axios from "axios";
 import usePlaylistStore from "../../state/UserPlaylistState";
+import { API_URL } from "../../config/api";
 
 const LeftTab = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -25,7 +26,7 @@ const LeftTab = () => {
 
   const fetchPlaylist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
+      const response = await axios.get(`${API_URL}/get-playlist-user/${user.Id}`);
       setPlaylists(response.data.data);
       // console.log(playlists);
     } catch (error) {
@@ -49,7 +50,7 @@ const LeftTab = () => {
     };
   
     try {
-      const response = await axios.post("http://localhost:8888/create-playlist", data);
+      const response = await axios.post(`${API_URL}/create-playlist`, data);
       console.log(response)
       fetchPlaylist();
     } catch (error) {

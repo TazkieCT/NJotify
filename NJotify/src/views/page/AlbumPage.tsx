@@ -11,6 +11,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DiscographyCard from "../../components/widget/DiscographyCard";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const AlbumPage = () => {
   const { albumId } = useParams<{ albumId: string }>();
@@ -21,7 +22,7 @@ const AlbumPage = () => {
   useEffect(() => {
     const fetchAlbum = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-album/${albumId}`);
+        const response = await axios.get(`${API_URL}/get-album/${albumId}`);
         setAlbums(response.data.data);
       } catch (error) {
         console.error("Error fetching album!", error);
@@ -30,7 +31,7 @@ const AlbumPage = () => {
 
     const fetchTrack = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-track-album/${albumId}`);
+        const response = await axios.get(`${API_URL}/get-track-album/${albumId}`);
         setTracks(response.data.data);
       } catch (error) {
         console.error("Error fetching track!", error);
@@ -39,7 +40,7 @@ const AlbumPage = () => {
 
     const fetchOtherAlbum = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-album-other/${albumId}`);
+        const response = await axios.get(`${API_URL}/get-album-other/${albumId}`);
         setOthers(response.data.data);
       } catch (error) {
         console.error("Error fetching album!", error);
@@ -55,7 +56,7 @@ const AlbumPage = () => {
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -68,11 +69,11 @@ const AlbumPage = () => {
 
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
 
       for (const track of tracks) {
-        await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+        await axios.get(`${API_URL}/add-queue/${track.track_id}`);
       }
 
       fetchQueue();
@@ -86,7 +87,7 @@ const AlbumPage = () => {
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src={`http://localhost:8888/${albums?.album_image}`} className={style['profile-image']} alt="" />
+            <img src={`${API_URL}/${albums?.album_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>{albums?.album_type}</span>

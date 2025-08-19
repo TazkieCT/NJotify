@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import style from "../../styles/widget/AlbumCard.module.css"
 import { useEffect, useState } from "react";
+import { API_URL } from "../../config/api";
 
 const DiscographyCard = ({ album } : {album:albumCard}) => {
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const DiscographyCard = ({ album } : {album:albumCard}) => {
     <div className={style.card} onClick={handleClick}>
       <div className={style["card-image-wrapper"]}>
         <img
-          src={`http://localhost:8888/${albums?.album_image}`}
+          src={`${API_URL}/${albums?.album_image}`}
           className={style["card-image"]}
           alt=""
         />

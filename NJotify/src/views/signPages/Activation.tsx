@@ -5,6 +5,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useUserStore from "../../state/AccountState";
+import { API_URL } from "../../config/api";
 
 const Activation = () => {
   const { tokenId } = useParams<{ tokenId: string }>();
@@ -28,7 +29,7 @@ const Activation = () => {
 
     const activate = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/activate/${tokenId}`);
+        const response = await axios.get(`${API_URL}/activate/${tokenId}`);
         if(response){
             setStatus("Active")
             localStorage.removeItem("activate-token");

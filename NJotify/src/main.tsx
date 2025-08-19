@@ -1,5 +1,5 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import * as React from "react"
+import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './index.css';
 import HomePage from './views/page/HomePage';
@@ -27,13 +27,15 @@ import YourPostPage from './views/page/YourPostPage';
 import HomeLayout from './views/HomeLayout';
 import ArtistPredictor from './views/page/LyricPredict';
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const root = createRoot(document.getElementById('root') as HTMLElement);
+
+root.render(
   <React.StrictMode>
     <Router>
       <Routes>
         <Route path="/login" element={<LoginForm />} />
         <Route path="/register" element={<RegisForm />} />
-        <Route path="/forgot" element={<ForgetForm />} />
+        <Route path="/forgot" element={<ForgetForm />} /> 
         <Route path="/activate/:tokenId" element={<Activation />} />
         <Route path="/reset/:tokenId" element={<ResetPasswordForm />} />
         <Route element={<HomeLayout />}>

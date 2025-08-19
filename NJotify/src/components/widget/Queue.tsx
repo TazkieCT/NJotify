@@ -1,4 +1,3 @@
-import React from 'react';
 import { IoCloseOutline } from "react-icons/io5";
 import style from "../../styles/widget/RightBarContent.module.css";
 import useRightTabStore from "../../state/RightBarState";
@@ -6,6 +5,7 @@ import SongQueue from "./SongQueue";
 import axios from "axios";
 import { usePlayerStore } from "../../state/PlayerState";
 import { FiTrash2 } from "react-icons/fi";
+import { API_URL } from '../../config/api';
 
 const Queue: React.FC = () => {
   const { closeRightTab } = useRightTabStore();
@@ -15,7 +15,7 @@ const Queue: React.FC = () => {
 
   const handleRemoveTrack = async (trackId: string) => {
     try {
-      await axios.get(`http://localhost:8888/remove-queue/${trackId}`);
+      await axios.get(`${API_URL}/remove-queue/${trackId}`);
       // console.log(response);
     } catch (error) {
       console.error("Response error:", error);
@@ -24,7 +24,7 @@ const Queue: React.FC = () => {
   };
 
   const handleClearQueue = async () => {
-    await axios.get(`http://localhost:8888/reset-queue`);
+    await axios.get(`${API_URL}/reset-queue`);
     clearQueue();
   };
 

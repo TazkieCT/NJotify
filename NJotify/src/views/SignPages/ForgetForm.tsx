@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import useUserStore from "../../state/AccountState";
+import { API_URL } from "../../config/api";
 
 const ForgetForm = () => {
   const [email, setEmail] = useState("");
@@ -41,7 +42,7 @@ const ForgetForm = () => {
     }
     setError("");
 
-    axios.get(`http://localhost:8888/forgot/${email}`)
+    axios.get(`${API_URL}/forgot/${email}`)
       .then((response) => {
         const token = response.data.data;
         Cookies.set('reset-token', token, { expires: 1, path: '/' });

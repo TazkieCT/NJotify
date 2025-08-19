@@ -8,6 +8,7 @@ import useUserStore from "../../state/AccountState";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import useCookie from "../../state/CookieState";
+import { API_URL } from "../../config/api";
 
 const HomePage = () => {
   const navigate = useNavigate();
@@ -46,13 +47,13 @@ const HomePage = () => {
     setIsFetching(true);
     try {
       // const payload = { token: token };
-      // const response = await axios.get(`http://localhost:8888/get-all-album?page=${page}`, {
+      // const response = await axios.get(`${API_URL}/get-all-album?page=${page}`, {
       //   headers: {
       //     Authorization: `${cookie}`,
       //     withCredentials: true
       //   }
       // });
-      const response = await axios.get(`http://localhost:8888/get-all-album?page=${page}`);
+      const response = await axios.get(`${API_URL}/get-all-album?page=${page}`);
       let newAlbums = response.data.data;
       shuffleArray(newAlbums);
       newAlbums = newAlbums.slice(0, 4);

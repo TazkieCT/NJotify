@@ -37,7 +37,6 @@ services:
       - redis
       - postgres
 
-
   frontend:
     build:
       context: ./NJotify

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import style from '../../styles/layoutPage/PlayerBar.module.css';
 import { TbArrowsDiagonal } from "react-icons/tb";
 import { HiOutlineQueueList } from "react-icons/hi2";
@@ -9,6 +9,7 @@ import useRightTabStore from '../../state/RightBarState';
 import { useNavigate } from 'react-router-dom';
 import { usePlayerStore } from '../../state/PlayerState';
 import axios from 'axios';
+import { API_URL } from '../../config/api';
 
 const PlayerBar = () => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const PlayerBar = () => {
 
   const fetchAlbum = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${currentTrack?.track_id}`);
+      const response = await axios.get(`${API_URL}/get-album-track/${currentTrack?.track_id}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -33,7 +34,7 @@ const PlayerBar = () => {
 
   const fetchArtist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/artist-track/${currentTrack?.track_id}`);
+      const response = await axios.get(`${API_URL}/artist-track/${currentTrack?.track_id}`);
       setArtist(response.data.data);
     } catch (error) {
       console.error("Error fetching artist!", error);
@@ -127,7 +128,7 @@ const PlayerBar = () => {
 
     const handleEnded = async () => {
       try {
-        await axios.get(`http://localhost:8888/listen/${currentTrack?.track_id}`);
+        await axios.get(`${API_URL}/listen/${currentTrack?.track_id}`);
       } catch (error) {
         console.error("Error updating listen count!", error);
       }
@@ -147,7 +148,7 @@ const PlayerBar = () => {
   return (
     <div className={`${style['container']} ${style['flex']}`}>
       <div className={style['player-info']}>
-        <img className={style['album-cover']} width={60} src={`http://localhost:8888/${album?.album_image}`} alt="" />
+        <img className={style['album-cover']} width={60} src={`${API_URL}/${album?.album_image}`} alt="" />
         <div className={style.col}>
           <span className={style['album-title']}>{currentTrack?.track_name}</span>
           <span className={style['album-subtitle']} onClick={() => { navigate(`/artist/${artist?.artist_id}`) }}>{`${artist?.artist_name}`}</span>
@@ -169,7 +170,7 @@ const PlayerBar = () => {
           <span className={`${style['small']} ${style['width-1']}`}>{formatTime((progress / 100) * (audioRef.current?.duration ?? 0))}</span>
           <input type="range" id="progress" name="progress" className={style['play']} min="0" max="100" value={progress} onChange={handleProgressChange} />
           <span className={`${style['small']} ${style['width-1']}`}>{formatTime(audioRef.current?.duration ?? 0)}</span>
-          <audio preload='metadata' ref={audioRef} src={`http://localhost:8888/${currentTrack?.track_file}`} />
+          <audio preload='metadata' ref={audioRef} src={`${API_URL}/${currentTrack?.track_file}`} />
         </div>
       </div>
       <div className={`${style['flex']} ${style['player-setting']} ${style['gap']}`}>

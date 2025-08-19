@@ -3,6 +3,7 @@ import style from "../../styles/widget/RightBarContent.module.css"
 import { FaMinus } from "react-icons/fa6";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_URL } from "../../config/api";
 
 interface SongQueueProps {
   track?: trackInfo;
@@ -21,7 +22,7 @@ const SongQueue: React.FC<SongQueueProps> = ({ track, onRemove }) => {
   const fetchAlbum = async () => {
     // console.log(trackId);
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${track.track_id}`);
+      const response = await axios.get(`${API_URL}/get-album-track/${track.track_id}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -30,7 +31,7 @@ const SongQueue: React.FC<SongQueueProps> = ({ track, onRemove }) => {
 
   const fetchArtist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/artist-track/${track.track_id}`);
+      const response = await axios.get(`${API_URL}/artist-track/${track.track_id}`);
       setArtist(response.data.data);
       // console.log(artist);
     } catch (error) {
@@ -54,7 +55,7 @@ const SongQueue: React.FC<SongQueueProps> = ({ track, onRemove }) => {
     <div className={style["song-info"]} onClick={() => {navigate(`/track/${track.track_id}`)}}>
       <img
         className={style["image-song"]}
-        src={`http://localhost:8888/${album?.album_image}`}
+        src={`${API_URL}/${album?.album_image}`}
         alt={track.track_name}
       />
       <div className={style.col}>

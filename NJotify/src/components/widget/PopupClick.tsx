@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import style from "../../styles/widget/PopupClick.module.css";
 import useUserStore from "../../state/AccountState";
 import axios from "axios";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 interface Playlist {
   playlist_id: string;
@@ -25,7 +26,7 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
 
   const fetchPlaylist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-playlist-user/${user.Id}`);
+      const response = await axios.get(`${API_URL}/get-playlist-user/${user.Id}`);
       setPlaylists(response.data.data);
     } catch (error) {
       console.error("Error fetching playlist!", error);
@@ -34,7 +35,7 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
   
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -47,7 +48,7 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
 
   const addQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/add-queue/${track_id}`);
+      await axios.get(`${API_URL}/add-queue/${track_id}`);
       fetchQueue();
     } catch (error) {
       console.error("Error fetching playlist!", error);
@@ -61,7 +62,7 @@ const PopupClick: React.FC<PopupClickAttributes> = ({ x, y, track_id }) => {
     };
   
     try {
-      const response = await axios.post("http://localhost:8888/add-track-playlist", data);
+      const response = await axios.post(`${API_URL}/add-track-playlist`, data);
       console.log(response);
     } catch (error) {
       console.error("Response error:", error);

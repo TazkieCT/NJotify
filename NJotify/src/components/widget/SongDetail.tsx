@@ -6,6 +6,7 @@ import { usePlayerStore } from "../../state/PlayerState";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import NextQueue from "./NextQueue";
+import { API_URL } from "../../config/api";
 
 const SongDetail = () => {
   const { closeRightTab } = useRightTabStore();
@@ -15,7 +16,7 @@ const SongDetail = () => {
 
   const fetchAlbum = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${currentTrack?.track_id}`);
+      const response = await axios.get(`${API_URL}/get-album-track/${currentTrack?.track_id}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -24,7 +25,7 @@ const SongDetail = () => {
 
   const fetchArtist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/artist-track/${currentTrack?.track_id}`);
+      const response = await axios.get(`${API_URL}/artist-track/${currentTrack?.track_id}`);
       setArtist(response.data.data);
     } catch (error) {
       console.error("Error fetching artist!", error);
@@ -33,7 +34,7 @@ const SongDetail = () => {
 
   // const fetchArtistProfile = async () => {
   //   try {
-  //     const response = await axios.get(`http://localhost:8888/get-user/${artist?.artist_id}`);
+  //     const response = await axios.get(`${API_URL}/get-user/${artist?.artist_id}`);
   //     setArtist(response.data.data);
   //   } catch (error) {
   //     console.error("Error fetching artist!", error);
@@ -75,14 +76,14 @@ const SongDetail = () => {
       </div>
       <div className={style.content}>
         <div className={style.album}>
-          <img className={style['album-cover']} src={`http://localhost:8888/${album?.album_image}`} alt="" />
+          <img className={style['album-cover']} src={`${API_URL}/${album?.album_image}`} alt="" />
           <span className={style.title}>{currentTrack?.track_name}</span>
           <span className={style.subtitle}>{artist?.artist_name}</span>
         </div>
         <div className={style.artist}>
           <span className={style['about-artist']}>About the artist</span>
           <div className={style.shadow}></div>
-          <img className={style['artist-image']} src={`http://localhost:8888/${artist?.banner_image}`} alt="Artist" />
+          <img className={style['artist-image']} src={`${API_URL}/${artist?.banner_image}`} alt="Artist" />
           <div className={style['p-20']}>
             <span className={style.white}>{artist?.artist_name}</span>
             <div className={`${style['between']} ${style['text-small']}`}>

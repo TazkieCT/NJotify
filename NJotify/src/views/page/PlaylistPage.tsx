@@ -12,6 +12,7 @@ import axios from "axios";
 import ModalDelete from "../../components/widget/ModalDelete";
 import useCookie from "../../state/CookieState";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const PlaylistPage = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
@@ -23,7 +24,7 @@ const PlaylistPage = () => {
 
   const fetchPlaylist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-playlist-id/${playlistId}`, {
+      const response = await axios.get(`${API_URL}/get-playlist-id/${playlistId}`, {
         headers: {
           Authorization: `${cookie}`
         }
@@ -36,7 +37,7 @@ const PlaylistPage = () => {
 
   const fetchTrack = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-track-playlist/${playlistId}`, {
+      const response = await axios.get(`${API_URL}/get-track-playlist/${playlistId}`, {
         headers: {
           Authorization: `${cookie}`
         }
@@ -50,7 +51,7 @@ const PlaylistPage = () => {
 
   const handleDelete = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/delete-playlist/${playlistId}`, {
+      const response = await axios.get(`${API_URL}/delete-playlist/${playlistId}`, {
         headers: {
           Authorization: `${cookie}`
         }
@@ -73,7 +74,7 @@ const PlaylistPage = () => {
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -86,11 +87,11 @@ const PlaylistPage = () => {
 
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
 
       for (const track of tracks) {
-        await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+        await axios.get(`${API_URL}/add-queue/${track.track_id}`);
       }
 
       fetchQueue();
@@ -104,7 +105,7 @@ const PlaylistPage = () => {
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src={`http://localhost:8888/${playlist?.playlist_image}`} className={style['profile-image']} alt="" />
+            <img src={`${API_URL}/${playlist?.playlist_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Playlist</span>

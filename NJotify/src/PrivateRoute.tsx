@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import * as React from "react"
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 import useUserStore from '../src/state/AccountState';
 
@@ -12,7 +12,7 @@ const PrivateRoute: React.FC<PrivateRouteProps> = ({ element, requiredRoles }) =
   const location = useLocation();
   // const navigate = useNavigate();
 
-  useEffect(() => {
+  React.useEffect(() => {
     const savedUser = localStorage.getItem("user");
     if (savedUser) {
       setUser(JSON.parse(savedUser));

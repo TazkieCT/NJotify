@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const TrackPage = () => {
   const { trackId } = useParams<{ trackId: string }>();
@@ -21,7 +22,7 @@ const TrackPage = () => {
   const fetchAlbum = async () => {
     // console.log(trackId);
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${trackId}`);
+      const response = await axios.get(`${API_URL}/get-album-track/${trackId}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -31,7 +32,7 @@ const TrackPage = () => {
   const fetchTrackAlbum = async () => {
     // console.log(trackId);
     try {
-      const response = await axios.get(`http://localhost:8888/get-track-album/${album?.album_id}`);
+      const response = await axios.get(`${API_URL}/get-track-album/${album?.album_id}`);
       setTrackAlbums(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -40,7 +41,7 @@ const TrackPage = () => {
 
   const fetchArtist = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/artist-track/${trackId}`);
+      const response = await axios.get(`${API_URL}/artist-track/${trackId}`);
       setArtist(response.data.data);
       // console.log(artist);
     } catch (error) {
@@ -50,7 +51,7 @@ const TrackPage = () => {
   
   const fetchMainTrack = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-track-id/${trackId}`);
+      const response = await axios.get(`${API_URL}/get-track-id/${trackId}`);
       setMainTrack(response.data.data);
       // console.log(response.data.data);
       // console.log(mainTrack);
@@ -61,7 +62,7 @@ const TrackPage = () => {
   
   const fetchTrack = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-track-artist/${artist?.artist_id}`);
+      const response = await axios.get(`${API_URL}/get-track-artist/${artist?.artist_id}`);
       setTracks(response.data.data);
       // console.log(response.data.data);
     } catch (error) {
@@ -91,7 +92,7 @@ const TrackPage = () => {
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -104,10 +105,10 @@ const TrackPage = () => {
 
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
 
-      await axios.get(`http://localhost:8888/add-queue/${mainTrack?.track_id}`);
+      await axios.get(`${API_URL}/add-queue/${mainTrack?.track_id}`);
 
       fetchQueue();
     } catch (error) {
@@ -136,7 +137,7 @@ const TrackPage = () => {
       <div className={style.content}>
         <div className={style.header}>
           <div className={style['profile-avatar']}>
-            <img src={`http://localhost:8888/${album?.album_image}`} className={style['profile-image']} alt="" />
+            <img src={`${API_URL}/${album?.album_image}`} className={style['profile-image']} alt="" />
           </div>
           <div className={style['profile-info']}>
             <span className={`${style.small}`}>Song</span>
@@ -167,7 +168,7 @@ const TrackPage = () => {
             </div>
             <div className={`${style['pad-lu']} ${style['flex-col']}`}>
               <div className={style['player-info']}>
-                <img className={style['album-cover']} src={`http://localhost:8888/${album?.album_image}`} alt="" />
+                <img className={style['album-cover']} src={`${API_URL}/${album?.album_image}`} alt="" />
                 <div className={style.col}>
                   <span className={style['album-subtitle']}>From the {album?.album_type}</span>
                   <span className={style['album-title']}>{album?.album_name}</span>

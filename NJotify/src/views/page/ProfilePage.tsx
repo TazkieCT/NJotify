@@ -1,12 +1,11 @@
-import React, { useEffect, useRef, useState} from 'react';
-import AlbumCard from "../../components/widget/AlbumCard";
-import ArtistCard from "../../components/widget/ArtistCard";
+import { useEffect, useRef, useState} from 'react';
 import useUserStore from "../../state/AccountState";
 import style from "../../styles/page/ProfilePage.module.css";
 import axios from 'axios';
 import { HiOutlinePencil } from 'react-icons/hi2';
 import PlaylistCardProfile from '../../components/widget/PlaylistCardProfile';
 import { useParams } from 'react-router-dom';
+import { API_URL } from '../../config/api';
 
 const toBase64 = (file: File): Promise<string> => 
   new Promise((resolve, reject) => {
@@ -24,14 +23,14 @@ const toBase64 = (file: File): Promise<string> =>
     const { userId } = useParams<{ userId: string }>();
     const { user, setUser } = useUserStore();
     const [profileImage, setProfileImage] = useState<string>(() => {
-      return `http://localhost:8888/${user.Profile}`;
+      return `${API_URL}/${user.Profile}`;
     });
     const fileInputRef = useRef<HTMLInputElement | null>(null);
     const [playlists, setPlaylists] = useState<playlist[]>([]);
 
     const fetchPlaylist = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-playlist-user/${userId}`);
+        const response = await axios.get(`${API_URL}/get-playlist-user/${userId}`);
         setPlaylists(response.data.data);
         // console.log(playlists);
       } catch (error) {
@@ -70,8 +69,8 @@ const toBase64 = (file: File): Promise<string> =>
         };
   
         // console.log(data);
-    
-        const response = await axios.post("http://localhost:8888/edit-profile", data, {
+
+        const response = await axios.post(`${API_URL}/edit-profile`, data, {
           headers: {
             'Content-Type': 'application/json'
           }
@@ -79,7 +78,7 @@ const toBase64 = (file: File): Promise<string> =>
 
         if (response.status === 200) {
           setProfileImage(`data:image/jpeg;base64,${base64File}`);
-          const responses = await axios.post("http://localhost:8888/fetch-user", email)
+          const responses = await axios.post(`${API_URL}/fetch-user`, email)
           const userData = responses.data.data;
           // console.log(userData);
           setUser({

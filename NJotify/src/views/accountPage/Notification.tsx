@@ -6,6 +6,7 @@ import { FiSmartphone } from "react-icons/fi";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useUserStore from "../../state/AccountState";
+import { API_URL } from "../../config/api";
 
 const Notification = () => {
   const changeSetting = useSettingStore((state) => state.changeSetting);
@@ -27,7 +28,7 @@ const Notification = () => {
     const fetchSettings = async () => {
       if (user && user.Id) {
         try {
-          const response = await axios.get(`http://localhost:8888/get-setting/${user.Id}`);
+          const response = await axios.get(`${API_URL}/get-setting/${user.Id}`);
           const { music_artist, podcast, follow } = response.data.data;
           setMusic(music_artist);
           setPodcast(podcast);
@@ -99,7 +100,7 @@ const Notification = () => {
 
   const handleSubmit = async () => {
     try {
-      const response = await axios.post('http://localhost:8888/set-setting', {
+      const response = await axios.post(`${API_URL}/set-setting`, {
         user_id: user.Id,
         music_artist: music,
         podcast: podcast,

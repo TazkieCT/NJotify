@@ -5,6 +5,7 @@ import useSettingStore from "../../state/SettingState";
 import useUserStore from "../../state/AccountState";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../../config/api";
 
 const GetVerified = () => {
   const changeSetting = useSettingStore((state) => state.changeSetting);
@@ -70,7 +71,7 @@ const GetVerified = () => {
 
       console.log(data);
   
-      const response = await axios.post("http://localhost:8888/verify", data, {
+      const response = await axios.post(`${API_URL}/verify`, data, {
         headers: {
           'Content-Type': 'application/json'
         }

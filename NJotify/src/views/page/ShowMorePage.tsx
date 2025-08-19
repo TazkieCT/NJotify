@@ -3,6 +3,7 @@ import AlbumCard from "../../components/widget/AlbumCard"
 import style from "../../styles/page/ShowMorePage.module.css"
 import axios from "axios";
 import { useSearchParams } from "react-router-dom";
+import { API_URL } from "../../config/api";
 
 const ShowMorePage = () => {
   const [albums, setAlbums] = useState<albumCard[]>([]);
@@ -20,7 +21,7 @@ const ShowMorePage = () => {
 
   useEffect(() => {
     if(!id && type === "album"){
-      axios.get('http://localhost:8888/get-all-album')
+      axios.get(`${API_URL}/get-all-album`)
         .then(response => {
           setAlbums(response.data.data);
           // console.log(response.data.data)

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import useUserStore from "../../state/AccountState";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { API_URL } from "../../config/api";
 
 const YourPostPage = () => {
   const navigate = useNavigate();
@@ -17,7 +18,7 @@ const YourPostPage = () => {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/artist/${user.Id}`);
+        const response = await axios.get(`${API_URL}/artist/${user.Id}`);
         setArtist(response.data.data);
         console.log(artist)
       } catch (error) {
@@ -27,7 +28,7 @@ const YourPostPage = () => {
 
     const fetchAlbum = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-album-artist/${user.Id}`);
+        const response = await axios.get(`${API_URL}/get-album-artist/${user.Id}`);
         setAlbums(response.data.data);
       } catch (error) {
         console.error("Error fetching album!", error);
@@ -39,7 +40,7 @@ const YourPostPage = () => {
   }, [user.Id]);
 
   const bannerImageUrl = artist?.banner_image
-    ? `http://localhost:8888/${artist.banner_image.replace(/\\/g, '/')}`
+    ? `${API_URL}/${artist.banner_image.replace(/\\/g, '/')}`
     : '';
 
   return (

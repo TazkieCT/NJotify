@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Footer from "../../components/layout/Footer";
 import style from "../../styles/accountPage/AdminPage.module.css";
@@ -6,6 +6,7 @@ import logo from '../../assets/NJOTIFY.png';
 import VerifyUser from "./VerifyUser";
 import { useNavigate } from "react-router-dom";
 import useUserStore from '../../state/AccountState';
+import { API_URL } from '../../config/api';
 
 // interface verifyUser {
 //   Id: string;
@@ -31,7 +32,7 @@ const AdminPage: React.FC = () => {
   }, [navigate, setUser]);
 
   useEffect(() => {
-    axios.get('http://localhost:8888/admin')
+    axios.get(`${API_URL}/admin`)
       .then(response => {
         setUsers(response.data.data);
         console.log(response.data.data)

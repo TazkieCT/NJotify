@@ -10,6 +10,7 @@ import Footer from "../../components/layout/Footer";
 import DiscographyCard from "../../components/widget/DiscographyCard";
 import PlaylistCard from "../../components/widget/PlaylistCard";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const ArtistPage = () => {
   const { artistId } = useParams<{ artistId: string }>();
@@ -23,7 +24,7 @@ const ArtistPage = () => {
   useEffect(() => {
     const fetchArtist = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/artist/${artistId}`);
+        const response = await axios.get(`${API_URL}/artist/${artistId}`);
         setArtist(response.data.data);
       } catch (error) {
         console.error("Error fetching artist!", error);
@@ -32,7 +33,7 @@ const ArtistPage = () => {
 
     const fetchAlbum = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-album-artist/${artistId}`);
+        const response = await axios.get(`${API_URL}/get-album-artist/${artistId}`);
         setAlbums(response.data.data);
         setFilteredAlbums(response.data.data);
       } catch (error) {
@@ -42,7 +43,7 @@ const ArtistPage = () => {
 
     const fetchTrack = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-track-artist/${artistId}`);
+        const response = await axios.get(`${API_URL}/get-track-artist/${artistId}`);
         setTracks(response.data.data);
       } catch (error) {
         console.error("Error fetching track!", error);
@@ -51,7 +52,7 @@ const ArtistPage = () => {
 
     const fetchPlaylist = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/get-playlist-artist/${artistId}`);
+        const response = await axios.get(`${API_URL}/get-playlist-artist/${artistId}`);
         setPlaylists(response.data.data);
       } catch (error) {
         console.error("Error fetching playlist!", error);
@@ -65,7 +66,7 @@ const ArtistPage = () => {
   }, [artistId]);
 
   const bannerImageUrl = artist?.banner_image
-    ? `http://localhost:8888/${artist.banner_image.replace(/\\/g, '/')}`
+    ? `${API_URL}/${artist.banner_image.replace(/\\/g, '/')}`
     : '';
 
   const handleButtonClick = (buttonName: string) => {
@@ -90,7 +91,7 @@ const ArtistPage = () => {
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -116,13 +117,13 @@ const ArtistPage = () => {
   
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
   
       const shuffledTracks = shuffleArray([...tracks]);
   
       for (const track of shuffledTracks) {
-        await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+        await axios.get(`${API_URL}/add-queue/${track.track_id}`);
       }
   
       fetchQueue();

@@ -53,7 +53,7 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -66,10 +66,10 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
 
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
 
-      await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+      await axios.get(`${API_URL}/add-queue/${track.track_id}`);
 
       fetchQueue();
     } catch (error) {
@@ -94,7 +94,7 @@ const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_i
         <div className={`${style["song-name-playlist"]} ${style["flex"]}`}>
           <div className={style["image-playlist"]}>
             <img
-              src={`http://localhost:8888/${tracks?.track_album_image}`}
+              src={`${API_URL}/${tracks?.track_album_image}`}
             />
           </div>
           <div className="">

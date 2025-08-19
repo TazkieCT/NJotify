@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
 import useUserStore from "../../state/AccountState";
+import { API_URL } from "../../config/api";
 
 const RegisForm = () => {
   const [email, setEmail] = useState("");
@@ -70,7 +71,7 @@ const RegisForm = () => {
     };
 
     axios
-      .post("http://localhost:8888/signup", data)
+      .post(`${API_URL}/signup`, data)
       .then((response) => {
         const token = response.data.data;
         Cookies.set('activate-token', token, { expires: 1, path: '/' });

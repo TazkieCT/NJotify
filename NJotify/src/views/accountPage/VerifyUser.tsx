@@ -3,6 +3,7 @@ import style from "../../styles/accountPage/AdminPage.module.css";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";
+import { API_URL } from "../../config/api";
 
 
 const VerifyUser = ({ user } : {user:userVerify}) => {
@@ -20,7 +21,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
 
   const fetchArtistProfile = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-user/${users?.id}`);
+      const response = await axios.get(`${API_URL}/get-user/${users?.id}`);
       setUserInfo(response.data.data);
     } catch (error) {
       console.error("Error fetching artist!", error);
@@ -28,7 +29,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
   };
 
   const accept = () => {
-    axios.get(`http://localhost:8888/set-artist/${user.id}`)
+    axios.get(`${API_URL}/set-artist/${user.id}`)
     .then(response => {
       console.log(response);
       window.location.reload();
@@ -39,7 +40,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
   }
 
   const decline = () => {
-    axios.get(`http://localhost:8888/remove-artist/${user.id}`)
+    axios.get(`${API_URL}/remove-artist/${user.id}`)
     .then(response => {
       console.log(response);
       window.location.reload();
@@ -55,7 +56,7 @@ const VerifyUser = ({ user } : {user:userVerify}) => {
         <div className={style["avatar"]}>
           <img
             className={style["photo"]}
-            src={`http://localhost:8888/${userInfo?.profile}`}
+            src={`${API_URL}/${userInfo?.profile}`}
             alt="User Avatar"
           />
         </div>

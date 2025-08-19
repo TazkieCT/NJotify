@@ -6,6 +6,7 @@ import ArtistCard from "../../components/widget/ArtistCard";
 import TopSearch from "../../components/widget/TopSearch";
 import useSearchStore from "../../state/SearchState";
 import style from "../../styles/page/SearchPage.module.css";
+import { API_URL } from "../../config/api";
 
 interface TrackTopResult {
   type: 'track';
@@ -62,7 +63,7 @@ const ResultSearchPage = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8888/search/${search}`);
+        const response = await axios.get(`${API_URL}/search/${search}`);
         const data = response.data.data || {
           type: '',
           track: [],
@@ -90,7 +91,7 @@ const ResultSearchPage = () => {
         if (data.type === "artist" && data.user && data.user.length > 0) {
           try {
             const artistId = data.user[0].user_id;
-            const response = await axios.get(`http://localhost:8888/get-track-artist/${artistId}`);
+            const response = await axios.get(`${API_URL}/get-track-artist/${artistId}`);
             setArtistTracks(response.data.data);
           } catch (error) {
             console.error("Error fetching artist tracks!", error);
@@ -146,7 +147,7 @@ const ResultSearchPage = () => {
                     <span className={style.header}>Top Results</span>
                     <div className={style['highlight-song']}>
                       <div className={style['highlight-image']}>
-                        <img src={`http://localhost:8888/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" />
+                        <img src={`${API_URL}/${topResult.track_image || topResult.profile_image || topResult.album_image || topResult.playlist_image}`} className={style['top-image']} alt="" />
                       </div>
                       <div className={`highlight-text`}>
                         <span className={style['highlight-title']}>

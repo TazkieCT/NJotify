@@ -1,10 +1,11 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import style from "../../styles/widget/SongRow.module.css";
 import PopupClick from "./PopupClick";
 import { useNavigate } from "react-router-dom";
 import { FaPlay } from "react-icons/fa";
 import axios from "axios";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
   const navigate = useNavigate();
@@ -38,7 +39,7 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
   }, []);
 
   const trackImageUrl = track?.track_image
-    ? `http://localhost:8888/${track.track_image.replace(/\\/g, '/')}`
+    ? `${API_URL}/${track.track_image.replace(/\\/g, '/')}`
     : '';
 
   const trackPage = () => {
@@ -50,7 +51,7 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
 
   const fetchQueue = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-queue`);
+      const response = await axios.get(`${API_URL}/get-queue`);
       const fetchedQueue = response.data.data;
       setQueue(fetchedQueue);
       if (fetchedQueue.length > 0) {
@@ -63,10 +64,10 @@ const SongRow = ({ track, index } : { track: trackArtist, index: number }) => {
 
   const addTracksToQueue = async () => {
     try {
-      await axios.get(`http://localhost:8888/reset-queue`);
+      await axios.get(`${API_URL}/reset-queue`);
       clearQueue();
 
-      await axios.get(`http://localhost:8888/add-queue/${track.track_id}`);
+      await axios.get(`${API_URL}/add-queue/${track.track_id}`);
 
       fetchQueue();
     } catch (error) {

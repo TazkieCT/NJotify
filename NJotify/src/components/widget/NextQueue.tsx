@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import style from '../../styles/widget/RightBarContent.module.css';
 import axios from 'axios';
+import { API_URL } from '../../config/api';
 
 interface TrackInfo {
   track_id: string;
@@ -20,7 +21,7 @@ const NextQueue: React.FC<NextQueueProps> = ({ track, artistName }) => {
 
   const fetchAlbum = async () => {
     try {
-      const response = await axios.get(`http://localhost:8888/get-album-track/${track.track_id}`);
+      const response = await axios.get(`${API_URL}/get-album-track/${track.track_id}`);
       setAlbum(response.data.data);
     } catch (error) {
       console.error("Error fetching album!", error);
@@ -35,7 +36,7 @@ const NextQueue: React.FC<NextQueueProps> = ({ track, artistName }) => {
 
   return (
     <div className={style['next-track']}>
-        <img className={style['next-track-image']} src={`http://localhost:8888/${album?.album_image}`} alt={track.track_name} />
+        <img className={style['next-track-image']} src={`${API_URL}/${album?.album_image}`} alt={track.track_name} />
         <div className={style['next-track-info']}>
             <span className={style['next-track-name']}>{track.track_name}</span>
             <span className={style['next-track-artist']}>{artistName}</span>
