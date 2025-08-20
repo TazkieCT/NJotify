@@ -7,6 +7,7 @@ import VerifyUser from "./VerifyUser";
 import { useNavigate } from "react-router-dom";
 import useUserStore from '../../state/AccountState';
 import { API_URL } from '../../config/api';
+import useCookie from '../../state/CookieState';
 
 // interface verifyUser {
 //   Id: string;
@@ -18,6 +19,8 @@ const AdminPage: React.FC = () => {
   const [users, setUsers] = useState<userVerify[]>([]);
   const navigate = useNavigate();
   const { setUser } = useUserStore();
+
+  const { cookie } = useCookie();
 
   useEffect(() => {
     const savedUser = localStorage.getItem("user");
@@ -42,13 +45,29 @@ const AdminPage: React.FC = () => {
       });
   }, []);
 
-  const logout = () => {
+  const logout = async () => {
     const savedUser = localStorage.getItem("user");
 
     if (savedUser) {
         localStorage.removeItem("user");
     }
-    navigate("/login");
+
+    try {
+      const response = await axios.post(`${API_URL}/logout`, {
+        headers: {
+          Authorization: `${cookie}`
+        }
+      });
+
+      const savedUser = localStorage.getItem("user");
+
+      if (savedUser) {
+          localStorage.removeItem("user");
+      }
+      navigate("/login");
+    } catch (error) {
+      console.error("Error fetching playlist!", error);
+    }
   };
 
   return (

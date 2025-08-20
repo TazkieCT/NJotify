@@ -84,7 +84,7 @@ const LoginForm = () => {
       <div className={styles.container}>
         <SignNav />
         <div className={styles.card}>
-          <h1 className={styles["title"]}>Login to Spotify</h1>
+          <h1 className={styles["title"]}>Login to NJotify</h1>
           <button className={styles["button-2"]}>
             <img src={google} width={"15px"} alt="" />
             <span>Continue with Google</span>

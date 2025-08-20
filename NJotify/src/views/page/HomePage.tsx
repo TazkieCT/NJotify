@@ -115,23 +115,23 @@ const HomePage = () => {
     <div className={style.container}>
       <div className={style.content} ref={containerRef}>
         <div className={style.gallery}>
-          <GalleryCard />
+          {/* <GalleryCard /> */}
         </div>
-        <div className={style.section}>
+        {/* <div className={style.section}>
           <div className={style["flex-between"]}>
             <span className={style.header}>Recently Played</span>
             <span className={style.link} onClick={() => navigate("/showmore?type=recent-album")}>Show all</span>
           </div>
           <div className={style.flex}>
-            {/* {albums.length === 0 && loading
+            {albums.length === 0 && loading
               ? Array.from({ length: 6 }).map((_, index) => <AlbumCardSkeleton key={index} />)
               : albums.map(album => <AlbumCard key={album.album_id} album={album} />)
             }
             {isShowingSkeleton && Array.from({ length: 6 }).map((_, index) => (
               <AlbumCardSkeleton key={`skeleton-${index}`} />
-            ))} */}
+            ))}
           </div>
-        </div>
+        </div> */}
         {/* <div className={style.section}>
           <div className={style["flex-between"]}>
             <span className={style.header}>Podcast</span>

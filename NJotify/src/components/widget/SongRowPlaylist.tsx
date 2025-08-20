@@ -4,6 +4,7 @@ import PopupPlaylist from "./PopupPlaylist";
 import { FaPlay } from "react-icons/fa";
 import axios from "axios";
 import { usePlayerStore } from "../../state/PlayerState";
+import { API_URL } from "../../config/api";
 
 const SongRowPlaylist = ({ playlist_id, track, index, fetchTrack }: { playlist_id?: string, track: trackPlaylist, index: number, fetchTrack: () => void }) => {
   const [popUp, setPopUp] = useState<{ visible: boolean, x: number, y: number }>({ visible: false, x: 0, y: 0 });
