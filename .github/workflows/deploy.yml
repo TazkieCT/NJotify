@@ -24,14 +24,14 @@ jobs:
 
       - name: Build backend image
         run: |
-          docker build \
+          docker build --no-cache \
             -t ghcr.io/${{ env.OWNER_LC }}/njotify-backend:${{ github.sha }} \
             -t ghcr.io/${{ env.OWNER_LC }}/njotify-backend:latest \
             ./Backend
 
       - name: Build frontend image
         run: |
-          docker build \
+          docker build --no-cache \
             -t ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:${{ github.sha }} \
             -t ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:latest \
             ./NJotify
