@@ -20,7 +20,7 @@ services:
       - "6379:6379"
 
   backend:
-    image: ghcr.io/tazkiect/njotify-backend:latest
+    image: ghcr.io/tazkiect/njotify-backend:${IMAGE_TAG:-latest}
     container_name: njotify-backend
     restart: always
     ports:

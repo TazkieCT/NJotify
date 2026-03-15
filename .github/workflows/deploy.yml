@@ -21,18 +21,26 @@ jobs:
 
       - name: Set lowercase owner
         run: echo "OWNER_LC=${GITHUB_REPOSITORY_OWNER,,}" >> $GITHUB_ENV
-      
+
       - name: Build backend image
         run: |
-          docker build -t ghcr.io/${{ env.OWNER_LC }}/njotify-backend:latest ./Backend
+          docker build \
+            -t ghcr.io/${{ env.OWNER_LC }}/njotify-backend:${{ github.sha }} \
+            -t ghcr.io/${{ env.OWNER_LC }}/njotify-backend:latest \
+            ./Backend
 
       - name: Build frontend image
         run: |
-          docker build -t ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:latest ./NJotify
+          docker build \
+            -t ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:${{ github.sha }} \
+            -t ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:latest \
+            ./NJotify
 
       - name: Push images
         run: |
+          docker push ghcr.io/${{ env.OWNER_LC }}/njotify-backend:${{ github.sha }}
           docker push ghcr.io/${{ env.OWNER_LC }}/njotify-backend:latest
+          docker push ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:${{ github.sha }}
           docker push ghcr.io/${{ env.OWNER_LC }}/njotify-frontend:latest
 
   deploy:
@@ -42,14 +50,11 @@ jobs:
     steps:
       - name: Deploy
         uses: appleboy/ssh-action@v1
-        env:
-          POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
-          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
-          POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
         with:
           host: ${{ secrets.SERVER_IP }}
           username: root
           key: ${{ secrets.SERVER_SSH_KEY }}
+          envs: GITHUB_SHA
           script: |
             cd ~/NJotify
 
@@ -57,7 +62,9 @@ jobs:
             POSTGRES_USER=${{ secrets.POSTGRES_USER }}
             POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
             POSTGRES_DB=${{ secrets.POSTGRES_DB }}
+            IMAGE_TAG=${GITHUB_SHA}
             EOF
 
-            docker compose pull
+            docker compose pull --policy always
             docker compose up -d --force-recreate
+            docker image prune -f
