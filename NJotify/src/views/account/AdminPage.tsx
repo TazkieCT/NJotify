@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Footer from "../../components/layout/Footer";
-import style from "../../styles/accountPage/AdminPage.module.css";
+import style from "../../styles/account/AdminPage.module.css";
 import logo from '../../assets/NJOTIFY.png';
 import VerifyUser from "./VerifyUser";
 import { useNavigate } from "react-router-dom";

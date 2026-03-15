@@ -1,5 +1,5 @@
 import { GrPrevious } from "react-icons/gr";
-import style from "../../styles/accountPage/SettingPage.module.css";
+import style from "../../styles/account/SettingPage.module.css";
 import useSettingStore from "../../state/SettingState";
 import { LuMail } from "react-icons/lu";
 import { FiSmartphone } from "react-icons/fi";

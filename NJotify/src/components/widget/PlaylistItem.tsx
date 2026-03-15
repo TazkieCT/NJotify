@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import style from "../../styles/layoutPage/LeftTab.module.css";
+import style from "../../styles/layout/LeftTab.module.css";
 import { API_URL } from "../../config/api";
 
 const PlaylistItem = ({ playlist } : { playlist: playlist }) => {

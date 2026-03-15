@@ -1,5 +1,5 @@
 import useRightTabStore from "../../state/RightBarState"
-import style from "../../styles/layoutPage/RightTab.module.css"
+import style from "../../styles/layout/RightTab.module.css"
 import Ads from "../widget/Ads"
 import Queue from "../widget/Queue"
 import SongDetail from "../widget/SongDetail"

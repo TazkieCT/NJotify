@@ -1,6 +1,6 @@
 import { GrPrevious } from "react-icons/gr";
 import { SlCamera } from "react-icons/sl";
-import style from "../../styles/accountPage/SettingPage.module.css";
+import style from "../../styles/account/SettingPage.module.css";
 import useSettingStore from "../../state/SettingState";
 import useUserStore from "../../state/AccountState";
 import { useEffect, useState } from "react";

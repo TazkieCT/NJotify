@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import style from "../../styles/layoutPage/HeaderBar.module.css";
+import style from "../../styles/layout/HeaderBar.module.css";
 import { GrPrevious, GrNext } from "react-icons/gr";
 import usePageStore from "../../state/PageState";
 import CustomSearchBar from "../widget/CustomSearchBar";

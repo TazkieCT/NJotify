@@ -2,7 +2,7 @@ import HeaderBar from "../components/layout/HeaderBar";
 import LeftTab from "../components/layout/LeftTab"
 import PlayerBar from "../components/layout/PlayerBar"
 import RightTab from "../components/layout/RightTab"
-import style from "../styles/layoutPage/Layout.module.css";
+import style from "../styles/layout/Layout.module.css";
 import useRightTabStore from "../state/RightBarState";
 import { Outlet } from 'react-router-dom';
 

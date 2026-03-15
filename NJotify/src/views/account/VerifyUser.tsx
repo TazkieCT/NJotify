@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import style from "../../styles/accountPage/AdminPage.module.css";
+import style from "../../styles/account/AdminPage.module.css";
 import { FaCheck } from "react-icons/fa6";
 import { IoClose } from "react-icons/io5";
 import axios from "axios";

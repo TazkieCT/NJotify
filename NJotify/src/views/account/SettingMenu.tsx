@@ -5,7 +5,7 @@ import { BsCheckLg } from "react-icons/bs";
 import { FiLock } from "react-icons/fi";
 import { TbBell } from "react-icons/tb";
 import { IoArrowForward } from "react-icons/io5";
-import style from "../../styles/accountPage/SettingPage.module.css";
+import style from "../../styles/account/SettingPage.module.css";
 import useSettingStore from "../../state/SettingState";
 
 const SettingMenu = () => {

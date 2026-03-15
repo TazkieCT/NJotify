@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import style from '../../styles/layoutPage/PlayerBar.module.css';
+import style from '../../styles/layout/PlayerBar.module.css';
 import { TbArrowsDiagonal } from "react-icons/tb";
 import { HiOutlineQueueList } from "react-icons/hi2";
 import { BsFilePlay } from "react-icons/bs";

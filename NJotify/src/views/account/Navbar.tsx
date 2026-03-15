@@ -1,4 +1,4 @@
-import style from '../../styles/accountPage/SettingPage.module.css';
+import style from '../../styles/account/SettingPage.module.css';
 import { CgProfile } from 'react-icons/cg';
 import logo from '../../assets/NJOTIFY.png'
 import { useNavigate } from 'react-router-dom';

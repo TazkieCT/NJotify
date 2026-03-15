@@ -1,4 +1,4 @@
-import style from "../../styles/layoutPage/Footer.module.css"
+import style from "../../styles/layout/Footer.module.css"
 import { FaFacebook } from "react-icons/fa";
 import { FaInstagram } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";

@@ -1,5 +1,5 @@
 import Footer from "../../components/layout/Footer";
-import style from "../../styles/accountPage/SettingPage.module.css";
+import style from "../../styles/account/SettingPage.module.css";
 import Navbar from "./Navbar";
 import logo from '../../assets/NJOTIFY.png'
 import SettingMenu from "./SettingMenu";
