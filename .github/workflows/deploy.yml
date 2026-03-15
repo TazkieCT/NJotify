@@ -33,18 +33,17 @@ on:
       needs: build
 
       steps:
-        - name: SSH Deploy
-          uses: appleboy/ssh-action@v1.0.3
+        - name: Deploy
+          uses: appleboy/ssh-action@v1
+          env:
+            POSTGRES_USER: ${{ secrets.POSTGRES_USER }}
+            POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }}
+            POSTGRES_DB: ${{ secrets.POSTGRES_DB }}
           with:
             host: ${{ secrets.SERVER_IP }}
             username: root
             key: ${{ secrets.SERVER_SSH_KEY }}
-          script: |
-            cd /root/njotify
-
-            export POSTGRES_USER=${{ secrets.POSTGRES_USER }}
-            export POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}
-            export POSTGRES_DB=${{ secrets.POSTGRES_DB }}
-
-            docker compose pull
-            docker compose up -d
+            script: |
+              cd ~/NJotify
+              docker compose pull
+              docker compose up -d
