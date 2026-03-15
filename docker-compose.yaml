@@ -3,9 +3,9 @@ services:
     image: postgres:15
     container_name: postgres
     environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: password123
-      POSTGRES_DB: njotify
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     ports:
       - "5432:5432"
     restart: always
@@ -20,8 +20,7 @@ services:
     restart: always
 
   backend:
-    build:
-      context: ./Backend
+    image: ghcr.io/tazkiect/njotify-backend:latest
     container_name: backend
     command: go run server.go
     volumes:
@@ -32,16 +31,15 @@ services:
     environment:
       DB_HOST: postgres
       DB_PORT: "5432"
-      DB_USER: postgres
-      DB_PASSWORD: password123
-      DB_NAME: njotify
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
     depends_on:
       - redis
       - postgres
 
   frontend:
-    build:
-      context: ./NJotify
+    image: ghcr.io/tazkiect/njotify-frontend:latest
     container_name: frontend
     volumes:
       - ./NJotify:/app
