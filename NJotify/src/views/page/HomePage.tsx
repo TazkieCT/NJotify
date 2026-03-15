@@ -1,5 +1,4 @@
 import style from "../../styles/page/HomePage.module.css";
-import GalleryCard from "../../components/widget/GalleryCard";
 import AlbumCard from "../../components/widget/AlbumCard";
 import AlbumCardSkeleton from "../../components/widget/AlbumCardSkeleton";
 import { useNavigate } from "react-router-dom";
