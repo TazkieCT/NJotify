@@ -1,6 +1,6 @@
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
-import styles from "../../styles/signPage/Sign.module.css";
+import styles from "../../styles/auth/Sign.module.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import SignNav from "../../components/layout/SignNav";
 import SignFooter from "../../components/layout/SignFooter";
-import styles from "../../styles/signPage/Sign.module.css";
+import styles from "../../styles/auth/Sign.module.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Cookies from 'js-cookie';
