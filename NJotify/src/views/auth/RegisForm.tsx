@@ -89,10 +89,10 @@ const RegisForm = () => {
         <SignNav />
         <div className={styles.card}>
           <h1 className={styles["title"]}>Sign Up to start listening</h1>
-          <button className={styles["button-2"]}>
+          {/* <button className={styles["button-2"]}>
             <img src={google} width={"15px"} alt="Google" />
             <span>Continue with Google</span>
-          </button>
+          </button> */}
           <div className={styles["form"]}>
             <div className={styles["group-form"]}>
               <label className={styles["label-form"]} htmlFor="email">Email</label>
