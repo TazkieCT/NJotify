@@ -61,7 +61,7 @@ func main() {
 	routers := router.NewRouter(userController, albumController, trackController, playlistController, artistController, searchController)
 	server := &http.Server{
 		Addr:    ":8080",
-		Handler: routers,
+		Handler: helper.CORSMiddleware(routers),
 	}
 
 	err := server.ListenAndServe()
