@@ -33,22 +33,34 @@ func NewUserServiceImpl(userRepository repository.UserRepository, validate *vali
 	}
 }
 
-func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) string {
-	err := c.Validate.Struct(user)
-	helper.CheckPanic(err)
+func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) (string, error) {
+	if err := c.Validate.Struct(user); err != nil {
+		return "", err
+	}
+
+	user.Email = strings.ToLower(user.Email)
+
+	existing, err := c.UserRepository.FindByEmail(user.Email)
+	if err == nil && existing != nil {
+		return "", fmt.Errorf("email already exists")
+	}
 
 	uuidV4, err := uuid.NewRandom()
-	helper.CheckPanic(err)
+	if err != nil {
+		return "", err
+	}
 
 	hashedPassword, err := bcrypt.GenerateFromPassword([]byte(user.Password), bcrypt.DefaultCost)
-	helper.CheckPanic(err)
+	if err != nil {
+		return "", err
+	}
 
 	name := strings.Split(user.Email, "@")
 	if len(name) == 0 {
-		helper.CheckPanic(fmt.Errorf("invalid email format"))
+		return "", fmt.Errorf("invalid email format")
 	}
+
 	username := strings.ReplaceAll(name[0], "_", " ")
-	user.Email = strings.ToLower(user.Email)
 
 	userModel := model.User{
 		Id:       uuidV4,
@@ -57,19 +69,30 @@ func (c *UserServiceImpl) CreateUser(user request.CreateUserRequest) string {
 		Password: string(hashedPassword),
 		Roles:    "inactive",
 	}
-	c.UserRepository.SignIn(userModel)
+
+	if err := c.UserRepository.CreateUser(userModel); err != nil {
+		if strings.Contains(err.Error(), "duplicate key") {
+			return "", fmt.Errorf("email already exists")
+		}
+		return "", err
+	}
 
 	token := helper.GenerateJWT(user.Email)
 
 	to := []string{user.Email}
 	cc := []string{"tazkiect25@gmail.com"}
+
 	subject := "Account Activation - NJotify"
-	message := fmt.Sprintf("Hello,\n\nYour account has been created. Here is your activation link: \nhttp://localhost:5173/activate/%s\n\nThank you!", token)
+	message := fmt.Sprintf(
+		"Hello,\n\nYour account has been created. Activation link:\nhttp://YOUR_DOMAIN/activate/%s",
+		token,
+	)
 
-	err_email := helper.SendMail(to, cc, subject, message)
-	helper.CheckPanic(err_email)
+	if err := helper.SendMail(to, cc, subject, message); err != nil {
+		return "", err
+	}
 
-	return token
+	return token, nil
 }
 
 func (u *UserServiceImpl) ActivateUser(email string) {

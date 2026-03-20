@@ -23,31 +23,46 @@ func NewUserController(service services.UserService) *UserController {
 }
 
 func (controller *UserController) CreateUser(ctx *gin.Context) {
-	createUserRequest := request.CreateUserRequest{}
-	err := ctx.ShouldBindJSON(&createUserRequest)
-	if err != nil {
-		ctx.JSON(http.StatusBadRequest, gin.H{"message": err.Error()})
+	var req request.CreateUserRequest
+
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{
+			"message": err.Error(),
+		})
 		return
 	}
 
-	token := controller.userService.CreateUser(createUserRequest)
+	token, err := controller.userService.CreateUser(req)
+	if err != nil {
+
+		if err.Error() == "email already exists" {
+			ctx.JSON(http.StatusConflict, gin.H{
+				"message": err.Error(),
+			})
+			return
+		}
+
+		ctx.JSON(http.StatusInternalServerError, gin.H{
+			"message": "internal server error",
+		})
+		return
+	}
 
 	ctx.SetCookie(
 		"activation_token",
 		token,
 		86400,
 		"/",
-		"localhost",
+		"",
 		false,
-		false,
+		true,
 	)
 
-	WebResponse := response.WebResponse{
-		Code:   http.StatusOK,
-		Status: "Ok",
+	ctx.JSON(http.StatusCreated, response.WebResponse{
+		Code:   http.StatusCreated,
+		Status: "Created",
 		Data:   token,
-	}
-	ctx.JSON(http.StatusOK, WebResponse)
+	})
 }
 
 func (controller *UserController) ActivateUser(ctx *gin.Context) {

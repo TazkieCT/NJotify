@@ -23,6 +23,35 @@ func NewUserRepositoryImpl(db *gorm.DB, redis *redis.Client) UserRepository {
 	return &UserRepositoryImpl{Db: db, Redis: redis}
 }
 
+func (c *UserRepositoryImpl) FindByEmail(email string) (*model.User, error) {
+	var user model.User
+	err := c.Db.Where("email = ?", email).First(&user).Error
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &user, nil
+}
+
+func (c *UserRepositoryImpl) CreateUser(user model.User) error {
+	if err := c.Db.Create(&user).Error; err != nil {
+		return err
+	}
+
+	userSetting := model.UserSetting{
+		UserId:      user.Id,
+		MusicArtist: 0,
+		Follow:      0,
+	}
+
+	if err := c.Db.Create(&userSetting).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func (c *UserRepositoryImpl) SignIn(user model.User) {
 	result := c.Db.Create(&user)
 	helper.CheckPanic(result.Error)

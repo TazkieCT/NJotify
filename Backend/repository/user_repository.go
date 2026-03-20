@@ -7,6 +7,8 @@ import (
 )
 
 type UserRepository interface {
+	FindByEmail(email string) (*model.User, error)
+	CreateUser(user model.User) error
 	SignIn(user model.User)
 	Activate(email string)
 	ChangePass(email string, newPassword string) error
